@@ -5,24 +5,16 @@ local Button={
   width=1,
   height=1,
   radius=0.5,
-  color={255, 255, 255, 1}
+  color={255, 255, 255, 1},
+  state={},
+  onLoad=function(self) return nil; end,
+  onClick=function(self) return nil; end
 }
 
 function Button.isButton(val)
   return getmetatable(val)==Button
 end
 
---[[
---  Estrutura de o
---  {
---    x=0,
---    y=0,
---    width=2,
---    height=1,
---    radius=1,
---    color=2
---  }
---]]
 function Button:new(o)
   o = o or {}
   local a={}
@@ -34,6 +26,9 @@ function Button:new(o)
   a:setHeight(o.height)
   a:setRadius(o.radius)
   a:setColor(o.color)
+  a:setState(o.state)
+  a:setOnLoad(o.onLoad)
+  a:setOnClick(o.onClick)
   return a
 end
 
@@ -97,28 +92,38 @@ function Button:getColor()
 end
 
 function Button:setColor(color)
-  local ehValido=type(color)=='table' and #color>=3
-  if ehValido then
-    print("cor valida1")
-    color[4]=type(color[4])=='number' and math.min(math.max(color[4], 0), 1) or 1
-    for i=1,3 do
-      if type(color[i])~='number' or color[i]<0 or 255<color[i] then
-        ehValido=false
-        break
-      end
+  if type(color)=='table' then
+    color[4]=type(color[4])=='number' and color[4] or 1
+    for i=1,4 do
+      color[i]=type(color[i])=='number' and math.max(math.min(color[i], 1), 0) or 0
     end
-  else
-    print("cor não valida1")
-  end
-
-  if ehValido then
-    print("cor valida2")
     self.color=color
-  else
-    print("cor não valida2")
   end
 
   return self.color
+end
+
+function Button:getState()
+  return self.state
+end
+
+function Button:setState(state)
+  self.state=state
+  return self.state
+end
+
+function Button:setOnLoad(fn)
+  if type(fn)=='function' then
+    self.onLoad=fn
+  end
+  return self.onLoad
+end
+
+function Button:setOnClick(fn)
+  if type(fn)=='function' then
+    self.onClick=fn
+  end
+  return self.onClick
 end
 
 function Button:getShapes()
@@ -148,6 +153,11 @@ function Button:isOver(x,y)
     end
   end
   return false
+end
+
+function Button:draw(love)
+    love.graphics.setColor(self:getColor())
+    love.graphics.rectangle('fill', self.x, self.y, self.width, self.height, self.radius, self.radius)
 end
 
 return Button
