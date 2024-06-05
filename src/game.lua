@@ -29,4 +29,10 @@ function Game.keypressed(key)
     Game.levels[Game.currentLevel].keypressed(key)
 end
 
+function Game.mousereleased( x, y, button, istouch, presses )
+  if(Game.levels[Game.currentLevel].mousereleased) then
+    Game.levels[Game.currentLevel].mousereleased(x, y, button, istouch, presses)
+  end
+end
+
 return Game
