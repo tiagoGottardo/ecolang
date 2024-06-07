@@ -30,13 +30,17 @@ local btn=Button:new{
   end,
   onPress=function(self, mouse)
     local state=self:getState()
+    print(utils:tostring(mouse))
     if self:isOver(mouse.x, mouse.y) then
+      print('botão pressionado')
       state.isPressed=true
     end
   end,
   onRelease=function(self, mouse)
     local state=self:getState()
+    print(utils:tostring(mouse))
     if state.isPressed and self:isOver(mouse.x, mouse.y) then
+      print('botão solto')
       state.contadorCores=1+state.contadorCores%#state.cores
       self:setColor(state.cores[state.contadorCores])
     end
