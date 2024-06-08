@@ -17,3 +17,4 @@ function love.keypressed(key)
 end
 
 love.mousereleased = Game.mousereleased
+love.mousepressed = Game.mousepressed

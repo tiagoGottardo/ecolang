@@ -11,6 +11,7 @@ local btn=Button:new{
   width=500,
   radius=50,
   state={
+    isPressed=false,
     cores={},
     contadorCores=1
   },
@@ -25,14 +26,25 @@ local btn=Button:new{
     end
     state.cores=cores
     local corAtual=state.cores[state.contadorCores]
-    print(utils:tostring(state.cores), utils:tostring(corAtual))
     self:setColor(corAtual)
   end,
-  onClick=function(self)
+  onPress=function(self, mouse)
     local state=self:getState()
-    state.contadorCores=1+state.contadorCores%#state.cores
-    self:setColor(state.cores[state.contadorCores])
-    print(utils:tostring(state.cores[state.contadorCores]))
+    print(utils:tostring(mouse))
+    if self:isOver(mouse.x, mouse.y) then
+      print('botão pressionado')
+      state.isPressed=true
+    end
+  end,
+  onRelease=function(self, mouse)
+    local state=self:getState()
+    print(utils:tostring(mouse))
+    if state.isPressed and self:isOver(mouse.x, mouse.y) then
+      print('botão solto')
+      state.contadorCores=1+state.contadorCores%#state.cores
+      self:setColor(state.cores[state.contadorCores])
+    end
+    state.isPressed=false
   end
   }
 
@@ -60,11 +72,12 @@ function menu.keypressed(key)
   -- Lidar com teclas pressionadas
 end
 
-function menu.mousereleased( x, y, button, istouch, presses )
-  print(('(%d,%d)'):format(x, y))
-  if btn:isOver(x,y) then
-    btn:onClick()
-  end
+function menu.mousepressed(x, y, button, is, touch, presses)
+  btn:onPress{x=x, y=y, button=button, istouch=istouch, press=press}
+end
+
+function menu.mousereleased(x, y, button, istouch, presses)
+  btn:onRelease{x=x, y=y, button=button, istouch=istouch, presses=presses}
 end
 
 

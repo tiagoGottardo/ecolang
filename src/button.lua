@@ -6,9 +6,11 @@ local Button={
   height=1,
   radius=0.5,
   color={255, 255, 255, 1},
+  isPressed=false,
   state={},
   onLoad=function(self) return nil; end,
-  onClick=function(self) return nil; end
+  onPress=function(self, mouse) return nil; end,
+  onRelease=function(self, mouse) return nil; end,
 }
 
 function Button.isButton(val)
@@ -28,7 +30,8 @@ function Button:new(o)
   a:setColor(o.color)
   a:setState(o.state)
   a:setOnLoad(o.onLoad)
-  a:setOnClick(o.onClick)
+  a:setOnPress(o.onPress)
+  a:setOnRelease(o.onRelease)
   return a
 end
 
@@ -119,11 +122,18 @@ function Button:setOnLoad(fn)
   return self.onLoad
 end
 
-function Button:setOnClick(fn)
+function Button:setOnPress(fn)
   if type(fn)=='function' then
-    self.onClick=fn
+    self.onPress=fn
   end
-  return self.onClick
+  return self.onPress
+end
+
+function Button:setOnRelease(fn)
+  if type(fn)=='function' then
+    self.onRelease=fn
+  end
+  return self.onRelease
 end
 
 function Button:getShapes()
