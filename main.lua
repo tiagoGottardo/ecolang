@@ -1,6 +1,7 @@
+love = require("love")
 local Game = require "src.game"
 
-love.load = function (args)
+love.load = function(args)
   Game.load()
 end
 
@@ -13,7 +14,7 @@ love.draw = function(dt)
 end
 
 function love.keypressed(key)
-    Game.keypressed(key)
+  Game.keypressed(key)
 end
 
 love.mousereleased = Game.mousereleased
