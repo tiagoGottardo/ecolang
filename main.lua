@@ -1,6 +1,7 @@
 love = require("love")
 local Game = require "src.game"
 
+
 love.load = function(args)
   Game.load()
 end
