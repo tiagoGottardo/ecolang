@@ -1,5 +1,7 @@
 local Game = {}
 
+local fundo=nil
+
 Game.levels = {
     require "levels.menu",
     require "levels.level1",
@@ -10,6 +12,7 @@ Game.levels = {
 Game.currentLevel = 1
 
 function Game.load()
+    fundo = love.graphics.newImage("fundo.png")
     Game.levels[Game.currentLevel].load()
 end
 
@@ -18,6 +21,8 @@ function Game.update(dt)
 end
 
 function Game.draw()
+    love.graphics.setBackgroundColor(1,1,1)
+    love.graphics.draw(fundo, 0,0,0,love.graphics.getWidth() / fundo:getWidth(), love.graphics.getHeight() / fundo:getHeight())
     Game.levels[Game.currentLevel].draw()
 end
 
