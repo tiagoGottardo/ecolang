@@ -1,9 +1,10 @@
+love = require("love")
 local Game = require "src.game"
 
 local isFullscreen = false
 
-love.load = function (args)
-  love.window.setMode(800, 600, {resizable=true, minwidth=400, minheight=300})
+love.load = function(args)
+  love.window.setMode(800, 600, { resizable = true, minwidth = 400, minheight = 300 })
   Game.load()
 end
 
@@ -29,7 +30,7 @@ function love.keypressed(key)
     -- Minimiza a janela
     love.window.minimize()
   end
-  
+
   Game.keypressed(key)
 end
 

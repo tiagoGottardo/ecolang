@@ -26,5 +26,4 @@ describe('Game module', function()
 
     assert.is_equal(Game.currentLevel, 2)
   end)
-
 end)
