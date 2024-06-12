@@ -47,7 +47,7 @@ end
 
 function Object:new(objectTable)
   objectTable = objectTable or {}
-  local instance = setmetatable({}, Object)
+  local instance = setmetatable({}, self)
   instance.color = Color:new(objectTable.color)
   instance.position = Position:new(objectTable.position)
   instance.shape = pickShape(objectTable.shape)
@@ -66,6 +66,10 @@ end
 function Object:draw()
   local r, g, b, a = self.color:format()
   local size = self.shape:get()
+
+  size.width = size.width or size.size or size.radius
+  size.height = size.height or size.size or size.radius
+
   local position = self.position:get()
   self.shape:draw(r, g, b, a, position.x - size.width / 2, position.y - size.height / 2)
   if getmetatable(self.shape) == Rectangle and self.content.label ~= "" then
