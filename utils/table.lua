@@ -1,26 +1,25 @@
-local t={}
-
+local t = {}
 function t.deepCopy(tab)
-  if type(tab)~='table' then
+  if type(tab) ~= 'table' then
     return nil
   end
 
-  local a={}
+  local a = {}
   for key, val in pairs(tab) do
-    a[key]=t.deepCopy(val) or val
+    a[key] = t.deepCopy(val) or val
   end
 
   return a
 end
 
 function t.shallowCopy(tab)
-  if type(tab)~='table' then
+  if type(tab) ~= 'table' then
     return nil
   end
 
-  local a={}
+  local a = {}
   for key, val in pairs(tab) do
-    a[key]=val
+    a[key] = val
   end
 
   return a
