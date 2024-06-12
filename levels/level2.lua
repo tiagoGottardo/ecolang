@@ -3,7 +3,7 @@ local Level2 = {}
 local titulo = nil
 
 function Level2.load()
-    titulo = love.graphics.newImage("titulo.png")
+    titulo = love.graphics.newImage("assets/images/titulo.png")
 
     -- Carregar recursos específicos
 end
