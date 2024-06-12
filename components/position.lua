@@ -18,12 +18,12 @@ end
 
 function Position:set(positionTable)
   positionTable = positionTable or {}
-  self.x = sanitizeValue(positionTable[1], 0) or self.x or 0
-  self.y = sanitizeValue(positionTable[2], 0) or self.y or 0
+  self.x = sanitizeValue(positionTable.x, 0) or self.x or 0
+  self.y = sanitizeValue(positionTable.y, 0) or self.y or 0
 end
 
 function Position:get()
-  return { self.x, self.y }
+  return { x = self.x, y = self.y }
 end
 
 function Position:debug()
