@@ -65,11 +65,11 @@ end
 
 function Object:draw()
   local r, g, b, a = self.color:format()
-  self.shape:draw(r, g, b, a, self.position:get())
+  local size = self.shape:get()
+  local position = self.position:get()
+  self.shape:draw(r, g, b, a, position[1] - size.width / 2, position[2] - size.height / 2)
   if getmetatable(self.shape) == Rectangle and self.content.label ~= "" then
-    local size = self.shape:get()
-    local position = self.position:get()
-    self.content:draw(position[1] + size.width / 2, position[2] + size.height / 2)
+    self.content:draw(position[1], position[2])
   end
 end
 
