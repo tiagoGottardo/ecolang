@@ -28,8 +28,8 @@ end
 function Circle:draw(R, G, B, A, X, Y)
   local r, g, b, a = love.graphics:getColor()
   love.graphics.setColor(R, G, B, A)
-  love.graphics:circle("fill", X, Y, self.radius)
-  love.graphics:setColor(r, g, b, a)
+  love.graphics.circle("fill", X, Y, self.radius)
+  love.graphics.setColor(r, g, b, a)
 end
 
 function Circle:debug()

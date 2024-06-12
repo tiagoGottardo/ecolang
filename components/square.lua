@@ -18,15 +18,15 @@ end
 
 function Square:set(squareTable)
   squareTable = squareTable or {}
-  self.size = sanitizeValue(squareTable.width, 0) or self.size or 0
+  self.size = sanitizeValue(squareTable.size, 0) or self.size or 0
   self.radius = sanitizeValue(squareTable.radius, 0) or self.radius or 0
 end
 
 function Square:draw(R, G, B, A, X, Y)
   local r, g, b, a = love.graphics:getColor()
   love.graphics.setColor(R, G, B, A)
-  love.graphics:rectangle("fill", X, Y, self.size, self.size, self.radius)
-  love.graphics:setColor(r, g, b, a)
+  love.graphics.rectangle("fill", X, Y, self.size, self.size, self.radius)
+  love.graphics.setColor(r, g, b, a)
 end
 
 function Square:get()
