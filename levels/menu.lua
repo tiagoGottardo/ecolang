@@ -16,8 +16,8 @@ local volumeSlider = {}
 function menu.load()
   playBtn = Button:new({
     shape = {
-      width = 560,
-      height = 150,
+      width = 300,
+      height = 90.5,
       radius = 30
     },
     color = Gray,
@@ -39,8 +39,8 @@ function menu.load()
 
   placarBtn = Button:new({
     shape = {
-      width = 560,
-      height = 75,
+      width = 300,
+      height = 53,
       radius = 30
     },
     color = Gray,
@@ -58,8 +58,8 @@ function menu.load()
 
   sobreBtn = Button:new({
     shape = {
-      width = 560,
-      height = 75,
+      width = 300,
+      height = 53,
       radius = 30
     },
     color = Gray,
@@ -77,8 +77,8 @@ function menu.load()
 
   sairBtn = Button:new({
     shape = {
-      width = 560,
-      height = 75,
+      width = 300,
+      height = 53,
       radius = 30
     },
     color = Gray,
@@ -95,7 +95,7 @@ function menu.load()
   })
 
   playImage = Image:new({ name = "play.png", width = 60, height = 60 })
-  titleImage = Image:new({ name = "titulo.png", width = 455, height = 215 })
+  titleImage = Image:new({ name = "titulo.png", width = 487, height = 225 })
 
   volumeSlider=newSlider(love.graphics.getWidth()-50, love.graphics.getHeight()-100, 300, 1, 0, 1, function(v) love.audio.setVolume(1) end, { width=50, orientation='vertical', track='roundrect', knob='circle' })
   --screenshakeSlider = newSlider(400, 310, 300, screenshake, 0.5, 2, function (v) screenshake = v end, {width=20, orientation='horizontal', track='line', knob='rectangle'})
@@ -143,16 +143,16 @@ function menu.resize()
   midW = (windowWidth) / 2 --miniButtonHeigh
 
   playBtn.position.x = midW
-  playBtn.position.y = windowHeight-(4*mBtnH)-137.5
+  playBtn.position.y = windowHeight-(4*mBtnH)-60
 
   placarBtn.position.x = midW
-  placarBtn.position.y = windowHeight-(3*mBtnH)-75
+  placarBtn.position.y = windowHeight-(3*mBtnH)-30
 
   sobreBtn.position.x = midW
-  sobreBtn.position.y = windowHeight-(2*mBtnH)-50
+  sobreBtn.position.y = windowHeight-(2*mBtnH)-20
 
   sairBtn.position.x = midW
-  sairBtn.position.y = windowHeight-mBtnH-25
+  sairBtn.position.y = windowHeight-mBtnH-10
 
   volumeSlider.x=windowWidth-volumeSlider.width
   volumeSlider.y=windowHeight-volumeSlider.length*7/8

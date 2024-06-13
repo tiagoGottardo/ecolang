@@ -4,7 +4,7 @@ local Game = require "src.game"
 local isFullscreen = false
 
 love.load = function(args)
-  love.window.setMode(800, 600, { resizable = true, minwidth = 400, minheight = 300 })
+  love.window.setMode(1024, 558, { resizable = true, minwidth = 400, minheight = 300 })
   Game.load()
 end
 
