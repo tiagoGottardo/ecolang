@@ -4,12 +4,14 @@ local Object = require 'components.object'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
+local simpleSlider = require "simple-slider"
 local playBtn = {}
 local header = {}
 local title = {}
 local playImage = {}
 local titleImage = {}
 local midW =0;
+local volumeSlider = {}
 
 function menu.load()
   playBtn = Button:new({
@@ -95,11 +97,15 @@ function menu.load()
   playImage = Image:new({ name = "play.png", width = 60, height = 60 })
   titleImage = Image:new({ name = "titulo.png", width = 455, height = 215 })
 
+  volumeSlider=newSlider(love.graphics.getWidth()-50, love.graphics.getHeight()-100, 300, 1, 0, 1, function(v) love.audio.setVolume(1) end, { width=50, orientation='vertical', track='roundrect', knob='circle' })
+  --screenshakeSlider = newSlider(400, 310, 300, screenshake, 0.5, 2, function (v) screenshake = v end, {width=20, orientation='horizontal', track='line', knob='rectangle'})
+
   menu.resize()
 end
 
 function menu.update(dt)
   -- Atualizar lógica
+  volumeSlider:update()
 end
 
 function menu.draw()
@@ -110,7 +116,11 @@ function menu.draw()
   sobreBtn:draw()
   sairBtn:draw()
   playImage:draw(playBtn.position.x, playBtn.position.y-25)
-  
+
+  local r, g, b, a = love.graphics.getColor()
+  love.graphics.setColor(love.math.colorFromBytes(36, 87, 197))
+  volumeSlider:draw()
+  love.graphics.setColor(r, g, b, a)
 end
 
 function menu.keypressed(key)
@@ -143,6 +153,9 @@ function menu.resize()
 
   sairBtn.position.x = midW
   sairBtn.position.y = windowHeight-mBtnH-25
+
+  volumeSlider.x=windowWidth-volumeSlider.width
+  volumeSlider.y=windowHeight-volumeSlider.length*7/8
 
 end
 
