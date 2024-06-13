@@ -129,12 +129,16 @@ function menu.keypressed(key)
   -- Lidar com teclas pressionadas
 end
 
-function menu.mousepressed(x, y, button, is, touch, presses)
+function menu.mousepressed(x, y, button, istouch, presses)
   if button == 1 then
     playBtn:onClick(x, y, (function(text)
       Game.currentLevel = 2
       Game.load()
     end), "tiago")
+    sobreBtn:onClick(x, y, (function()
+      Game.currentLevel = 5
+      Game.load()
+    end))
   end
 end
 
