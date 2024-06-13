@@ -13,6 +13,8 @@ local titleImage = {}
 local midW =0;
 local volumeSlider = {}
 
+local btnCollor = {200,200,200}
+
 function menu.load()
   playBtn = Button:new({
     shape = {
@@ -20,7 +22,7 @@ function menu.load()
       height = 90.5,
       radius = 30
     },
-    color = Gray,
+    color = btnCollor,
     position = {
       x = 400,
       y = 300
@@ -43,7 +45,7 @@ function menu.load()
       height = 53,
       radius = 30
     },
-    color = Gray,
+    color = btnCollor,
     position = {
       x = 400,
       y = 300
@@ -62,7 +64,7 @@ function menu.load()
       height = 53,
       radius = 30
     },
-    color = Gray,
+    color = btnCollor,
     position = {
       x = 400,
       y = 300
@@ -81,7 +83,7 @@ function menu.load()
       height = 53,
       radius = 30
     },
-    color = Gray,
+    color = btnCollor,
     position = {
       x = 400,
       y = 300
