@@ -87,18 +87,21 @@ function sobre.resize()
     }
   }
 
-  container:set {
-    shape={
-      width=windowWidth*0.8,
-      height=windowHeight*0.8,
-      radius=10
-    },
-    position={
-      x=midW,
-      y=windowHeight/2
-    }
+  local containerTable={}
+  containerTable.shape={
+    width=windowWidth*0.8,
+    height=windowHeight*0.8,
+    radius=10
+  }
+  containerTable.position={
+    x=midW,
+    y=windowHeight/2
+  }
+  containerTable.content={
+    wrapLimit=containerTable.shape.width*0.8
   }
 
+  container:set(containerTable)
 end
 
 return sobre
