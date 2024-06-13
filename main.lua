@@ -18,18 +18,11 @@ end
 function love.keypressed(key)
   if key == "q" then
     love.event.quit()
-  elseif key == "f10" then
-    -- Restaura a janela
-    isFullscreen = false
-    love.window.setFullscreen(isFullscreen)
-    love.window.restore()
-  elseif key == "f9" then
-    -- Minimiza a janela
-    love.window.minimize()
   end
 
   Game.keypressed(key)
 end
 
+love.resize = Game.resize
 love.mousereleased = Game.mousereleased
 love.mousepressed = Game.mousepressed
