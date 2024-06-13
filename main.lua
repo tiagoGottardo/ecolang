@@ -1,10 +1,9 @@
 love = require("love")
 local Game = require "src.game"
-
-local isFullscreen = false
+WINDOW_WIDTH = love.graphics.getWidth()
+WINDOW_HEIGHT = love.graphics.getHeight()
 
 love.load = function(args)
-  love.window.setMode(800, 600, { resizable = true, minwidth = 400, minheight = 300 })
   Game.load()
 end
 
@@ -17,10 +16,8 @@ love.draw = function(dt)
 end
 
 function love.keypressed(key)
-  if key == "f11" then
-    -- Alterna entre tela cheia e janela
-    isFullscreen = not isFullscreen
-    love.window.setFullscreen(isFullscreen)
+  if key == "q" then
+    love.event.quit()
   elseif key == "f10" then
     -- Restaura a janela
     isFullscreen = false
