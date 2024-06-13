@@ -10,7 +10,7 @@ local midW =0;
 
 function sobre.load()
   container = Object:new {
-    color=Gray,
+    color=Blue,
     position={10,10},
     shape={ kind='rectangle' },
     content={
@@ -76,8 +76,16 @@ function sobre.resize()
 
   midW = (windowWidth) / 2 --miniButtonHeigh
 
-  voltarBtn.position.x = midW
-  voltarBtn.position.y = windowHeight-(4*mBtnH)-137.5
+  voltarBtn:set {
+    shape={
+      width=windowWidth*0.2,
+      height=windowWidth*0.1
+    },
+    position={
+      x = windowWidth*0.8,
+      y = windowHeight*0.8
+    }
+  }
 
   container:set {
     shape={
