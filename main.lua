@@ -34,5 +34,6 @@ function love.keypressed(key)
   Game.keypressed(key)
 end
 
+love.resize = Game.resize
 love.mousereleased = Game.mousereleased
 love.mousepressed = Game.mousepressed
