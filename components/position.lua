@@ -18,8 +18,8 @@ end
 
 function Position:set(positionTable)
   positionTable = positionTable or {}
-  self.x = sanitizeValue(positionTable.x, 0) or self.x or 0
-  self.y = sanitizeValue(positionTable.y, 0) or self.y or 0
+  self.x = sanitizeValue(positionTable.x or positionTable[1], 0) or self.x or 0
+  self.y = sanitizeValue(positionTable.y or positionTable[2], 0) or self.y or 0
 end
 
 function Position:get()

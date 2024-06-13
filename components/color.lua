@@ -18,10 +18,10 @@ end
 
 function Color:set(colorTable)
   colorTable = colorTable or {}
-  self.r = sanitizeValue(colorTable[1], 0, 255) or self.r or 255
-  self.g = sanitizeValue(colorTable[2], 0, 255) or self.g or 255
-  self.b = sanitizeValue(colorTable[3], 0, 255) or self.b or 255
-  self.a = sanitizeValue(colorTable[4], 0, 1) or self.a or 1
+  self.r = sanitizeValue(colorTable.r or colorTable[1], 0, 255) or self.r or 255
+  self.g = sanitizeValue(colorTable.g or colorTable[2], 0, 255) or self.g or 255
+  self.b = sanitizeValue(colorTable.b or colorTable[3], 0, 255) or self.b or 255
+  self.a = sanitizeValue(colorTable.a or colorTable[4], 0, 1) or self.a or 1
 end
 
 function Color:get()

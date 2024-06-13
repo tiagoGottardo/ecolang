@@ -1,6 +1,6 @@
 Black = { 0, 0, 0 }
 -- (0, 0, 0)
-LightGreen = { 148, 221, 114 }
+LightGreen = { 148, 221, 114, 0.49 }
 -- (148,221,114)lightg
 Green = { 29, 159, 50 }
 -- (29,159,50) darkecolanglogo
@@ -8,6 +8,7 @@ DarkGreen = { 7, 139, 36 }
 -- (7,139,36)darkg
 Orange = { 242, 157, 56 }
 -- (242,157,56) orange
+LightOrange = { 255, 229, 0 }
 Gray = { 107, 102, 102 }
 -- (107,102,102) gray
 Red = { 204, 0, 0 }
