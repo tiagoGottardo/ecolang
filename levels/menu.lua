@@ -133,6 +133,10 @@ function menu.mousepressed(x, y, button, is, touch, presses)
       Game.currentLevel = 2
       Game.load()
     end), "tiago")
+    sobreBtn:onClick(x, y, (function()
+      Game.currentLevel = 5
+      Game.load()
+    end))
   end
 end
 
