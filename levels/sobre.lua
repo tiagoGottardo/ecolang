@@ -65,7 +65,6 @@ function sobre.mousepressed(x, y, button, is, touch, presses)
   if button == 1 then
     voltarBtn:onClick(x, y, (function(text)
       Game.currentLevel = 1
-      Game.load()
     end), "tiago")
   end
 end
