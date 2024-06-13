@@ -61,7 +61,7 @@ function sobre.keypressed(key)
   -- Lidar com teclas pressionadas
 end
 
-function sobre.mousepressed(x, y, button, is, touch, presses)
+function sobre.mousepressed(x, y, button, istouch, presses)
   if button == 1 then
     voltarBtn:onClick(x, y, (function(text)
       Game.currentLevel = 1
