@@ -1,4 +1,4 @@
-local Game = {}
+Game = {}
 
 local fundo = nil
 
