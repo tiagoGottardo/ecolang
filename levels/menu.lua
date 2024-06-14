@@ -17,7 +17,7 @@ local sobreBtn
 local placarBtn
 local sairBtn
 
-local utils=require 'src.utils'
+local utils = require 'src.utils'
 
 local cursor = {}
 
@@ -105,7 +105,7 @@ function menu.load()
   })
 
   cursor = Cursor:new {
-    botoes={playBtn, sobreBtn, sairBtn}
+    botoes = { playBtn, sobreBtn, sairBtn }
   }
 
   playImage = Image:new({ name = "play.png", width = 60, height = 60 })
@@ -144,13 +144,12 @@ function menu.keypressed(key)
 end
 
 function menu.mousepressed(x, y, button, istouch, presses)
-
   playBtn:onClick(x, y, button, (function()
     Game.timer:start(600)
     Game.currentLevel = 2
     Game.load()
   end))
-  sobreBtn:onClick(x, y, button, (function() 
+  sobreBtn:onClick(x, y, button, (function()
     Game.currentLevel = 6
     Game.load()
   end))
