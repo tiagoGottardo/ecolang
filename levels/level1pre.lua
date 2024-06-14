@@ -136,6 +136,10 @@ function Level1pre.mousemoved(x, y, dx, dy, istouch)
   cursor:update(x,y)
 end
 
+function Level1pre.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x,y)
+end
+
 function Level1pre.draw()
   container:draw()
   titulo:draw()
