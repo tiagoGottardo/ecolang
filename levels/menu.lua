@@ -10,10 +10,13 @@ local header = {}
 local title = {}
 local playImage = {}
 local titleImage = {}
-local midW =0;
+local midW = 0;
 local volumeSlider = {}
+local sobreBtn
+local placarBtn
+local sairBtn
 
-local btnCollor = {200,200,200}
+local btnCollor = { 200, 200, 200 }
 
 function menu.load()
   playBtn = Button:new({
@@ -29,14 +32,14 @@ function menu.load()
     },
     content = {
       label = 'Jogar',
-      color = {36, 87, 197, 0.9},
+      color = { 36, 87, 197, 0.9 },
       fontSize = 40,
-      position ={
-        x=100,
-        y=200
+      position = {
+        x = 100,
+        y = 200
       }
     }
-    
+
   })
 
   placarBtn = Button:new({
@@ -52,10 +55,10 @@ function menu.load()
     },
     content = {
       label = 'Placar',
-      color = {36, 87, 197, 0.9},
+      color = { 36, 87, 197, 0.9 },
       fontSize = 40
     }
-    
+
   })
 
   sobreBtn = Button:new({
@@ -71,10 +74,10 @@ function menu.load()
     },
     content = {
       label = 'Sobre',
-      color = {36, 87, 197, 0.9},
+      color = { 36, 87, 197, 0.9 },
       fontSize = 40
     }
-    
+
   })
 
   sairBtn = Button:new({
@@ -90,16 +93,18 @@ function menu.load()
     },
     content = {
       label = 'Sair',
-      color = {36, 87, 197, 0.9},
+      color = { 36, 87, 197, 0.9 },
       fontSize = 40
     }
-    
+
   })
 
   playImage = Image:new({ name = "play.png", width = 60, height = 60 })
   titleImage = Image:new({ name = "titulo.png", width = 487, height = 225 })
 
-  volumeSlider=newSlider(love.graphics.getWidth()-50, love.graphics.getHeight()-100, 300, 1, 0, 1, function(v) love.audio.setVolume(1) end, { width=50, orientation='vertical', track='roundrect', knob='circle' })
+  volumeSlider = newSlider(love.graphics.getWidth() - 50, love.graphics.getHeight() - 100, 300, 1, 0, 1,
+    function(v) love.audio.setVolume(1) end,
+    { width = 50, orientation = 'vertical', track = 'roundrect', knob = 'circle' })
   --screenshakeSlider = newSlider(400, 310, 300, screenshake, 0.5, 2, function (v) screenshake = v end, {width=20, orientation='horizontal', track='line', knob='rectangle'})
 
   menu.resize()
@@ -112,17 +117,17 @@ end
 
 function menu.draw()
   -- Desenhar elementos
-  titleImage:draw(playBtn.position.x,107.5)
+  titleImage:draw(playBtn.position.x, 107.5)
   playBtn:draw()
   placarBtn:draw()
   sobreBtn:draw()
   sairBtn:draw()
-  playImage:draw(playBtn.position.x, playBtn.position.y-25)
+  -- playImage:draw(playBtn.position.x, playBtn.position.y - 25)
 
-  local r, g, b, a = love.graphics.getColor()
-  love.graphics.setColor(love.math.colorFromBytes(36, 87, 197))
-  volumeSlider:draw()
-  love.graphics.setColor(r, g, b, a)
+  -- local r, g, b, a = love.graphics.getColor()
+  -- love.graphics.setColor(love.math.colorFromBytes(36, 87, 197))
+  -- volumeSlider:draw()
+  -- love.graphics.setColor(r, g, b, a)
 end
 
 function menu.keypressed(key)
@@ -130,16 +135,16 @@ function menu.keypressed(key)
 end
 
 function menu.mousepressed(x, y, button, istouch, presses)
-  if button == 1 then
-    playBtn:onClick(x, y, (function(text)
-      Game.currentLevel = 2
-      Game.load()
-    end), "tiago")
-    sobreBtn:onClick(x, y, (function()
-      Game.currentLevel = 5
-      Game.load()
-    end))
-  end
+  Game.timer:start(600)
+
+  playBtn:onClick(x, y, button, (function(text)
+    Game.currentLevel = 2
+    Game.load()
+  end))
+  -- sobreBtn:onClick(x, y, button, (function()
+  --   Game.currentLevel = 5
+  --   Game.load()
+  -- end))
 end
 
 function menu.resize()
@@ -149,20 +154,19 @@ function menu.resize()
   midW = (windowWidth) / 2 --miniButtonHeigh
 
   playBtn.position.x = midW
-  playBtn.position.y = windowHeight-(4*mBtnH)-60
+  playBtn.position.y = windowHeight - (4 * mBtnH) - 60
 
   placarBtn.position.x = midW
-  placarBtn.position.y = windowHeight-(3*mBtnH)-30
+  placarBtn.position.y = windowHeight - (3 * mBtnH) - 30
 
   sobreBtn.position.x = midW
-  sobreBtn.position.y = windowHeight-(2*mBtnH)-20
+  sobreBtn.position.y = windowHeight - (2 * mBtnH) - 20
 
   sairBtn.position.x = midW
-  sairBtn.position.y = windowHeight-mBtnH-10
+  sairBtn.position.y = windowHeight - mBtnH - 10
 
-  volumeSlider.x=windowWidth-volumeSlider.width
-  volumeSlider.y=windowHeight-volumeSlider.length*7/8
-
+  volumeSlider.x = windowWidth - volumeSlider.width
+  volumeSlider.y = windowHeight - volumeSlider.length * 7 / 8
 end
 
 return menu
