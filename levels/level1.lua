@@ -1,6 +1,7 @@
 local Level1 = {}
 require("utils.colors")
 local Object = require 'components.object'
+local Timer = require 'src.timer'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
@@ -12,13 +13,14 @@ local options = {}
 local offsetOptionsV = 90
 local offsetOptionsH = 160
 local logo = {}
-local timerLabel = {}
 local helpButton = {}
 local answers = { "Macaco", "Leão", "Abelha", "Cachorro" }
 local correct
 local correctSound
-local successModal = {}
-local failedModal = {}
+local successModal
+local failedModal
+local isTimeOverModal
+local evenTriggered = false
 
 local function setBorder(love, object)
   object = object or Object:new()
@@ -32,6 +34,7 @@ end
 
 
 function Level1.load()
+  evenTriggered = false
   correct = answers[math.floor(love.math.random() * 4) + 1]
   correctSound = love.audio.newSource("assets/sounds/" .. correct .. ".mp3", "static")
   local optionsTemplate = {
@@ -106,7 +109,7 @@ function Level1.load()
     options[i].value = answers[i]
   end
 
-  timerLabel = Text:new({ label = ("Tempo: " .. "20:00"), fontSize = 20, color = Black })
+
 
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4, })
   helpButton = Button:new({
@@ -123,6 +126,36 @@ function Level1.load()
     },
     position = { 960, 494 }
   })
+
+  isTimeOverModal = Object:new({
+    shape = {
+      width = 600,
+      height = 300,
+      radius = 20
+    },
+    color = Red,
+    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
+  })
+  isTimeOverModal:set({ color = { a = 1 } })
+  isTimeOverModal.text = Text:new({
+    label = "O tempo acabou",
+    fontSize = 40,
+    color = Black
+  })
+  isTimeOverModal.button = Button:new({
+    shape = {
+      width = 400,
+      height = 75,
+      radius = 40
+    },
+    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
+    content = {
+      label = "Ir para o menu",
+      fontSize = 30,
+      color = Black
+    }
+  })
+  isTimeOverModal.hidden = true
 
   successModal = Object:new({
     shape = {
@@ -210,9 +243,20 @@ function Level1.mousepressed(x, y, button)
       Game.load()
     end))
   end
+  if not isTimeOverModal.hidden then
+    isTimeOverModal.button:onClick(x, y, button, (function()
+      Game.currentLevel = 1
+      Game.load()
+    end))
+  end
 end
 
 function Level1.update(dt)
+  Game.timer:update()
+  if Game.timer:isTimeOver() and not evenTriggered then
+    isTimeOverModal.hidden = false
+    evenTriggered = true
+  end
 end
 
 function Level1.draw()
@@ -224,7 +268,7 @@ function Level1.draw()
   options[2]:draw()
   options[3]:draw()
   options[4]:draw()
-  -- timerLabel:draw(950, 20)
+  Game.timer:draw(950, 20)
   logo:draw(325 * 0.2, 152 * 0.2)
   helpButton:draw()
   setBorder(love, helpButton)
@@ -234,6 +278,13 @@ function Level1.draw()
     failedModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
     failedModal.button:draw()
     setBorder(love, failedModal.button)
+  end
+  if not isTimeOverModal.hidden then
+    isTimeOverModal:draw()
+    setBorder(love, isTimeOverModal)
+    isTimeOverModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
+    isTimeOverModal.button:draw()
+    setBorder(love, isTimeOverModal.button)
   end
   if not successModal.hidden then
     successModal:draw()

@@ -1,6 +1,9 @@
+require("utils.colors")
+local Timer = require 'src.timer'
 Game = {}
+Game.timer = Timer:new({ fontSize = 20, color = Black })
 
-local fundo = nil
+local fundo
 
 Game.levels = {
   require "levels.menu",
@@ -24,7 +27,7 @@ end
 function Game.draw()
   love.graphics.setBackgroundColor(1, 1, 1)
   love.graphics.draw(fundo, 0, 0, 0, love.graphics.getWidth() / fundo:getWidth(),
-  love.graphics.getHeight() / fundo:getHeight())
+    love.graphics.getHeight() / fundo:getHeight())
   Game.levels[Game.currentLevel].draw()
 end
 
