@@ -4,13 +4,30 @@ local Object = require 'components.object'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
+local Cursor = require 'src.cursor'
+
 local voltarBtn = {}
 local container = {}
 local midW = 0;
 
+local btnCollor = { 200, 200, 200 }
+local containerColor = { 250, 250, 250 }
+
+local cursor={}
+
+local function setBorder(love, object)
+  object = object or Object:new()
+  local r, g, b, a = love.graphics.getColor()
+  love.graphics.setColor(Black)
+  love.graphics.rectangle("line", object.position.x - object.shape.width / 2,
+    object.position.y - object.shape.height / 2, object.shape.width, object.shape.height,
+    object.shape.radius)
+  love.graphics.setColor(r, g, b, a)
+end
+
 function sobre.load()
   container = Object:new {
-    color = Blue,
+    color = containerColor,
     position = { 10, 10 },
     shape = { kind = 'rectangle' },
     content = {
@@ -26,13 +43,13 @@ function sobre.load()
       height = 150,
       radius = 30
     },
-    color = Gray,
+    color = btnCollor,
     position = {
       x = 400,
       y = 300
     },
     content = {
-      label = 'voltar',
+      label = 'Voltar',
       color = { 36, 87, 197, 0.9 },
       fontSize = 40,
       position = {
@@ -42,6 +59,12 @@ function sobre.load()
     }
 
   })
+
+  cursor = Cursor:new {
+    botoes={
+      voltarBtn
+    }
+  }
 
   sobre.resize()
 end
@@ -53,7 +76,9 @@ end
 function sobre.draw()
   -- Desenhar elementos
   container:draw()
+  setBorder(love, container)
   voltarBtn:draw()
+  --setBorder(love, voltarBtn)
 end
 
 function sobre.keypressed(key)
@@ -62,10 +87,15 @@ end
 
 function sobre.mousepressed(x, y, button, istouch, presses)
   if button == 1 then
-    voltarBtn:onClick(x, y, (function(text)
+    voltarBtn:onClick(x, y, button, (function()
       Game.currentLevel = 1
-    end), "tiago")
+      Game.load()
+    end))
   end
+end
+
+function sobre.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x, y)
 end
 
 function sobre.resize()
@@ -80,7 +110,7 @@ function sobre.resize()
       height = windowWidth * 0.1
     },
     position = {
-      x = windowWidth * 0.8,
+      x = windowWidth * 0.75,
       y = windowHeight * 0.8
     }
   }

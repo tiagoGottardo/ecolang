@@ -5,6 +5,8 @@ local Timer = require 'src.timer'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
+local Cursor = require 'src.cursor'
+local cursor = {}
 local container = {}
 local header = {}
 local headerLabel = {}
@@ -215,14 +217,21 @@ function Level1.load()
     }
   })
   failedModal.hidden = true
+
+  cursor = Cursor:new {
+    botoes = { options[1], options[2], options[3], options[4], soundHeader }
+  }
+
 end
 
 local function verifyCorrectAnswer(answer)
   answer = answer or ""
   if correct == answer then
     successModal.hidden = false
+    cursor:set{ botoes={ successModal.button } }
   else
     failedModal.hidden = false
+    cursor:set{ botoes={ failedModal.button } }
   end
 end
 
@@ -251,10 +260,15 @@ function Level1.mousepressed(x, y, button)
   end
 end
 
+function Level1.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x, y)
+end
+
 function Level1.update(dt)
   Game.timer:update()
   if Game.timer:isTimeOver() and not evenTriggered then
     isTimeOverModal.hidden = false
+    cursor:set{ botoes = { isTimeOverModa.button }}
     evenTriggered = true
   end
 end
