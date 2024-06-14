@@ -137,9 +137,16 @@ end
 function menu.mousepressed(x, y, button, istouch, presses)
   Game.timer:start(600)
 
-  playBtn:onClick(x, y, button, (function(text)
+  playBtn:onClick(x, y, button, (function()
     Game.currentLevel = 2
     Game.load()
+  end))
+  sobreBtn:onClick(x, y, button, (function() 
+    Game.currentLevel = 5
+    Game.load()
+  end))
+  sairBtn:onClick(x, y, button, (function()
+    love.event.quit()
   end))
   -- sobreBtn:onClick(x, y, button, (function()
   --   Game.currentLevel = 5
