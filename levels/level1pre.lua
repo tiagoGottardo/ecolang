@@ -5,6 +5,8 @@ local Timer = require("src.timer")
 local Button = require("components.button")
 local Text = require("components.text")
 local Image = require("components.image")
+local Cursor = require 'src.cursor'
+local cursor = {}
 local container = {}
 local footer = {}
 local soundFooter = {}
@@ -104,8 +106,12 @@ function Level1pre.load()
     color = { a = 0.51 },
   })
 
-  logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4 })
-  audioLabel = love.audio.newSource("assets/sounds/fase1label.mp3", "static")
+	logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4 })
+	audioLabel = love.audio.newSource("assets/sounds/fase1label.mp3", "static")
+
+  cursor = Cursor:new {
+    botoes = { soundFooter, proximoFooter }
+  }
 end
 
 function Level1pre.mousepressed(x, y, button)
@@ -124,6 +130,10 @@ function Level1pre.update(dt)
   -- isTimeOverModal.hidden = false
   -- evenTriggered = true
   -- end
+end
+
+function Level1pre.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x,y)
 end
 
 function Level1pre.draw()
