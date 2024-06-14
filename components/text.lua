@@ -28,24 +28,24 @@ function Text:draw(X, Y)
   local previousFont = love.graphics.getFont()
   love.graphics.setFont(myFont)
 
-  local label=self.label
-  local textWidth  = myFont:getWidth(self.label)
+  local label     = self.label
+  local textWidth = myFont:getWidth(self.label)
 
-  if self.wrapLimit>0 then
-    local textWrapped={}
-    textWidth, textWrapped=myFont:getWrap(label, self.wrapLimit)
-    label=''
-    for i,v in ipairs(textWrapped) do
-      if i>0 then
-        label=label..'\n'
+  if self.wrapLimit > 0 then
+    local textWrapped = {}
+    textWidth, textWrapped = myFont:getWrap(label, self.wrapLimit)
+    label = ''
+    for i, v in ipairs(textWrapped) do
+      if i > 0 then
+        label = label .. '\n'
       end
-      label=label..v
+      label = label .. v
     end
   end
 
-  local _, linesQnt=label:gsub("\n", "")
-  linesQnt=linesQnt+1
-  local textHeight=linesQnt*myFont:getHeight()
+  local _, linesQnt = label:gsub("\n", "")
+  linesQnt = linesQnt + 1
+  local textHeight = linesQnt * myFont:getHeight()
 
   love.graphics.print(label, myFont, X, Y, 0, 1, 1, textWidth / 2, textHeight / 2)
 
