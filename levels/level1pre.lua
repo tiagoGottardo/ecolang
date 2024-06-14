@@ -106,8 +106,8 @@ function Level1pre.load()
     color = { a = 0.51 },
   })
 
-	logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4 })
-	audioLabel = love.audio.newSource("assets/sounds/fase1label.mp3", "static")
+  logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4 })
+  audioLabel = love.audio.newSource("assets/sounds/fase1label.mp3", "static")
 
   cursor = Cursor:new {
     botoes = { soundFooter, proximoFooter }
@@ -133,11 +133,7 @@ function Level1pre.update(dt)
 end
 
 function Level1pre.mousemoved(x, y, dx, dy, istouch)
-  cursor:update(x,y)
-end
-
-function Level1pre.mousemoved(x, y, dx, dy, istouch)
-  cursor:update(x,y)
+  cursor:update(x, y)
 end
 
 function Level1pre.draw()
