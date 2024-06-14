@@ -135,9 +135,9 @@ function menu.keypressed(key)
 end
 
 function menu.mousepressed(x, y, button, istouch, presses)
-  Game.timer:start(600)
 
   playBtn:onClick(x, y, button, (function()
+    Game.timer:start(600)
     Game.currentLevel = 2
     Game.load()
   end))
