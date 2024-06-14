@@ -7,6 +7,7 @@ local fundo
 
 Game.levels = {
   require "levels.menu",
+  require "levels.level1pre",
   require "levels.level1",
   require "levels.level2",
   require "levels.level3",
