@@ -221,17 +221,16 @@ function Level1.load()
   cursor = Cursor:new {
     botoes = { options[1], options[2], options[3], options[4], soundHeader }
   }
-
 end
 
 local function verifyCorrectAnswer(answer)
   answer = answer or ""
   if correct == answer then
     successModal.hidden = false
-    cursor:set{ botoes={ successModal.button } }
+    cursor:set { botoes = { successModal.button } }
   else
     failedModal.hidden = false
-    cursor:set{ botoes={ failedModal.button } }
+    cursor:set { botoes = { failedModal.button } }
   end
 end
 
@@ -241,9 +240,9 @@ function Level1.mousepressed(x, y, button)
   options[3]:onClick(x, y, button, verifyCorrectAnswer, options[3].value)
   options[4]:onClick(x, y, button, verifyCorrectAnswer, options[4].value)
   soundHeader:onClick(x, y, button, (function() correctSound:play() end))
-  helpButton:onClick(x, y, button, (function() 
-  Game.currentLevel = 2
-  Game.load()
+  helpButton:onClick(x, y, button, (function()
+    Game.currentLevel = 2
+    Game.load()
   end))
   if not failedModal.hidden then
     failedModal.button:onClick(x, y, button, (function()
@@ -272,7 +271,7 @@ function Level1.update(dt)
   Game.timer:update()
   if Game.timer:isTimeOver() and not evenTriggered then
     isTimeOverModal.hidden = false
-    cursor:set{ botoes = { isTimeOverModa.button }}
+    cursor:set { botoes = { isTimeOverModal.button } }
     evenTriggered = true
   end
 end
