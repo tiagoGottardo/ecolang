@@ -241,6 +241,10 @@ function Level1.mousepressed(x, y, button)
   options[3]:onClick(x, y, button, verifyCorrectAnswer, options[3].value)
   options[4]:onClick(x, y, button, verifyCorrectAnswer, options[4].value)
   soundHeader:onClick(x, y, button, (function() correctSound:play() end))
+  helpButton:onClick(x, y, button, (function() 
+  Game.currentLevel = 2
+  Game.load()
+  end))
   if not failedModal.hidden then
     failedModal.button:onClick(x, y, button, (function()
       Game.load()
