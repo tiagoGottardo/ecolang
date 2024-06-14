@@ -4,6 +4,7 @@ local Object = require 'components.object'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
+local Cursor = require 'src.cursor'
 
 local voltarBtn = {}
 local container = {}
@@ -11,6 +12,8 @@ local midW = 0;
 
 local btnCollor = { 200, 200, 200 }
 local containerColor = { 250, 250, 250 }
+
+local cursor={}
 
 local function setBorder(love, object)
   object = object or Object:new()
@@ -57,6 +60,12 @@ function sobre.load()
 
   })
 
+  cursor = Cursor:new {
+    botoes={
+      voltarBtn
+    }
+  }
+
   sobre.resize()
 end
 
@@ -83,6 +92,10 @@ function sobre.mousepressed(x, y, button, istouch, presses)
       Game.load()
     end))
   end
+end
+
+function sobre.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x, y)
 end
 
 function sobre.resize()

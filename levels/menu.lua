@@ -4,6 +4,7 @@ local Object = require 'components.object'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
+local Cursor = require 'src.cursor'
 local simpleSlider = require "simple-slider"
 local playBtn = {}
 local header = {}
@@ -15,6 +16,10 @@ local volumeSlider = {}
 local sobreBtn
 local placarBtn
 local sairBtn
+
+local utils=require 'src.utils'
+
+local cursor = {}
 
 local btnCollor = { 200, 200, 200 }
 
@@ -99,6 +104,10 @@ function menu.load()
 
   })
 
+  cursor = Cursor:new {
+    botoes={playBtn, sobreBtn, sairBtn}
+  }
+
   playImage = Image:new({ name = "play.png", width = 60, height = 60 })
   titleImage = Image:new({ name = "titulo.png", width = 487, height = 225 })
 
@@ -152,6 +161,10 @@ function menu.mousepressed(x, y, button, istouch, presses)
   --   Game.currentLevel = 5
   --   Game.load()
   -- end))
+end
+
+function menu.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x, y)
 end
 
 function menu.resize()

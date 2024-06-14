@@ -13,4 +13,10 @@ function Button:onClick(x, y, button, fn, input)
   end
 end
 
+function Button:isHover(x, y)
+  local width = self.shape.width or self.shape.size or self.shape.radius
+  local height = self.shape.height or self.shape.size or self.shape.radius
+  return x <= self.position.x + width / 2 and x >= self.position.x - width / 2 and y <= self.position.y + height / 2 and y >= self.position.y - height / 2
+end
+
 return Button

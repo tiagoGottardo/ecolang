@@ -51,6 +51,12 @@ function Game.mousereleased(x, y, button, istouch, presses)
   end
 end
 
+function Game.mousemoved(x, y, dx, dy, istouch)
+  if(Game.levels[Game.currentLevel].mousemoved) then
+    Game.levels[Game.currentLevel].mousemoved(x, y, dx, dy, istouch)
+  end
+end
+
 function Game.resize()
   if (Game.levels[Game.currentLevel].resize) then
     Game.levels[Game.currentLevel].resize()
