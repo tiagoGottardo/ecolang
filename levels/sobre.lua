@@ -4,13 +4,17 @@ local Object = require 'components.object'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
+
 local voltarBtn = {}
 local container = {}
 local midW = 0;
 
+local btnCollor = { 200, 200, 200 }
+local containerColor = { 250, 250, 250 }
+
 function sobre.load()
   container = Object:new {
-    color = Blue,
+    color = containerColor,
     position = { 10, 10 },
     shape = { kind = 'rectangle' },
     content = {
@@ -26,13 +30,13 @@ function sobre.load()
       height = 150,
       radius = 30
     },
-    color = Gray,
+    color = btnCollor,
     position = {
       x = 400,
       y = 300
     },
     content = {
-      label = 'voltar',
+      label = 'Voltar',
       color = { 36, 87, 197, 0.9 },
       fontSize = 40,
       position = {
@@ -62,9 +66,10 @@ end
 
 function sobre.mousepressed(x, y, button, istouch, presses)
   if button == 1 then
-    voltarBtn:onClick(x, y, (function(text)
+    voltarBtn:onClick(x, y, button, (function()
       Game.currentLevel = 1
-    end), "tiago")
+      Game.load()
+    end))
   end
 end
 
