@@ -2,6 +2,8 @@ local Text = {}
 local Color = require 'components.color'
 Text.__index = Text
 
+local t = require 'utils.input'
+
 function Text:new(textTable)
   textTable = textTable or {}
   local instance = setmetatable({}, Text)
@@ -13,15 +15,13 @@ end
 function Text:set(textTable)
   textTable = textTable or {}
   self.color:set(textTable.color)
-  -- Agora label deve ser uma string, por causa do wrapping
   self.label = textTable.label or self.label or ""
-  self.fontSize = textTable.fontSize or self.fontSize or 24
-  -- wrapLimit é a largura em pixels para que o texto para a próxima linha
-  self.wrapLimit = textTable.wrapLimit or self.wrapLimit or 0
+  self.fontSize = t.sanitizeMin(textTable.fontSize, 0) or self.fontSize or 24
+  self.wrapLimit = t.sanitizeMin(textTable.wrapLimit, 0) or self.wrapLimit or 0
 end
 
 function Text:draw(X, Y)
-  local r, g, b, a = love.graphics.getColor() -- Previous system color
+  local r, g, b, a = love.graphics.getColor()
   love.graphics.setColor(self.color:format())
 
   local myFont       = love.graphics.newFont("assets/Sniglet/Sniglet-Regular.ttf", self.fontSize)
@@ -54,7 +54,7 @@ function Text:draw(X, Y)
 end
 
 function Text:debug()
-  print("   Text(" .. self.label .. ", " .. self.fontSize .. ")")
+  print("   Text(" .. self.label .. ", FontSize:" .. self.fontSize .. ", WrapLimit:" .. self.wrapLimit .. ")")
 end
 
 return Text
