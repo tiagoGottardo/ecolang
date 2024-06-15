@@ -1,0 +1,35 @@
+local assert = require("luassert")
+local Button = require 'components.button'
+
+describe('Button module test suite', function()
+  it('should call function passed by params', function()
+    local btn = Button:new({ shape = { width = 20, height = 20 }, position = { 40, 40 } })
+    local fn = spy.new(function(_) end)
+    btn:onClick(43, 44, 1, fn, "Foo")
+    assert.spy(fn).called_with("Foo")
+  end)
+
+  it('should not call function passed by params', function()
+    local btn = Button:new({ shape = { width = 20, height = 20 }, position = { 40, 40 } })
+    local fn = spy.new(function(_) end)
+    btn:onClick(5, 0, 1, fn, "Foo")
+    assert.spy(fn).not_called_with("Foo")
+  end)
+
+  it('should not call function passed by params', function()
+    local btn = Button:new({ shape = { width = 20, height = 20 }, position = { 40, 40 } })
+    local fn = spy.new(function(_) end)
+    btn:onClick(43, 44, 2, fn, "Foo")
+    assert.spy(fn).not_called_with("Foo")
+  end)
+
+  it('should return true', function()
+    local btn = Button:new({ shape = { width = 20, height = 20 }, position = { 40, 40 } })
+    assert.is_true(btn:isHover(44, 44))
+  end)
+
+  it('should return false', function()
+    local btn = Button:new({ shape = { width = 20, height = 20 }, position = { 40, 40 } })
+    assert.is_false(btn:isHover(4, 4))
+  end)
+end)
