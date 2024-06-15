@@ -1,6 +1,8 @@
 local Rectangle = {}
 Rectangle.__index = Rectangle
 
+local t = require 'utils.input'
+
 function Rectangle:new(rectangleTable)
   rectangleTable = rectangleTable or {}
   local instance = setmetatable({}, Rectangle)
@@ -8,19 +10,11 @@ function Rectangle:new(rectangleTable)
   return instance
 end
 
-local function sanitizeValue(val, min)
-  if type(min) ~= 'number' or type(val) ~= 'number' then
-    return nil
-  end
-
-  return math.max(val, min)
-end
-
 function Rectangle:set(rectangleTable)
   rectangleTable = rectangleTable or {}
-  self.width = sanitizeValue(rectangleTable.width, 0) or self.width or 0
-  self.height = sanitizeValue(rectangleTable.height, 0) or self.height or 0
-  self.radius = sanitizeValue(rectangleTable.radius, 0) or self.radius or 0
+  self.width = t.sanitizeMin(rectangleTable.width, 0) or self.width or 0
+  self.height = t.sanitizeMin(rectangleTable.height, 0) or self.height or 0
+  self.radius = t.sanitizeMin(rectangleTable.radius, 0) or self.radius or 0
 end
 
 function Rectangle:draw(R, G, B, A, X, Y)

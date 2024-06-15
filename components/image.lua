@@ -1,15 +1,17 @@
 local Image = {}
 Image.__index = Image
-local imagesFilePath = 'assets/images/'
 
-function Image:new(imageTable)
+local imagesFilePath = 'assets/images/'
+local t = require 'utils.input'
+
+function Image:new(imageTable, getImageFn)
   imageTable = imageTable or {}
   local instance = setmetatable({}, Image)
-  instance:set(imageTable)
+  instance:set(imageTable, getImageFn)
   return instance
 end
 
-local function setImage(name)
+local function getImage(name)
   name = name or ""
   if name ~= "" then
     local success, result = pcall(function()
@@ -25,12 +27,13 @@ local function setImage(name)
   end
 end
 
-function Image:set(imageTable)
+function Image:set(imageTable, getImageFn)
+  getImageFn = getImageFn or getImage
   imageTable = imageTable or {}
   self.name = imageTable.name or self.name or "default.png"
-  self.width = imageTable.width or self.width or 200
-  self.height = imageTable.height or self.height or 200
-  self.image = setImage(self.name)
+  self.width = t.sanitizeMin(imageTable.width, 0) or self.width or 200
+  self.height = t.sanitizeMin(imageTable.height, 0) or self.height or 200
+  self.image = getImageFn(self.name)
 end
 
 function Image:draw(X, Y)

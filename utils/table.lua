@@ -1,4 +1,5 @@
 local t = {}
+
 function t.deepCopy(tab)
   if type(tab) ~= 'table' then
     return nil

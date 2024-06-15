@@ -1,6 +1,8 @@
 local Circle = {}
 Circle.__index = Circle
 
+local t = require 'utils.input'
+
 function Circle:new(circleTable)
   circleTable = circleTable or {}
   local instance = setmetatable({}, Circle)
@@ -8,17 +10,9 @@ function Circle:new(circleTable)
   return instance
 end
 
-local function sanitizeValue(val, min)
-  if type(min) ~= 'number' or type(val) ~= 'number' then
-    return nil
-  end
-
-  return math.max(val, min)
-end
-
 function Circle:set(circleTable)
   circleTable = circleTable or {}
-  self.radius = sanitizeValue(circleTable.radius, 0) or self.radius or 0
+  self.radius = t.sanitizeMin(circleTable.radius, 0) or self.radius or 0
 end
 
 function Circle:get()
