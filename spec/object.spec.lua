@@ -50,4 +50,28 @@ describe('Object module test suite', function()
     obj:draw()
     assert.spy(circleDraw).called(1)
   end)
+
+  it('should call shape draw function with exact correct params', function()
+    local obj = Object:new({
+      shape = {
+        kind = 'square',
+        size = 30
+      },
+      position = { 50, 60 },
+      color = Black
+    })
+    local squareDraw = spy.new(function() end)
+    obj.shape.draw = squareDraw
+    obj:draw()
+    assert.spy(squareDraw).called_with(obj.shape, 0, 0, 0, 1, 50 - 30 / 2, 60 - 30 / 2)
+  end)
+
+  it('should call content draw function with exact correct params', function()
+    local obj = Object:new({ position = { 50, 61 }, content = { label = "Test" } })
+    local rectangleDraw = spy.new(function() end)
+    obj.shape.draw = (function() end)
+    obj.content.draw = rectangleDraw
+    obj:draw()
+    assert.spy(rectangleDraw).called_with(obj.content, 50, 61)
+  end)
 end)
