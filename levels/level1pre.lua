@@ -42,7 +42,7 @@ function Level1pre.load()
     },
     content = {
       kind = "text",
-      label = "Fase 1:",
+      label = "FASE 1:",
       fontSize = 40,
     },
     color = { 29, 159, 50 },
@@ -59,7 +59,7 @@ function Level1pre.load()
       kind = "text",
       color = Black,
       fontSize = 40,
-      label = "Nesta atividade você deverá\n ler e associar o nome com a\nsua figura correspondente:\n\n\n",
+      label = "NESTA ATIVIDADE VOCÊ DEVERÁ\n LER E ASSOCIAR O NOME COM A\nSUA FIGURA CORRESPONDENTE:\n\n\n",
     },
   })
 

@@ -9,7 +9,7 @@ function Level3.update(dt)
 end
 
 function Level3.draw()
-    love.graphics.print("Fase3", 400, 300)
+    love.graphics.print("FASE3", 400, 300)
     -- Desenhar elementos
 end
 

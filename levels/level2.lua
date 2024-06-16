@@ -12,7 +12,7 @@ local gameOver = nil
 function Level2.load()
   titulo = love.graphics.newImage("assets/images/titulo.png")
   timer = Timer:new { color = Black }
-  gameOver = Text:new { label = 'Game Over', color = Red }
+  gameOver = Text:new { label = 'GAME OVER', color = Red }
   gameOver.color.a = 0
 
   timer:start(5)
@@ -33,7 +33,7 @@ end
 function Level2.draw()
   love.graphics.draw(titulo, -25, -15, 0, 0.1, 0.1)
 
-  love.graphics.print("Fase2", 400, 300)
+  love.graphics.print("FASE2", 400, 300)
 
   -- timer:draw(200, 200)
   -- gameOver:draw(200, 200)
