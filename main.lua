@@ -27,3 +27,4 @@ love.resize = Game.resize
 love.mousereleased = Game.mousereleased
 love.mousepressed = Game.mousepressed
 love.mousemoved = Game.mousemoved
+love.textinput = Game.textinput

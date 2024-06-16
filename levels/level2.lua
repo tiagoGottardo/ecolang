@@ -1,5 +1,7 @@
 local Level2 = {}
 require("utils.colors")
+local utils = require 'utils'
+local utf8 = require 'utf8'
 local Object = require 'components.object'
 local Timer = require 'src.timer'
 local Button = require "components.button"
@@ -35,6 +37,8 @@ local successModal
 local failedModal
 local isTimeOverModal
 local evenTriggered = false
+local letterPressed
+local letterGoal
 
 local function setBorder(love, object)
   object = object or Object:new()
@@ -51,6 +55,21 @@ function Level2.load()
   evenTriggered = false
   animal = animals[math.floor(love.math.random() * 4) + 1]
   animalSound = love.audio.newSource("assets/sounds/" .. animalsSounds[animal], "static")
+
+  letterPressed = Object:new {
+    color = LightGray,
+    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
+    shape = {
+      width = 100,
+      height= 100,
+      radius=10
+    },
+    content = {
+      color = Black,
+      fontSize = 60,
+      label = ''
+    }
+  }
 
   container = Object:new({
     color = LightGreen,
@@ -283,6 +302,7 @@ function Level2.draw()
   animalImage:draw()
   Game.timer:draw(900, 20)
   logo:draw(325 * 0.2, 152 * 0.2)
+  letterPressed:draw()
   helpButton:draw()
   setBorder(love, helpButton)
   if not failedModal.hidden then
@@ -308,7 +328,15 @@ function Level2.draw()
   end
 end
 
-function Level2.keypressed(key)
+function Level2.textinput(text)
+  if text then
+    text=text:upper()
+    letterPressed:set {
+      content = {
+        label = text
+      }
+    }
+  end
 end
 
 return Level2

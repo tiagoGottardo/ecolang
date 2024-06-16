@@ -39,30 +39,38 @@ function Game.keypressed(key)
     Game.currentLevel = Game.currentLevel % #Game.levels + 1
     Game.levels[Game.currentLevel].load()
   end
-  Game.levels[Game.currentLevel].keypressed(key)
+  if Game.levels[Game.currentLevel].keypressed then
+    Game.levels[Game.currentLevel].keypressed(key)
+  end
 end
 
 function Game.mousepressed(x, y, button, istouch, presses)
-  if (Game.levels[Game.currentLevel].mousepressed) then
+  if Game.levels[Game.currentLevel].mousepressed then
     Game.levels[Game.currentLevel].mousepressed(x, y, button, istouch, presses)
   end
 end
 
 function Game.mousereleased(x, y, button, istouch, presses)
-  if (Game.levels[Game.currentLevel].mousereleased) then
+  if Game.levels[Game.currentLevel].mousereleased then
     Game.levels[Game.currentLevel].mousereleased(x, y, button, istouch, presses)
   end
 end
 
 function Game.mousemoved(x, y, dx, dy, istouch)
-  if(Game.levels[Game.currentLevel].mousemoved) then
+  if Game.levels[Game.currentLevel].mousemoved then
     Game.levels[Game.currentLevel].mousemoved(x, y, dx, dy, istouch)
   end
 end
 
 function Game.resize()
-  if (Game.levels[Game.currentLevel].resize) then
+  if Game.levels[Game.currentLevel].resize then
     Game.levels[Game.currentLevel].resize()
+  end
+end
+
+function Game.textinput(text)
+  if Game.levels[Game.currentLevel].textinput then
+    Game.levels[Game.currentLevel].textinput(text)
   end
 end
 
