@@ -188,7 +188,7 @@ function Level1.load()
     },
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
     content = {
-      label = "IR PARA O MENU",
+      label = "IR PARA A FASE 2",
       fontSize = 30,
       color = Black
     }
@@ -257,7 +257,7 @@ function Level1.mousepressed(x, y, button)
   end
   if not successModal.hidden then
     successModal.button:onClick(x, y, button, (function()
-      Game.currentLevel = 1
+      Game.currentLevel = 4
       Game.load()
     end))
   end

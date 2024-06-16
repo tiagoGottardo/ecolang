@@ -16,9 +16,9 @@ love.draw = function(dt)
 end
 
 function love.keypressed(key)
-  if key == "q" then
-    love.event.quit()
-  end
+  --if key == "q" then
+  --  love.event.quit()
+  --end
 
   Game.keypressed(key)
 end
@@ -27,3 +27,4 @@ love.resize = Game.resize
 love.mousereleased = Game.mousereleased
 love.mousepressed = Game.mousepressed
 love.mousemoved = Game.mousemoved
+love.textinput = Game.textinput
