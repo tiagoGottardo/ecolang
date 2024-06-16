@@ -110,7 +110,7 @@ function sobre.resize()
       height = windowWidth * 0.1
     },
     position = {
-      x = windowWidth * 0.75,
+      x = windowWidth * 0.77,
       y = windowHeight * 0.8
     }
   }
