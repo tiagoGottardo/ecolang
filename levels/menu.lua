@@ -17,7 +17,7 @@ local sobreBtn
 local placarBtn
 local sairBtn
 
-local utils = require 'src.utils'
+local utils = require 'utils'
 
 local cursor = {}
 
@@ -145,7 +145,6 @@ end
 
 function menu.mousepressed(x, y, button, istouch, presses)
   playBtn:onClick(x, y, button, (function()
-    Game.timer:start(600)
     Game.currentLevel = 2
     Game.load()
   end))
