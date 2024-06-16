@@ -1,6 +1,8 @@
 local Color = {}
 Color.__index = Color
 
+local t = require 'utils.input'
+
 function Color:new(colorTable)
   colorTable = colorTable or {}
   local instance = setmetatable({}, Color)
@@ -8,20 +10,12 @@ function Color:new(colorTable)
   return instance
 end
 
-local function sanitizeValue(val, min, max)
-  if type(val) ~= 'number' then
-    return nil
-  end
-
-  return math.max(math.min(val, max), min)
-end
-
 function Color:set(colorTable)
   colorTable = colorTable or {}
-  self.r = sanitizeValue(colorTable.r or colorTable[1], 0, 255) or self.r or 255
-  self.g = sanitizeValue(colorTable.g or colorTable[2], 0, 255) or self.g or 255
-  self.b = sanitizeValue(colorTable.b or colorTable[3], 0, 255) or self.b or 255
-  self.a = sanitizeValue(colorTable.a or colorTable[4], 0, 1) or self.a or 1
+  self.r = t.sanitizeRange(colorTable.r or colorTable[1], 0, 255) or self.r or 255
+  self.g = t.sanitizeRange(colorTable.g or colorTable[2], 0, 255) or self.g or 255
+  self.b = t.sanitizeRange(colorTable.b or colorTable[3], 0, 255) or self.b or 255
+  self.a = t.sanitizeRange(colorTable.a or colorTable[4], 0, 1) or self.a or 1
 end
 
 function Color:get()

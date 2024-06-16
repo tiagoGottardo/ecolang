@@ -1,6 +1,8 @@
 local Square = {}
 Square.__index = Square
 
+local t = require 'utils.input'
+
 function Square:new(squareTable)
   squareTable = squareTable or {}
   local instance = setmetatable({}, Square)
@@ -8,18 +10,10 @@ function Square:new(squareTable)
   return instance
 end
 
-local function sanitizeValue(val, min)
-  if type(min) ~= 'number' or type(val) ~= 'number' then
-    return nil
-  end
-
-  return math.max(val, min)
-end
-
 function Square:set(squareTable)
   squareTable = squareTable or {}
-  self.size = sanitizeValue(squareTable.size, 0) or self.size or 0
-  self.radius = sanitizeValue(squareTable.radius, 0) or self.radius or 0
+  self.size = t.sanitizeMin(squareTable.size, 0) or self.size or 0
+  self.radius = t.sanitizeMin(squareTable.radius, 0) or self.radius or 0
 end
 
 function Square:draw(R, G, B, A, X, Y)

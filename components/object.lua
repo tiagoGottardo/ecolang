@@ -72,7 +72,7 @@ function Object:draw()
 
   local position = self.position:get()
   self.shape:draw(r, g, b, a, position.x - size.width / 2, position.y - size.height / 2)
-  if getmetatable(self.shape) == Rectangle and self.content.label ~= "" then
+  if self.content.label ~= "" then
     self.content:draw(position.x, position.y)
   end
 end

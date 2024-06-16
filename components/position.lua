@@ -1,6 +1,8 @@
 local Position = {}
 Position.__index = Position
 
+local t = require 'utils.input'
+
 function Position:new(positionTable)
   positionTable = positionTable or {}
   local instance = setmetatable({}, Position)
@@ -8,18 +10,10 @@ function Position:new(positionTable)
   return instance
 end
 
-local function sanitizeValue(val, min)
-  if type(min) ~= 'number' or type(val) ~= 'number' then
-    return nil
-  end
-
-  return math.max(val, min)
-end
-
 function Position:set(positionTable)
   positionTable = positionTable or {}
-  self.x = sanitizeValue(positionTable.x or positionTable[1], 0) or self.x or 0
-  self.y = sanitizeValue(positionTable.y or positionTable[2], 0) or self.y or 0
+  self.x = t.sanitizeMin(positionTable.x or positionTable[1], 0) or self.x or 0
+  self.y = t.sanitizeMin(positionTable.y or positionTable[2], 0) or self.y or 0
 end
 
 function Position:get()
