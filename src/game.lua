@@ -9,7 +9,9 @@ Game.levels = {
   require "levels.menu",
   require "levels.level1pre",
   require "levels.level1",
+  require "levels.level2pre",
   require "levels.level2",
+  require "levels.level3pre",
   require "levels.level3",
   require "levels.sobre"
 }

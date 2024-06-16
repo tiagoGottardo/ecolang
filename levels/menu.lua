@@ -149,7 +149,7 @@ function menu.mousepressed(x, y, button, istouch, presses)
     Game.load()
   end))
   sobreBtn:onClick(x, y, button, (function()
-    Game.currentLevel = 6
+    Game.currentLevel = 8
     Game.load()
   end))
   sairBtn:onClick(x, y, button, (function()
