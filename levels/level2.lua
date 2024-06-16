@@ -40,18 +40,30 @@ local evenTriggered = false
 local letterPressed
 local letterGoal
 local keyboardImage
+local selectedKey
 
-local function setBorder(love, object)
+local function setBorder(love, object, color)
   object = object or Object:new()
+  color = color or Black
   local r, g, b, a = love.graphics.getColor()
-  love.graphics.setColor(Black)
+  love.graphics.setColor(color)
   love.graphics.rectangle("line", object.position.x - object.shape.width / 2,
     object.position.y - object.shape.height / 2, object.shape.width, object.shape.height,
     object.shape.radius)
   love.graphics.setColor(r, g, b, a)
 end
 
-function firstUtf8Char(str)
+local function getKeyPosition(key)
+  local keys={
+    ['A'] = {314, 257}, -- {314, 256}
+    ['C'] = {429, 301}, -- {429, 301}
+    ['L'] = {681, 257}, -- {681, 257}
+    ['M'] = {612, 301}  -- {612, 301}
+  }
+  return keys[key] or { 0, 0 }
+end
+
+local function firstUtf8Char(str)
   if type(str)~='string' then
     return ''
   end
@@ -66,17 +78,34 @@ function Level2.load()
   animal = animals[math.floor(love.math.random() * 4) + 1]
   animalSound = love.audio.newSource("assets/sounds/" .. animalsSounds[animal], "static")
 
-  --keyboardImage = Object:new {
-  --  position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT },
-  --  shape = {
-  --    width = 780,
-  --    height = 297
-  --  },
-  --  content = {
-  --    kind = 'image',
-  --    name = 'keyboard'
-  --  }
-  --}
+  local keyboardScale=.6
+  keyboardImage = Object:new {
+    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
+    color = { a = 0 },
+    shape = {
+      width = 780*keyboardScale,
+      height = 297*keyboardScale
+    },
+    content = {
+      kind = 'image',
+      name = 'keyboard.png',
+      width = 780*keyboardScale,
+      height = 297*keyboardScale
+    }
+  }
+  
+  selectedKey = Object:new {
+    position = getKeyPosition(firstUtf8Char(animal)),
+    color = Red,
+    shape = {
+      width=40,
+      height=40,
+      radius=5
+    }
+  }
+  selectedKey:set {
+    color = { a = .3 }
+  }
 
   letterGoal = Object:new {
     color = { a = 0 },
@@ -111,7 +140,7 @@ function Level2.load()
 
   letterPressed = Object:new {
     color = LightGray,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT * 2 / 3 },
+    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT * 4 / 5 },
     shape = {
       width = 100,
       height= 100,
@@ -310,6 +339,7 @@ local function verifyCorrectAnswer(answer)
 end
 
 function Level2.mousepressed(x, y, button)
+  -- print(utils.string:tostring{x, y})
   soundHeader:onClick(x, y, button, (function() animalSound:play() end))
   helpButton:onClick(x, y, button, (function()
     Game.currentLevel = 4
@@ -355,6 +385,9 @@ function Level2.draw()
   animalImage:draw()
   Game.timer:draw(900, 20)
   logo:draw(325 * 0.2, 152 * 0.2)
+  keyboardImage:draw()
+  selectedKey:draw()
+  setBorder(love, selectedKey, Red)
   letterPressed:draw()
   setBorder(love, letterPressed)
   letterGoal:draw()
