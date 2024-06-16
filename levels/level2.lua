@@ -2,7 +2,7 @@ local Level2 = {}
 
 local Timer = require 'src.timer'
 local Text = require 'components.text'
-local utils = require 'src.utils'
+local utils = require 'utils'
 require 'utils.colors'
 
 local titulo = nil
