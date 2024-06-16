@@ -55,13 +55,16 @@ function Level1pre.load()
       width = 768,
       height = 471,
     },
+  })
+  container:set {
     content = {
       kind = "text",
       color = Black,
       fontSize = 40,
-      label = "NESTA ATIVIDADE VOCÊ DEVERÁ\n LER E ASSOCIAR O NOME COM A\nSUA FIGURA CORRESPONDENTE:\n\n\n",
-    },
-  })
+      label = "NESTA ATIVIDADE VOCÊ DEVERÁ LER E ASSOCIAR O NOME COM A SUA FIGURA CORRESPONDENTE:\n\n\n",
+      wrapLimit = container.shape.width*0.9
+    }
+  }
 
   footer = Object:new({
     color = LightGreen,
