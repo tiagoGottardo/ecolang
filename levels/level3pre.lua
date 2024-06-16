@@ -110,7 +110,7 @@ function Level3pre.load()
   })
 
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4 })
-  audioLabel = love.audio.newSource("assets/sounds/fase1label.mp3", "static")
+  audioLabel = love.audio.newSource("assets/sounds/fase3label.mp3", "static")
 
   cursor = Cursor:new {
     botoes = { soundFooter, proximoFooter }
@@ -122,7 +122,7 @@ function Level3pre.mousepressed(x, y, button)
     audioLabel:play()
   end)
   proximoFooter:onClick(x, y, button, function()
-    Game.currentLevel = 3
+    Game.currentLevel = 7
     Game.load()
   end)
 end
