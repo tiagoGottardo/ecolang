@@ -80,8 +80,8 @@ function Level2.load()
     color = { a = 0.51 }
   })
   animalImage = Object:new {
-    position = { WINDOW_WIDTH * 4 / 7 + 88, 97 },
-    color = { a = 0 },
+    position = { WINDOW_WIDTH * 4 / 5, 97 },
+    color = { a = 0.51 },
     shape = {
       width = 88,
       height = 88,
