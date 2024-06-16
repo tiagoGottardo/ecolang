@@ -123,12 +123,13 @@ function Level2pre.mousepressed(x, y, button)
   end)
   proximoFooter:onClick(x, y, button, function()
     Game.currentLevel = 5
+    Game.timer:start(600)
     Game.load()
   end)
 end
 
 function Level2pre.update(dt)
-  Game.timer:update()
+  -- Game.timer:update()
   -- if Game.timer:isTimeOver() and not evenTriggered then
   -- isTimeOverModal.hidden = false
   -- evenTriggered = true
