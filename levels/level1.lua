@@ -219,7 +219,7 @@ function Level1.load()
   failedModal.hidden = true
 
   cursor = Cursor:new {
-    botoes = { options[1], options[2], options[3], options[4], soundHeader }
+    botoes = { options[1], options[2], options[3], options[4], soundHeader, helpButton }
   }
 end
 
