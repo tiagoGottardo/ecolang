@@ -35,10 +35,10 @@ function Game.draw()
 end
 
 function Game.keypressed(key)
-  if key == "n" then
-    Game.currentLevel = Game.currentLevel % #Game.levels + 1
-    Game.levels[Game.currentLevel].load()
-  end
+  --if key == "n" then
+  --  Game.currentLevel = Game.currentLevel % #Game.levels + 1
+  --  Game.levels[Game.currentLevel].load()
+  --end
   if Game.levels[Game.currentLevel].keypressed then
     Game.levels[Game.currentLevel].keypressed(key)
   end

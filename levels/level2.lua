@@ -50,15 +50,40 @@ local function setBorder(love, object)
   love.graphics.setColor(r, g, b, a)
 end
 
+function firstUtf8Char(str)
+  if type(str)~='string' then
+    return ''
+  end
+  for _, c in utf8.codes(str) do
+    return utf8.char(c)
+  end
+  return ''
+end
 
 function Level2.load()
   evenTriggered = false
   animal = animals[math.floor(love.math.random() * 4) + 1]
   animalSound = love.audio.newSource("assets/sounds/" .. animalsSounds[animal], "static")
 
+
+  letterGoal = Object:new {
+    color = { a = 0 },
+    position = { WINDOW_WIDTH * 2 / 6, 97 },
+    shape = {
+      width = 100,
+      height= 88,
+      radius=10
+    },
+    content = {
+      color = Red,
+      fontSize = 70,
+      label = firstUtf8Char(animal)
+    }
+  }
+
   letterPressed = Object:new {
     color = LightGray,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
+    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT * 2 / 3 },
     shape = {
       width = 100,
       height= 100,
@@ -98,7 +123,7 @@ function Level2.load()
       radius = 20,
     },
     content = {
-      label = animal,
+      label = animal:sub(2),
       fontSize = 60,
       color = DarkGreen
     },
@@ -247,12 +272,12 @@ end
 
 local function verifyCorrectAnswer(answer)
   answer = answer or ""
-  if animal == answer then
+  if firstUtf8Char(animal) == answer then
     successModal.hidden = false
     cursor:set { botoes = { successModal.button } }
   else
-    failedModal.hidden = false
-    cursor:set { botoes = { failedModal.button } }
+    --failedModal.hidden = false
+    --cursor:set { botoes = { failedModal.button } }
   end
 end
 
@@ -303,6 +328,8 @@ function Level2.draw()
   Game.timer:draw(900, 20)
   logo:draw(325 * 0.2, 152 * 0.2)
   letterPressed:draw()
+  setBorder(love, letterPressed)
+  letterGoal:draw()
   helpButton:draw()
   setBorder(love, helpButton)
   if not failedModal.hidden then
@@ -330,12 +357,13 @@ end
 
 function Level2.textinput(text)
   if text then
-    text=text:upper()
+    text=firstUtf8Char(text:upper())
     letterPressed:set {
       content = {
         label = text
       }
     }
+    verifyCorrectAnswer(text)
   end
 end
 
