@@ -39,6 +39,7 @@ local isTimeOverModal
 local evenTriggered = false
 local letterPressed
 local letterGoal
+local keyboardImage
 
 local function setBorder(love, object)
   object = object or Object:new()
@@ -65,6 +66,17 @@ function Level2.load()
   animal = animals[math.floor(love.math.random() * 4) + 1]
   animalSound = love.audio.newSource("assets/sounds/" .. animalsSounds[animal], "static")
 
+  --keyboardImage = Object:new {
+  --  position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT },
+  --  shape = {
+  --    width = 780,
+  --    height = 297
+  --  },
+  --  content = {
+  --    kind = 'image',
+  --    name = 'keyboard'
+  --  }
+  --}
 
   letterGoal = Object:new {
     color = { a = 0 },
@@ -80,6 +92,22 @@ function Level2.load()
       label = firstUtf8Char(animal)
     }
   }
+
+  --letterGoal = Object:new {
+  --  color = Black,
+  --  position = { WINDOW_WIDTH * 2 / 6, 97 },
+  --  shape = {
+  --    width = 100,
+  --    height= 88,
+  --    radius=10
+  --  },
+  --  content = {
+  --    color = White,
+  --    fontSize = 70,
+  --    label = firstUtf8Char(animal)
+  --  }
+  --}
+
 
   letterPressed = Object:new {
     color = LightGray,
