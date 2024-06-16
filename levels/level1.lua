@@ -17,6 +17,12 @@ local offsetOptionsH = 160
 local logo = {}
 local helpButton = {}
 local answers = { "MACACO", "LEÃO", "ABELHA", "CACHORRO" }
+local animalSound = {
+  ["MACACO"] = 'monkey',
+  ["LEÃO"] = 'lion',
+  ["ABELHA"] = 'bee',
+  ["CACHORRO"] = 'dog'
+}
 local correct
 local correctSound
 local successModal
@@ -38,7 +44,7 @@ end
 function Level1.load()
   evenTriggered = false
   correct = answers[math.floor(love.math.random() * 4) + 1]
-  correctSound = love.audio.newSource("assets/sounds/" .. correct .. ".mp3", "static")
+  correctSound = love.audio.newSource("assets/sounds/" .. animalSound[correct] .. ".mp3", "static")
   local optionsTemplate = {
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
     shape = {

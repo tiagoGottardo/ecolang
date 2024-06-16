@@ -6,7 +6,7 @@ Timer.__index = Timer
 
 local function secondsToTimeFormat(sec)
   sec = type(sec) == 'number' and sec or 0
-  return ('Tempo: %02d:%02d'):format(math.floor(sec / 60), sec % 60)
+  return ('TEMPO: %02d:%02d'):format(math.floor(sec / 60), sec % 60)
 end
 
 function Timer:new(timerTable)
