@@ -42,7 +42,7 @@ function Level1pre.load()
     },
     content = {
       kind = "text",
-      label = "Fase 1:",
+      label = "FASE 1:",
       fontSize = 40,
     },
     color = { 29, 159, 50 },
@@ -55,13 +55,16 @@ function Level1pre.load()
       width = 768,
       height = 471,
     },
+  })
+  container:set {
     content = {
       kind = "text",
       color = Black,
       fontSize = 40,
-      label = "Nesta atividade você deverá\n ler e associar o nome com a\nsua figura correspondente:\n\n\n",
-    },
-  })
+      label = "NESTA ATIVIDADE VOCÊ DEVERÁ LER E ASSOCIAR O NOME COM A SUA FIGURA CORRESPONDENTE:\n\n\n",
+      wrapLimit = container.shape.width*0.9
+    }
+  }
 
   footer = Object:new({
     color = LightGreen,
@@ -120,12 +123,13 @@ function Level1pre.mousepressed(x, y, button)
   end)
   proximoFooter:onClick(x, y, button, function()
     Game.currentLevel = 3
+    Game.timer:start(600)
     Game.load()
   end)
 end
 
 function Level1pre.update(dt)
-  Game.timer:update()
+  --Game.timer:update()
   -- if Game.timer:isTimeOver() and not evenTriggered then
   -- isTimeOverModal.hidden = false
   -- evenTriggered = true

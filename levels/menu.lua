@@ -17,7 +17,7 @@ local sobreBtn
 local placarBtn
 local sairBtn
 
-local utils = require 'src.utils'
+local utils = require 'utils'
 
 local cursor = {}
 
@@ -36,7 +36,7 @@ function menu.load()
       y = 300
     },
     content = {
-      label = 'Jogar',
+      label = 'JOGAR',
       color = { 36, 87, 197, 0.9 },
       fontSize = 40,
       position = {
@@ -59,7 +59,7 @@ function menu.load()
       y = 300
     },
     content = {
-      label = 'Placar',
+      label = 'PLACAR',
       color = { 36, 87, 197, 0.9 },
       fontSize = 40
     }
@@ -78,7 +78,7 @@ function menu.load()
       y = 300
     },
     content = {
-      label = 'Sobre',
+      label = 'SOBRE',
       color = { 36, 87, 197, 0.9 },
       fontSize = 40
     }
@@ -97,7 +97,7 @@ function menu.load()
       y = 300
     },
     content = {
-      label = 'Sair',
+      label = 'SAIR',
       color = { 36, 87, 197, 0.9 },
       fontSize = 40
     }
@@ -145,7 +145,6 @@ end
 
 function menu.mousepressed(x, y, button, istouch, presses)
   playBtn:onClick(x, y, button, (function()
-    Game.timer:start(600)
     Game.currentLevel = 2
     Game.load()
   end))

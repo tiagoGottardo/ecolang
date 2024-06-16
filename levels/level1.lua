@@ -16,7 +16,7 @@ local offsetOptionsV = 90
 local offsetOptionsH = 160
 local logo = {}
 local helpButton = {}
-local answers = { "Macaco", "Leão", "Abelha", "Cachorro" }
+local answers = { "MACACO", "LEÃO", "ABELHA", "CACHORRO" }
 local correct
 local correctSound
 local successModal
@@ -140,7 +140,7 @@ function Level1.load()
   })
   isTimeOverModal:set({ color = { a = 1 } })
   isTimeOverModal.text = Text:new({
-    label = "O tempo acabou",
+    label = "O TEMPO ACABOU",
     fontSize = 40,
     color = Black
   })
@@ -152,7 +152,7 @@ function Level1.load()
     },
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
     content = {
-      label = "Ir para o menu",
+      label = "IR PARA O MENU",
       fontSize = 30,
       color = Black
     }
@@ -170,7 +170,7 @@ function Level1.load()
   })
   successModal:set({ color = { a = 1 } })
   successModal.text = Text:new({
-    label = "Parabéns",
+    label = "PARABÉNS",
     fontSize = 40,
     color = Black
   })
@@ -182,7 +182,7 @@ function Level1.load()
     },
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
     content = {
-      label = "Ir para o menu",
+      label = "IR PARA O MENU",
       fontSize = 30,
       color = Black
     }
@@ -199,7 +199,7 @@ function Level1.load()
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
   })
   failedModal.text = Text:new({
-    label = "Tente Novamente",
+    label = "TENTE NOVAMENTE",
     fontSize = 40,
     color = Black
   })
@@ -211,7 +211,7 @@ function Level1.load()
     },
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
     content = {
-      label = "Jogar novamente",
+      label = "JOGAR NOVAMENTE",
       fontSize = 30,
       color = Black
     }
@@ -285,7 +285,7 @@ function Level1.draw()
   options[2]:draw()
   options[3]:draw()
   options[4]:draw()
-  Game.timer:draw(950, 20)
+  Game.timer:draw(900, 20)
   logo:draw(325 * 0.2, 152 * 0.2)
   helpButton:draw()
   setBorder(love, helpButton)

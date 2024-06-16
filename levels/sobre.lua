@@ -33,7 +33,7 @@ function sobre.load()
     content = {
       kind = 'text',
       color = Black,
-      label = 'SOBRE:\nO objetivo deste jogo prevê o aprendizado e melhoria na escrita dos alunos que o jogarem.\n\nFeito por: Thales Janisch Santos, Marcos Vinicius Passos, Claudiney Gustavo Rodrigues dos Santos, Natália Mendes Goes, Tiago Panizio Gottardo e Arthur Baldoqui Bergamo.\nRequisitos mínimos:\n- Processador: 1.6 GHz\n- Memória: 1GB RAM\n- Armazenamento: 40 MB de espaço livre'
+      label = 'SOBRE:\nO OBJETIVO DESTE JOGO PREVÊ O APRENDIZADO E MELHORIA NA ESCRITA DOS ALUNOS QUE O JOGAREM \n\nFEITO POR: ARTHUR BALDOQUI BERGAMO, CLAUDINEY GUSTAVO RODRIGUES DOS SANTOS, MARCOS VINICIUS PASSOS, NATÁLIA MENDES GOES, THALES JANISCH SANTOS E TIAGO PANIZIO GOTTARDO.\nREQUISITOS MÍNIMOS:\n- PROCESSADOR: 1.6 GHZ\n- MEMÓRIA: 1GB RAM\n- ARMAZENAMENTO: 40 MB DE ESPAÇO LIVRE'
     }
   }
 
@@ -49,7 +49,7 @@ function sobre.load()
       y = 300
     },
     content = {
-      label = 'Voltar',
+      label = 'VOLTAR',
       color = { 36, 87, 197, 0.9 },
       fontSize = 40,
       position = {

@@ -1,7 +1,7 @@
 require("utils.colors")
 local Timer = require 'src.timer'
 Game = {}
-Game.timer = Timer:new({ fontSize = 20, color = Black })
+Game.timer = Timer:new({ fontSize = 30, color = Black })
 
 local fundo
 
