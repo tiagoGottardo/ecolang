@@ -23,6 +23,12 @@ local animalsImages = {
   ["ABELHA"] = 'bee.png',
   ["CACHORRO"] = 'dog.png'
 }
+local animalsSounds = {
+  ["MACACO"] = 'monkey.mp3',
+  ["LEÃO"] = 'lion.mp3',
+  ["ABELHA"] = 'bee.mp3',
+  ["CACHORRO"] = 'dog.mp3'
+}
 local animalSound
 local animalImage
 local successModal
@@ -44,7 +50,7 @@ end
 function Level2.load()
   evenTriggered = false
   animal = animals[math.floor(love.math.random() * 4) + 1]
-  animalSound = love.audio.newSource("assets/sounds/" .. animal:lower() .. ".mp3", "static")
+  animalSound = love.audio.newSource("assets/sounds/" .. animalsSounds[animal], "static")
 
   container = Object:new({
     color = LightGreen,
