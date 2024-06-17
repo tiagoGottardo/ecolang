@@ -107,20 +107,20 @@ function Level2.load()
     color = { a = .3 }
   }
 
-  letterGoal = Object:new {
-    color = { a = 0 },
-    position = { WINDOW_WIDTH * 2 / 6, 97 },
-    shape = {
-      width = 100,
-      height= 88,
-      radius=10
-    },
-    content = {
-      color = Red,
-      fontSize = 70,
-      label = firstUtf8Char(animal)
-    }
-  }
+  -- letterGoal = Object:new {
+  --   color = { a = 0 },
+  --   position = { WINDOW_WIDTH * 2 / 6, 97 },
+  --   shape = {
+  --     width = 100,
+  --     height= 88,
+  --     radius=10
+  --   },
+  --   content = {
+  --     color = Red,
+  --     fontSize = 70,
+  --     label = firstUtf8Char(animal)
+  --   }
+  -- }
 
   --letterGoal = Object:new {
   --  color = Black,
@@ -179,13 +179,14 @@ function Level2.load()
       height = 88,
       radius = 20,
     },
-    content = {
-      label = animal:sub(2),
-      fontSize = 60,
-      color = DarkGreen
-    },
+    --content = {
+    --  label = animal:sub(2),
+    --  fontSize = 60,
+    --  color = DarkGreen
+    --},
     color = { a = 0.51 }
   })
+
   animalImage = Object:new {
     position = { WINDOW_WIDTH * 4 / 5, 97 },
     color = { a = 0.51 },
@@ -381,6 +382,16 @@ function Level2.draw()
   container:draw()
   header:draw()
   headerLabel:draw()
+
+  local myFont       = love.graphics.newFont("assets/Sniglet/Sniglet-Regular.ttf", 65)
+  local previousFont = love.graphics.getFont()
+  love.graphics.setFont(myFont)
+
+
+  local highlightColor = { 204 / 255, 0, 0, 1 }
+  local regularColor = { 7 / 255, 139 / 255, 36 / 255, 1 }
+  love.graphics.print({ highlightColor, firstUtf8Char(animal:upper()), regularColor, ' ' .. animal:sub(2) }, myFont, WINDOW_WIDTH / 3, 97-myFont:getHeight()/2)
+
   soundHeader:draw()
   animalImage:draw()
   Game.timer:draw(900, 20)
@@ -390,7 +401,7 @@ function Level2.draw()
   setBorder(love, selectedKey, Red)
   letterPressed:draw()
   setBorder(love, letterPressed)
-  letterGoal:draw()
+  --letterGoal:draw()
   helpButton:draw()
   setBorder(love, helpButton)
   if not failedModal.hidden then
