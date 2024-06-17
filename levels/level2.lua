@@ -40,18 +40,30 @@ local evenTriggered = false
 local letterPressed
 local letterGoal
 local keyboardImage
+local selectedKey
 
-local function setBorder(love, object)
+local function setBorder(love, object, color)
   object = object or Object:new()
+  color = color or Black
   local r, g, b, a = love.graphics.getColor()
-  love.graphics.setColor(Black)
+  love.graphics.setColor(color)
   love.graphics.rectangle("line", object.position.x - object.shape.width / 2,
     object.position.y - object.shape.height / 2, object.shape.width, object.shape.height,
     object.shape.radius)
   love.graphics.setColor(r, g, b, a)
 end
 
-function firstUtf8Char(str)
+local function getKeyPosition(key)
+  local keys={
+    ['A'] = {314, 257}, -- {314, 256}
+    ['C'] = {429, 301}, -- {429, 301}
+    ['L'] = {681, 257}, -- {681, 257}
+    ['M'] = {612, 301}  -- {612, 301}
+  }
+  return keys[key] or { 0, 0 }
+end
+
+local function firstUtf8Char(str)
   if type(str)~='string' then
     return ''
   end
@@ -66,32 +78,49 @@ function Level2.load()
   animal = animals[math.floor(love.math.random() * 4) + 1]
   animalSound = love.audio.newSource("assets/sounds/" .. animalsSounds[animal], "static")
 
-  --keyboardImage = Object:new {
-  --  position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT },
-  --  shape = {
-  --    width = 780,
-  --    height = 297
-  --  },
-  --  content = {
-  --    kind = 'image',
-  --    name = 'keyboard'
-  --  }
-  --}
-
-  letterGoal = Object:new {
+  local keyboardScale=.6
+  keyboardImage = Object:new {
+    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
     color = { a = 0 },
-    position = { WINDOW_WIDTH * 2 / 6, 97 },
     shape = {
-      width = 100,
-      height= 88,
-      radius=10
+      width = 780*keyboardScale,
+      height = 297*keyboardScale
     },
     content = {
-      color = Red,
-      fontSize = 70,
-      label = firstUtf8Char(animal)
+      kind = 'image',
+      name = 'keyboard.png',
+      width = 780*keyboardScale,
+      height = 297*keyboardScale
     }
   }
+  
+  selectedKey = Object:new {
+    position = getKeyPosition(firstUtf8Char(animal)),
+    color = Red,
+    shape = {
+      width=40,
+      height=40,
+      radius=5
+    }
+  }
+  selectedKey:set {
+    color = { a = .3 }
+  }
+
+  -- letterGoal = Object:new {
+  --   color = { a = 0 },
+  --   position = { WINDOW_WIDTH * 2 / 6, 97 },
+  --   shape = {
+  --     width = 100,
+  --     height= 88,
+  --     radius=10
+  --   },
+  --   content = {
+  --     color = Red,
+  --     fontSize = 70,
+  --     label = firstUtf8Char(animal)
+  --   }
+  -- }
 
   --letterGoal = Object:new {
   --  color = Black,
@@ -111,7 +140,7 @@ function Level2.load()
 
   letterPressed = Object:new {
     color = LightGray,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT * 2 / 3 },
+    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT * 4 / 5 },
     shape = {
       width = 100,
       height= 100,
@@ -150,13 +179,14 @@ function Level2.load()
       height = 88,
       radius = 20,
     },
-    content = {
-      label = animal:sub(2),
-      fontSize = 60,
-      color = DarkGreen
-    },
+    --content = {
+    --  label = animal:sub(2),
+    --  fontSize = 60,
+    --  color = DarkGreen
+    --},
     color = { a = 0.51 }
   })
+
   animalImage = Object:new {
     position = { WINDOW_WIDTH * 4 / 5, 97 },
     color = { a = 0.51 },
@@ -310,6 +340,7 @@ local function verifyCorrectAnswer(answer)
 end
 
 function Level2.mousepressed(x, y, button)
+  -- print(utils.string:tostring{x, y})
   soundHeader:onClick(x, y, button, (function() animalSound:play() end))
   helpButton:onClick(x, y, button, (function()
     Game.currentLevel = 4
@@ -351,13 +382,34 @@ function Level2.draw()
   container:draw()
   header:draw()
   headerLabel:draw()
+
+  local myFont       = love.graphics.newFont("assets/Sniglet/Sniglet-Regular.ttf", 65)
+  local previousFont = love.graphics.getFont()
+  love.graphics.setFont(myFont)
+
+
+  local highlightColor = { 0.8, 0, 0, 1 }
+  local regularColor = { 0.027, 0.545, 0.141, 1 }
+  local coloredText = { highlightColor, firstUtf8Char(animal:upper()), regularColor, ' ' .. animal:sub(2) }
+  local textWidth = 0
+  local textHeight = myFont:getHeight()
+  for i, v in ipairs(coloredText) do
+    if i%2==0 then
+      textWidth=textWidth+myFont:getWidth(v)
+    end
+  end
+  love.graphics.print(coloredText, myFont, WINDOW_WIDTH / 2 - textWidth/2, 97-textHeight/2)
+
   soundHeader:draw()
   animalImage:draw()
   Game.timer:draw(900, 20)
   logo:draw(325 * 0.2, 152 * 0.2)
+  keyboardImage:draw()
+  selectedKey:draw()
+  setBorder(love, selectedKey, Red)
   letterPressed:draw()
   setBorder(love, letterPressed)
-  letterGoal:draw()
+  --letterGoal:draw()
   helpButton:draw()
   setBorder(love, helpButton)
   if not failedModal.hidden then
