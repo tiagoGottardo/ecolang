@@ -388,9 +388,17 @@ function Level2.draw()
   love.graphics.setFont(myFont)
 
 
-  local highlightColor = { 204 / 255, 0, 0, 1 }
-  local regularColor = { 7 / 255, 139 / 255, 36 / 255, 1 }
-  love.graphics.print({ highlightColor, firstUtf8Char(animal:upper()), regularColor, ' ' .. animal:sub(2) }, myFont, WINDOW_WIDTH / 3, 97-myFont:getHeight()/2)
+  local highlightColor = { 0.8, 0, 0, 1 }
+  local regularColor = { 0.027, 0.545, 0.141, 1 }
+  local coloredText = { highlightColor, firstUtf8Char(animal:upper()), regularColor, ' ' .. animal:sub(2) }
+  local textWidth = 0
+  local textHeight = myFont:getHeight()
+  for i, v in ipairs(coloredText) do
+    if i%2==0 then
+      textWidth=textWidth+myFont:getWidth(v)
+    end
+  end
+  love.graphics.print(coloredText, myFont, WINDOW_WIDTH / 2 - textWidth/2, 97-textHeight/2)
 
   soundHeader:draw()
   animalImage:draw()
