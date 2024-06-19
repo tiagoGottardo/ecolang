@@ -5,16 +5,30 @@ local Timer = require 'src.timer'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
-local Cursor = require 'src.cursor'
+
 local cursor = {}
+local Cursor = require 'src.cursor'
+
 local container = {}
+local centralContainer = require "levels.components.centralContainer"
+
 local header = {}
+local upHeader = require "levels.components.upHeader"
+
 local headerLabel = {}
+local componentHeaderLabel = require "levels.components.componentHeaderLabel"
+
 local soundHeader = {}
-local animalButtons = require "levels.components.animalButtons"
+local componentSoundHeader = require "levels.components.componentSoundHeader"
+
 local options = {}
+local animalButtons = require "levels.components.animalButtons"
+
 local logo = {}
+
 local helpButton = {}
+local componentHelpButton = require "levels.components.componentHelpButton"
+
 local answers = { "MACACO", "LEÃO", "ABELHA", "CACHORRO" }
 local animalSound = {
   ["MACACO"] = 'monkey',
@@ -24,9 +38,16 @@ local animalSound = {
 }
 local correct
 local correctSound
+
 local successModal
+local componentSucces = require "levels.components.componentSucces"
+
 local failedModal
+local componentFailed = require "levels.components.componentFailed"
+
 local isTimeOverModal
+local componentTimeOver = require "levels.components.componentTimeOver"
+
 local evenTriggered = false
 
 function Level1.load()
@@ -35,159 +56,20 @@ function Level1.load()
   correctSound = love.audio.newSource("assets/sounds/" .. animalSound[correct] .. ".mp3", "static")
 
   options = animalButtons:new()
-  container = Object:new({
-    color = LightGreen,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-    shape = {
-      width = 768,
-      height = 471
-    }
-  })
-
-  header = Object:new({
-    color = LightGreen,
-    position = { WINDOW_WIDTH / 2, 97 },
-    shape = {
-      width = 768,
-      height = 108
-    }
-  })
-  header.color:set({ a = 0.69 })
-
-  headerLabel = Object:new({
-    position = { WINDOW_WIDTH / 2, 97 },
-    shape = {
-      width = 468,
-      height = 88,
-      radius = 20,
-    },
-    content = {
-      label = correct,
-      fontSize = 60,
-      color = DarkGreen
-    },
-    color = { a = 0.51 }
-  })
-  soundHeader = Button:new({
-    position = { WINDOW_WIDTH / 2 - 330, 97 },
-    shape = {
-      width = 88,
-      height = 88,
-      radius = 20,
-    },
-    content = {
-      kind = 'image',
-      name = 'sound.png',
-      width = 58,
-      height = 58
-    },
-    color = { a = 0.51 }
-  })
+  container = centralContainer:new()
+  header = upHeader:new()
+  headerLabel = componentHeaderLabel:new(correct)
+  soundHeader = componentSoundHeader:new()
 
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4, })
-  helpButton = Button:new({
-    shape = {
-      width = 70,
-      height = 70,
-      radius = 20
-    },
-    content = {
-      kind = 'image',
-      name = 'question.png',
-      width = 70,
-      height = 70
-    },
-    position = { 960, 494 }
-  })
 
-  isTimeOverModal = Object:new({
-    shape = {
-      width = 600,
-      height = 300,
-      radius = 20
-    },
-    color = Red,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-  })
-  isTimeOverModal:set({ color = { a = 1 } })
-  isTimeOverModal.text = Text:new({
-    label = "O TEMPO ACABOU",
-    fontSize = 40,
-    color = Black
-  })
-  isTimeOverModal.button = Button:new({
-    shape = {
-      width = 400,
-      height = 75,
-      radius = 40
-    },
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
-    content = {
-      label = "IR PARA O MENU",
-      fontSize = 30,
-      color = Black
-    }
-  })
-  isTimeOverModal.hidden = true
+  helpButton = componentHelpButton:new()
 
-  successModal = Object:new({
-    shape = {
-      width = 600,
-      height = 300,
-      radius = 20
-    },
-    color = LightGreen,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-  })
-  successModal:set({ color = { a = 1 } })
-  successModal.text = Text:new({
-    label = "PARABÉNS",
-    fontSize = 40,
-    color = Black
-  })
-  successModal.button = Button:new({
-    shape = {
-      width = 400,
-      height = 75,
-      radius = 40
-    },
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
-    content = {
-      label = "IR PARA A FASE 2",
-      fontSize = 30,
-      color = Black
-    }
-  })
-  successModal.hidden = true
+  isTimeOverModal = componentTimeOver:new()
 
-  failedModal = Object:new({
-    shape = {
-      width = 600,
-      height = 300,
-      radius = 20
-    },
-    color = Orange,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-  })
-  failedModal.text = Text:new({
-    label = "TENTE NOVAMENTE",
-    fontSize = 40,
-    color = Black
-  })
-  failedModal.button = Button:new({
-    shape = {
-      width = 400,
-      height = 75,
-      radius = 40
-    },
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
-    content = {
-      label = "JOGAR NOVAMENTE",
-      fontSize = 30,
-      color = Black
-    }
-  })
-  failedModal.hidden = true
+  successModal = componentSucces:new()
+
+  failedModal =  componentFailed:new()
 
   cursor = Cursor:new {
     botoes = { options[1], options[2], options[3], options[4], soundHeader, helpButton }
