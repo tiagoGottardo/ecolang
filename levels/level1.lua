@@ -11,9 +11,8 @@ local container = {}
 local header = {}
 local headerLabel = {}
 local soundHeader = {}
+local animalButtons = require "levels.components.animalButtons"
 local options = {}
-local offsetOptionsV = 90
-local offsetOptionsH = 160
 local logo = {}
 local helpButton = {}
 local answers = { "MACACO", "LEÃO", "ABELHA", "CACHORRO" }
@@ -34,20 +33,8 @@ function Level1.load()
   evenTriggered = false
   correct = answers[math.floor(love.math.random() * 4) + 1]
   correctSound = love.audio.newSource("assets/sounds/" .. animalSound[correct] .. ".mp3", "static")
-  local optionsTemplate = {
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-    shape = {
-      width = 150,
-      height = 150,
-      radius = 20,
-    },
-    content = {
-      kind = 'image',
-      width = 100,
-      height = 100
-    }
-  }
 
+  options = animalButtons:new()
   container = Object:new({
     color = LightGreen,
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
@@ -96,17 +83,6 @@ function Level1.load()
     },
     color = { a = 0.51 }
   })
-  for i = 1, 4 do options[i] = Button:new(optionsTemplate) end
-  options[1]:set({ position = { WINDOW_WIDTH / 2 - offsetOptionsH, (WINDOW_HEIGHT + 108) / 2 - offsetOptionsV }, content = { name = "monkey.png" } })
-  options[2]:set({ position = { WINDOW_WIDTH / 2 + offsetOptionsH, (WINDOW_HEIGHT + 108) / 2 - offsetOptionsV }, content = { name = "lion.png" } })
-  options[3]:set({ position = { WINDOW_WIDTH / 2 - offsetOptionsH, (WINDOW_HEIGHT + 108) / 2 + offsetOptionsV }, content = { name = "bee.png" } })
-  options[4]:set({ position = { WINDOW_WIDTH / 2 + offsetOptionsH, (WINDOW_HEIGHT + 108) / 2 + offsetOptionsV }, content = { name = "dog.png" } })
-
-  for i = 1, 4 do
-    options[i].value = answers[i]
-  end
-
-
 
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4, })
   helpButton = Button:new({
@@ -276,10 +252,7 @@ function Level1.draw()
   header:draw()
   headerLabel:draw()
   soundHeader:draw()
-  options[1]:draw()
-  options[2]:draw()
-  options[3]:draw()
-  options[4]:draw()
+  options:draw()
   Game.timer:draw(900, 20)
   logo:draw(325 * 0.2, 152 * 0.2)
   helpButton:draw()
