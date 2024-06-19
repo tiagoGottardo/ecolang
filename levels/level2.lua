@@ -42,17 +42,6 @@ local letterGoal
 local keyboardImage
 local selectedKey
 
-local function setBorder(love, object, color)
-  object = object or Object:new()
-  color = color or Black
-  local r, g, b, a = love.graphics.getColor()
-  love.graphics.setColor(color)
-  love.graphics.rectangle("line", object.position.x - object.shape.width / 2,
-    object.position.y - object.shape.height / 2, object.shape.width, object.shape.height,
-    object.shape.radius)
-  love.graphics.setColor(r, g, b, a)
-end
-
 local function getKeyPosition(key)
   local keys={
     ['A'] = {314, 257}, -- {314, 256}
@@ -406,32 +395,32 @@ function Level2.draw()
   logo:draw(325 * 0.2, 152 * 0.2)
   keyboardImage:draw()
   selectedKey:draw()
-  setBorder(love, selectedKey, Red)
+  selectedKey:setBorder(Red)
   letterPressed:draw()
-  setBorder(love, letterPressed)
+  letterPressed:setBorder()
   --letterGoal:draw()
   helpButton:draw()
-  setBorder(love, helpButton)
+  helpButton:setBorder()
   if not failedModal.hidden then
     failedModal:draw()
-    setBorder(love, failedModal)
+    failedModal:setBorder()
     failedModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
     failedModal.button:draw()
-    setBorder(love, failedModal.button)
+    failedModal.button:setBorder()
   end
   if not isTimeOverModal.hidden then
     isTimeOverModal:draw()
-    setBorder(love, isTimeOverModal)
+    isTimeOverModal:setBorder()
     isTimeOverModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
     isTimeOverModal.button:draw()
-    setBorder(love, isTimeOverModal.button)
+    isTimeOverModal.button:setBorder()
   end
   if not successModal.hidden then
     successModal:draw()
-    setBorder(love, successModal)
+    successModal:setBorder()
     successModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
     successModal.button:draw()
-    setBorder(love, successModal.button)
+    successModal.button:setBorder()
   end
 end
 

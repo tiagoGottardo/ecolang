@@ -15,16 +15,6 @@ local containerColor = { 250, 250, 250 }
 
 local cursor={}
 
-local function setBorder(love, object)
-  object = object or Object:new()
-  local r, g, b, a = love.graphics.getColor()
-  love.graphics.setColor(Black)
-  love.graphics.rectangle("line", object.position.x - object.shape.width / 2,
-    object.position.y - object.shape.height / 2, object.shape.width, object.shape.height,
-    object.shape.radius)
-  love.graphics.setColor(r, g, b, a)
-end
-
 function sobre.load()
   container = Object:new {
     color = containerColor,
@@ -76,7 +66,7 @@ end
 function sobre.draw()
   -- Desenhar elementos
   container:draw()
-  setBorder(love, container)
+  container:setBorder()
   voltarBtn:draw()
   --setBorder(love, voltarBtn)
 end

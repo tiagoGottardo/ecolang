@@ -30,17 +30,6 @@ local failedModal
 local isTimeOverModal
 local evenTriggered = false
 
-local function setBorder(love, object)
-  object = object or Object:new()
-  local r, g, b, a = love.graphics.getColor()
-  love.graphics.setColor(Black)
-  love.graphics.rectangle("line", object.position.x - object.shape.width / 2,
-    object.position.y - object.shape.height / 2, object.shape.width, object.shape.height,
-    object.shape.radius)
-  love.graphics.setColor(r, g, b, a)
-end
-
-
 function Level1.load()
   evenTriggered = false
   correct = answers[math.floor(love.math.random() * 4) + 1]
@@ -294,27 +283,27 @@ function Level1.draw()
   Game.timer:draw(900, 20)
   logo:draw(325 * 0.2, 152 * 0.2)
   helpButton:draw()
-  setBorder(love, helpButton)
+  helpButton:setBorder()
   if not failedModal.hidden then
     failedModal:draw()
-    setBorder(love, failedModal)
+    failedModal:setBorder()
     failedModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
     failedModal.button:draw()
-    setBorder(love, failedModal.button)
+    failedModal.button:setBorder()
   end
   if not isTimeOverModal.hidden then
     isTimeOverModal:draw()
-    setBorder(love, isTimeOverModal)
+    isTimeOverModal:setBorder()
     isTimeOverModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
     isTimeOverModal.button:draw()
-    setBorder(love, isTimeOverModal.button)
+    isTimeOverModal.button:setBorder()
   end
   if not successModal.hidden then
     successModal:draw()
-    setBorder(love, successModal)
+    successModal:setBorder()
     successModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
     successModal.button:draw()
-    setBorder(love, successModal.button)
+    successModal.button:setBorder()
   end
 end
 
