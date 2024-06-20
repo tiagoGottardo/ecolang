@@ -20,7 +20,7 @@ local componentHeaderLabel = require "levels.components.componentHeaderLabel"
 local soundHeader = {}
 local componentSoundHeader = require "levels.components.componentSoundHeader"
 
-local options = {}
+local animals = {}
 local animalButtons = require "levels.components.animalButtons"
 
 local logo = {}
@@ -54,7 +54,7 @@ function Level1.load()
   correct = answers[math.floor(love.math.random() * 4) + 1]
   correctSound = love.audio.newSource("assets/sounds/" .. animalSound[correct] .. ".mp3", "static")
 
-  options = animalButtons:new()
+  animals = animalButtons:new()
   container = centralContainer:new()
   header = upHeader:new()
   headerLabel = componentHeaderLabel:new(correct)
@@ -71,7 +71,7 @@ function Level1.load()
   failedModal =  componentFailed:new()
 
   cursor = Cursor:new {
-    botoes = { options[1], options[2], options[3], options[4], soundHeader, helpButton }
+    botoes = { animals.options[1], animals.options[2], animals.options[3], animals.options[4], soundHeader, helpButton }
   }
 end
 
@@ -87,10 +87,7 @@ local function verifyCorrectAnswer(answer)
 end
 
 function Level1.mousepressed(x, y, button)
-  options[1]:onClick(x, y, button, verifyCorrectAnswer, options[1].value)
-  options[2]:onClick(x, y, button, verifyCorrectAnswer, options[2].value)
-  options[3]:onClick(x, y, button, verifyCorrectAnswer, options[3].value)
-  options[4]:onClick(x, y, button, verifyCorrectAnswer, options[4].value)
+  animals:mousepressed(x, y, button, verifyCorrectAnswer)
   soundHeader:onClick(x, y, button, (function() correctSound:play() end))
   helpButton:onClick(x, y, button, (function()
     Game.currentLevel = 2
@@ -133,7 +130,7 @@ function Level1.draw()
   header:draw()
   headerLabel:draw()
   soundHeader:draw()
-  options:draw()
+  animals:draw()
   Game.timer:draw(900, 20)
   logo:draw(325 * 0.2, 152 * 0.2)
   helpButton:draw()
