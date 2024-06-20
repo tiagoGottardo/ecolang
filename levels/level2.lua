@@ -7,16 +7,24 @@ local Timer = require 'src.timer'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
-local Cursor = require 'src.cursor'
+
 local cursor = {}
+local Cursor = require 'src.cursor'
+
 local container = {}
+local centralContainer = require 'levels.components.centralContainer'
+
 local header = {}
+local upHeader = require "levels.components.upHeader"
+
 local headerLabel = {}
 local soundHeader = {}
 local options = {}
 local offsetOptionsV = 90
 local offsetOptionsH = 160
+
 local logo = {}
+
 local helpButton = {}
 local animals = { "MACACO", "LEÃO", "ABELHA", "CACHORRO" }
 local animalsImages = {
@@ -142,24 +150,9 @@ function Level2.load()
     }
   }
 
-  container = Object:new({
-    color = LightGreen,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-    shape = {
-      width = 768,
-      height = 471
-    }
-  })
+  container = centralContainer:new()
 
-  header = Object:new({
-    color = LightGreen,
-    position = { WINDOW_WIDTH / 2, 97 },
-    shape = {
-      width = 768,
-      height = 108
-    }
-  })
-  header.color:set({ a = 0.69 })
+  header = upHeader:new()
 
   headerLabel = Object:new({
     position = { WINDOW_WIDTH / 2, 97 },
