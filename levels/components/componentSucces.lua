@@ -5,7 +5,8 @@ local Object = require("components.object")
 local Text = require("components.text")
 local Button = require("components.button")
 
-function componentSucces:new(correct)
+function componentSucces:new(buttonLabel)
+
 	successModal = Object:new({
 		shape = {
 			width = 600,
@@ -29,7 +30,7 @@ function componentSucces:new(correct)
 		},
 		position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
 		content = {
-			label = "IR PARA A FASE 2",
+			label = buttonLabel,
 			fontSize = 30,
 			color = Black,
 		},

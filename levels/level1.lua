@@ -66,7 +66,7 @@ function Level1.load()
 
   isTimeOverModal = componentTimeOver:new()
 
-  successModal = componentSucces:new()
+  successModal = componentSucces:new("IR PARA A FASE 2")
 
   failedModal =  componentFailed:new()
 
