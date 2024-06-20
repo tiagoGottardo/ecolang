@@ -87,12 +87,15 @@ local function verifyCorrectAnswer(answer)
 end
 
 function Level1.mousepressed(x, y, button)
-  animals:mousepressed(x, y, button, verifyCorrectAnswer)
-  soundHeader:onClick(x, y, button, (function() correctSound:play() end))
-  helpButton:onClick(x, y, button, (function()
-    Game.currentLevel = 2
-    Game.load()
-  end))
+  if(failedModal.hidden and successModal.hidden and isTimeOverModal.hidden) then
+    animals:mousepressed(x, y, button, verifyCorrectAnswer)
+    soundHeader:onClick(x, y, button, (function() correctSound:play() end))
+    helpButton:onClick(x, y, button, (function()
+      Game.currentLevel = 2
+      Game.load()
+    end))
+  end
+
   if not failedModal.hidden then
     failedModal.button:onClick(x, y, button, (function()
       Game.load()

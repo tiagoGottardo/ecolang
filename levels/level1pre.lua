@@ -108,7 +108,7 @@ function Level1pre.mousepressed(x, y, button)
   end)
   proximoFooter:onClick(x, y, button, function()
     Game.currentLevel = 3
-    Game.timer:start(10)
+    Game.timer:start(600)
     Game.load()
   end)
 end
