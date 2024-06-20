@@ -82,10 +82,19 @@ local function firstUtf8Char(str)
   return ''
 end
 
+local function tamanhoString(s)
+  local len = 0
+  for _ in s:gmatch("[^\128-\191]") do
+      len = len + 1
+  end
+  return len
+end
+
 function Level3.load()
   letterIndex =1
   evenTriggered = false
   animal = animals[math.floor(love.math.random() * 4) + 1]
+  animal = animals[2]
   animalSound = love.audio.newSource("assets/sounds/" .. animalsSounds[animal], "static")
 
   local keyboardScale=.6
@@ -183,7 +192,7 @@ local function verifyCorrectAnswer(answer)
     --cursor:set { botoes = { failedModal.button } }
   end
 
-  if letterIndex > #animal then
+  if letterIndex > tamanhoString(animal) then
     successModal.hidden = false
     cursor:set { botoes = { successModal.button } }
   end
