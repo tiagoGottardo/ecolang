@@ -1,6 +1,5 @@
 local Level1 = {}
 require("utils.colors")
-local Object = require 'components.object'
 local Timer = require 'src.timer'
 local Button = require "components.button"
 local Text = require "components.text"
