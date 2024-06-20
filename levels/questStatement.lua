@@ -1,4 +1,4 @@
-local Level3pre = {}
+local Level1pre = {}
 require("utils.colors")
 local Object = require("components.object")
 local Timer = require("src.timer")
@@ -17,7 +17,22 @@ local titulo = {}
 local helpButton = {}
 local audioLabel = {}
 
-function Level3pre.load()
+local function setBorder(love, object)
+  object = object or Object:new()
+  local r, g, b, a = love.graphics.getColor()
+  love.graphics.setColor(Black)
+  love.graphics.rectangle(
+    "line",
+    object.position.x - object.shape.width / 2,
+    object.position.y - object.shape.height / 2,
+    object.shape.width,
+    object.shape.height,
+    object.shape.radius
+  )
+  love.graphics.setColor(r, g, b, a)
+end
+
+function questStatement.load(levelName, levelStatement)
   titulo = Button:new({
     position = { WINDOW_WIDTH / 2 - 300, 65 },
     shape = {
@@ -27,7 +42,7 @@ function Level3pre.load()
     },
     content = {
       kind = "text",
-      label = "FASE 3:",
+      label = levelName,
       fontSize = 40,
     },
     color = { 29, 159, 50 },
@@ -46,7 +61,7 @@ function Level3pre.load()
       kind = "text",
       color = Black,
       fontSize = 40,
-      label = "NESTA ATIVIDADE VOCÊ DEVERÁ ESCREVER A PALAVRA CORRESPONDENTE A FIGURA UTILIZANDO O TECLADO:\n\n\n",
+      label = levelStatement,
       wrapLimit = container.shape.width*0.9
     }
   }
@@ -95,36 +110,37 @@ function Level3pre.load()
   })
 
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4 })
-  audioLabel = love.audio.newSource("assets/sounds/fase3label.mp3", "static")
+  audioLabel = love.audio.newSource("assets/sounds/fase1label.mp3", "static")
 
   cursor = Cursor:new {
     botoes = { soundFooter, proximoFooter }
   }
 end
 
-function Level3pre.mousepressed(x, y, button)
+function questStatement.mousepressed(x, y, button)
   soundFooter:onClick(x, y, button, function()
     audioLabel:play()
   end)
   proximoFooter:onClick(x, y, button, function()
-    Game.currentLevel = 7
+    Game.currentLevel = 3
+    Game.timer:start(600)
     Game.load()
   end)
 end
 
-function Level3pre.update(dt)
-  Game.timer:update()
+function questStatement.update(dt)
+  --Game.timer:update()
   -- if Game.timer:isTimeOver() and not evenTriggered then
   -- isTimeOverModal.hidden = false
   -- evenTriggered = true
   -- end
 end
 
-function Level3pre.mousemoved(x, y, dx, dy, istouch)
+function questStatement.mousemoved(x, y, dx, dy, istouch)
   cursor:update(x, y)
 end
 
-function Level3pre.draw()
+function questStatement.draw()
   container:draw()
   titulo:draw()
   footer:draw()
@@ -133,6 +149,6 @@ function Level3pre.draw()
   logo:draw(325 * 0.2, 152 * 0.2)
 end
 
-function Level3pre.keypressed(key) end
+function questStatement.keypressed(key) end
 
-return Level3pre
+return Level1pre

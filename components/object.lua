@@ -86,4 +86,15 @@ function Object:debug()
   print(")")
 end
 
+function Object:setBorder(color)
+  local object = self or Object:new()
+  local color = color or Black
+  local r, g, b, a = love.graphics.getColor()
+  love.graphics.setColor(color)
+  love.graphics.rectangle("line", object.position.x - object.shape.width / 2,
+    object.position.y - object.shape.height / 2, object.shape.width, object.shape.height,
+    object.shape.radius)
+  love.graphics.setColor(r, g, b, a)
+end
+
 return Object

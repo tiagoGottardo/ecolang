@@ -7,17 +7,27 @@ local Timer = require 'src.timer'
 local Button = require "components.button"
 local Text = require "components.text"
 local Image = require "components.image"
-local Cursor = require 'src.cursor'
+
 local cursor = {}
+local Cursor = require 'src.cursor'
+
 local container = {}
+local centralContainer = require 'levels.components.centralContainer'
+
 local header = {}
+local upHeader = require "levels.components.upHeader"
+
 local headerLabel = {}
+local componentHeaderLabel = require "levels.components.componentHeaderLabel"
+
 local soundHeader = {}
-local options = {}
-local offsetOptionsV = 90
-local offsetOptionsH = 160
+local componentSoundHeader = require "levels.components.componentSoundHeader"
+
 local logo = {}
+
 local helpButton = {}
+local componentHelpButton = require "levels.components.componentHelpButton"
+
 local animals = { "MACACO", "LEÃO", "ABELHA", "CACHORRO" }
 local animalsImages = {
   ["MACACO"] = 'monkey.png',
@@ -33,25 +43,21 @@ local animalsSounds = {
 }
 local animalSound
 local animalImage
+
 local successModal
+local componentSucces = require "levels.components.componentSucces"
+
 local failedModal
+local componentFailed = require "levels.components.componentFailed"
+
 local isTimeOverModal
+local componentTimeOver = require "levels.components.componentTimeOver"
+
 local evenTriggered = false
 local letterPressed
 local letterGoal
 local keyboardImage
 local selectedKey
-
-local function setBorder(love, object, color)
-  object = object or Object:new()
-  color = color or Black
-  local r, g, b, a = love.graphics.getColor()
-  love.graphics.setColor(color)
-  love.graphics.rectangle("line", object.position.x - object.shape.width / 2,
-    object.position.y - object.shape.height / 2, object.shape.width, object.shape.height,
-    object.shape.radius)
-  love.graphics.setColor(r, g, b, a)
-end
 
 local function getKeyPosition(key)
   local keys={
@@ -153,39 +159,11 @@ function Level2.load()
     }
   }
 
-  container = Object:new({
-    color = LightGreen,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-    shape = {
-      width = 768,
-      height = 471
-    }
-  })
+  container = centralContainer:new()
 
-  header = Object:new({
-    color = LightGreen,
-    position = { WINDOW_WIDTH / 2, 97 },
-    shape = {
-      width = 768,
-      height = 108
-    }
-  })
-  header.color:set({ a = 0.69 })
+  header = upHeader:new()
 
-  headerLabel = Object:new({
-    position = { WINDOW_WIDTH / 2, 97 },
-    shape = {
-      width = 468,
-      height = 88,
-      radius = 20,
-    },
-    --content = {
-    --  label = animal:sub(2),
-    --  fontSize = 60,
-    --  color = DarkGreen
-    --},
-    color = { a = 0.51 }
-  })
+  headerLabel = componentHeaderLabel:new(nil)
 
   animalImage = Object:new {
     position = { WINDOW_WIDTH * 4 / 5, 97 },
@@ -202,126 +180,18 @@ function Level2.load()
       name = animalsImages[animal]
     }
   }
-  soundHeader = Button:new({
-    position = { WINDOW_WIDTH / 2 - 330, 97 },
-    shape = {
-      width = 88,
-      height = 88,
-      radius = 20,
-    },
-    content = {
-      kind = 'image',
-      name = 'sound.png',
-      width = 58,
-      height = 58
-    },
-    color = { a = 0.51 }
-  })
+
+  soundHeader = componentSoundHeader:new()
 
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4, })
-  helpButton = Button:new({
-    shape = {
-      width = 70,
-      height = 70,
-      radius = 20
-    },
-    content = {
-      kind = 'image',
-      name = 'question.png',
-      width = 70,
-      height = 70
-    },
-    position = { 960, 494 }
-  })
+  
+  helpButton = componentHelpButton:new()
 
-  isTimeOverModal = Object:new({
-    shape = {
-      width = 600,
-      height = 300,
-      radius = 20
-    },
-    color = Red,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-  })
-  isTimeOverModal:set({ color = { a = 1 } })
-  isTimeOverModal.text = Text:new({
-    label = "O TEMPO ACABOU",
-    fontSize = 40,
-    color = Black
-  })
-  isTimeOverModal.button = Button:new({
-    shape = {
-      width = 400,
-      height = 75,
-      radius = 40
-    },
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
-    content = {
-      label = "IR PARA O MENU",
-      fontSize = 30,
-      color = Black
-    }
-  })
-  isTimeOverModal.hidden = true
+  isTimeOverModal = componentTimeOver:new()
 
-  successModal = Object:new({
-    shape = {
-      width = 600,
-      height = 300,
-      radius = 20
-    },
-    color = LightGreen,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-  })
-  successModal:set({ color = { a = 1 } })
-  successModal.text = Text:new({
-    label = "PARABÉNS",
-    fontSize = 40,
-    color = Black
-  })
-  successModal.button = Button:new({
-    shape = {
-      width = 400,
-      height = 75,
-      radius = 40
-    },
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
-    content = {
-      label = "IR PARA O MENU",
-      fontSize = 30,
-      color = Black
-    }
-  })
-  successModal.hidden = true
+  successModal = componentSucces:new("VOLTAR PARA O MENU")
 
-  failedModal = Object:new({
-    shape = {
-      width = 600,
-      height = 300,
-      radius = 20
-    },
-    color = Orange,
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
-  })
-  failedModal.text = Text:new({
-    label = "TENTE NOVAMENTE",
-    fontSize = 40,
-    color = Black
-  })
-  failedModal.button = Button:new({
-    shape = {
-      width = 400,
-      height = 75,
-      radius = 40
-    },
-    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50 },
-    content = {
-      label = "JOGAR NOVAMENTE",
-      fontSize = 30,
-      color = Black
-    }
-  })
-  failedModal.hidden = true
+  failedModal =  componentFailed:new()
 
   cursor = Cursor:new {
     botoes = { soundHeader, helpButton }
@@ -341,11 +211,13 @@ end
 
 function Level2.mousepressed(x, y, button)
   -- print(utils.string:tostring{x, y})
-  soundHeader:onClick(x, y, button, (function() animalSound:play() end))
-  helpButton:onClick(x, y, button, (function()
-    Game.currentLevel = 4
-    Game.load()
-  end))
+  if(failedModal.hidden and successModal.hidden and isTimeOverModal.hidden) then
+    soundHeader:onClick(x, y, button, (function() animalSound:play() end))
+    helpButton:onClick(x, y, button, (function()
+      Game.currentLevel = 4
+      Game.load()
+    end))
+  end
   if not failedModal.hidden then
     failedModal.button:onClick(x, y, button, (function()
       Game.load()
@@ -406,32 +278,20 @@ function Level2.draw()
   logo:draw(325 * 0.2, 152 * 0.2)
   keyboardImage:draw()
   selectedKey:draw()
-  setBorder(love, selectedKey, Red)
+  selectedKey:setBorder(Red)
   letterPressed:draw()
-  setBorder(love, letterPressed)
+  letterPressed:setBorder()
   --letterGoal:draw()
   helpButton:draw()
-  setBorder(love, helpButton)
+  helpButton:setBorder()
   if not failedModal.hidden then
     failedModal:draw()
-    setBorder(love, failedModal)
-    failedModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
-    failedModal.button:draw()
-    setBorder(love, failedModal.button)
   end
   if not isTimeOverModal.hidden then
     isTimeOverModal:draw()
-    setBorder(love, isTimeOverModal)
-    isTimeOverModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
-    isTimeOverModal.button:draw()
-    setBorder(love, isTimeOverModal.button)
   end
   if not successModal.hidden then
     successModal:draw()
-    setBorder(love, successModal)
-    successModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
-    successModal.button:draw()
-    setBorder(love, successModal.button)
   end
 end
 

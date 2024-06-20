@@ -17,21 +17,6 @@ local titulo = {}
 local helpButton = {}
 local audioLabel = {}
 
-local function setBorder(love, object)
-  object = object or Object:new()
-  local r, g, b, a = love.graphics.getColor()
-  love.graphics.setColor(Black)
-  love.graphics.rectangle(
-    "line",
-    object.position.x - object.shape.width / 2,
-    object.position.y - object.shape.height / 2,
-    object.shape.width,
-    object.shape.height,
-    object.shape.radius
-  )
-  love.graphics.setColor(r, g, b, a)
-end
-
 function Level2pre.load()
   titulo = Button:new({
     position = { WINDOW_WIDTH / 2 - 300, 65 },
