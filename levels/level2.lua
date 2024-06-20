@@ -18,7 +18,10 @@ local header = {}
 local upHeader = require "levels.components.upHeader"
 
 local headerLabel = {}
+local componentHeaderLabel = require "levels.components.componentHeaderLabel"
+
 local soundHeader = {}
+
 local options = {}
 local offsetOptionsV = 90
 local offsetOptionsH = 160
@@ -154,20 +157,7 @@ function Level2.load()
 
   header = upHeader:new()
 
-  headerLabel = Object:new({
-    position = { WINDOW_WIDTH / 2, 97 },
-    shape = {
-      width = 468,
-      height = 88,
-      radius = 20,
-    },
-    --content = {
-    --  label = animal:sub(2),
-    --  fontSize = 60,
-    --  color = DarkGreen
-    --},
-    color = { a = 0.51 }
-  })
+  headerLabel = componentHeaderLabel:new(nil)
 
   animalImage = Object:new {
     position = { WINDOW_WIDTH * 4 / 5, 97 },

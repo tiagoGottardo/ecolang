@@ -13,13 +13,18 @@ function componentHeaderLabel:new(correct)
 			height = 88,
 			radius = 20,
 		},
-		content = {
-			label = correct,
-			fontSize = 60,
-			color = DarkGreen,
-		},
 		color = { a = 0.51 },
 	})
+
+	if correct then 
+		instance:set({
+			content = {
+				label = correct,
+				fontSize = 60,
+				color = DarkGreen,
+			}
+		})
+	end
 
 	return instance
 end
