@@ -140,24 +140,12 @@ function Level1.draw()
   helpButton:setBorder()
   if not failedModal.hidden then
     failedModal:draw()
-    failedModal:setBorder()
-    failedModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
-    failedModal.button:draw()
-    failedModal.button:setBorder()
   end
   if not isTimeOverModal.hidden then
     isTimeOverModal:draw()
-    isTimeOverModal:setBorder()
-    isTimeOverModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
-    isTimeOverModal.button:draw()
-    isTimeOverModal.button:setBorder()
   end
   if not successModal.hidden then
     successModal:draw()
-    successModal:setBorder()
-    successModal.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
-    successModal.button:draw()
-    successModal.button:setBorder()
   end
 end
 

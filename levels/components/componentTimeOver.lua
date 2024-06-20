@@ -6,9 +6,9 @@ local Text = require "components.text"
 local Button = require "components.button"
 
 function timeOverModal:new(correct)
-	local isTimeOverModal = setmetatable({}, self)
+	local instance = setmetatable({}, self)
 
-	isTimeOverModal = Object:new({
+	instance.background = Object:new({
         shape = {
           width = 600,
           height = 300,
@@ -18,15 +18,15 @@ function timeOverModal:new(correct)
         position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
       })
     
-      isTimeOverModal:set({ color = { a = 1 } })
+      instance.background:set({ color = { a = 1 } })
     
-      isTimeOverModal.text = Text:new({
+      instance.text = Text:new({
         label = "O TEMPO ACABOU",
         fontSize = 40,
         color = Black
       })
       
-      isTimeOverModal.button = Button:new({
+      instance.button = Button:new({
         shape = {
           width = 400,
           height = 75,
@@ -39,9 +39,17 @@ function timeOverModal:new(correct)
           color = Black
         }
       })
-      isTimeOverModal.hidden = true
+      instance.hidden = true
 
-	return isTimeOverModal
+	return instance
+end
+
+function timeOverModal:draw()
+	self.background:draw()
+	self.background:setBorder()
+	self.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
+	self.button:draw()
+	self.button:setBorder()
 end
 
 return timeOverModal

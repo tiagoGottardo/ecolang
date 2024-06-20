@@ -6,7 +6,9 @@ local Text = require("components.text")
 local Button = require("components.button")
 
 function componentFailed:new(correct)
-	failedModal = Object:new({
+	local instance = setmetatable({}, self)
+
+	instance.background = Object:new({
 		shape = {
 			width = 600,
 			height = 300,
@@ -15,12 +17,12 @@ function componentFailed:new(correct)
 		color = Orange,
 		position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
 	})
-	failedModal.text = Text:new({
+	instance.text = Text:new({
 		label = "TENTE NOVAMENTE",
 		fontSize = 40,
 		color = Black,
 	})
-	failedModal.button = Button:new({
+	instance.button = Button:new({
 		shape = {
 			width = 400,
 			height = 75,
@@ -33,9 +35,17 @@ function componentFailed:new(correct)
 			color = Black,
 		},
 	})
-	failedModal.hidden = true
+	instance.hidden = true
 
-	return failedModal
+	return instance
+end
+
+function componentFailed:draw()
+	self.background:draw()
+	self.background:setBorder()
+	self.text:draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 - 40)
+	self.button:draw()
+	self.button:setBorder()
 end
 
 return componentFailed
