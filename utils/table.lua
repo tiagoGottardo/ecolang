@@ -1,6 +1,6 @@
 local t = {}
 
-function t.deepCopy(tab)
+function t:deepCopy(tab)
   if type(tab) ~= 'table' then
     return nil
   end
@@ -13,7 +13,7 @@ function t.deepCopy(tab)
   return a
 end
 
-function t.shallowCopy(tab)
+function t:shallowCopy(tab)
   if type(tab) ~= 'table' then
     return nil
   end
