@@ -1,8 +1,5 @@
 local Level1 = {}
 require("utils.colors")
-local Timer = require 'src.timer'
-local Button = require "components.button"
-local Text = require "components.text"
 local Image = require "components.image"
 
 local cursor = {}
@@ -68,7 +65,7 @@ function Level1.load()
 
   successModal = componentSucces:new("IR PARA A FASE 2")
 
-  failedModal =  componentFailed:new()
+  failedModal = componentFailed:new()
 
   cursor = Cursor:new {
     botoes = { animals.options[1], animals.options[2], animals.options[3], animals.options[4], soundHeader, helpButton }
@@ -87,7 +84,7 @@ local function verifyCorrectAnswer(answer)
 end
 
 function Level1.mousepressed(x, y, button)
-  if(failedModal.hidden and successModal.hidden and isTimeOverModal.hidden) then
+  if (failedModal.hidden and successModal.hidden and isTimeOverModal.hidden) then
     animals:mousepressed(x, y, button, verifyCorrectAnswer)
     soundHeader:onClick(x, y, button, (function() correctSound:play() end))
     helpButton:onClick(x, y, button, (function()
