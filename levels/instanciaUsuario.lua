@@ -1,33 +1,32 @@
-local sobre = {}
+local instancia = {}
 require("utils.colors")
 local Object = require 'components.object'
 local Button = require "components.button"
-local Text = require "components.text"
-local Image = require "components.image"
 local Cursor = require 'src.cursor'
 
-local voltarBtn = {}
+local alunoBtn = {}
+local profBtn = {}
 local container = {}
-local midW = 0;
 
 local btnCollor = { 200, 200, 200 }
 local containerColor = { 250, 250, 250 }
 
 local cursor={}
 
-function sobre.load()
+function instancia.load()
   container = Object:new {
     color = containerColor,
     position = { 10, 10 },
     shape = { kind = 'rectangle' },
     content = {
       kind = 'text',
+      fontSize = 50,
       color = Black,
-      label = 'SOBRE:\nO OBJETIVO DESTE JOGO PREVÊ O APRENDIZADO E MELHORIA NA ESCRITA DOS ALUNOS QUE O JOGAREM \n\nFEITO POR: ARTHUR BALDOQUI BERGAMO, CLAUDINEY GUSTAVO RODRIGUES DOS SANTOS, MARCOS VINICIUS PASSOS, NATÁLIA MENDES GOES, THALES JANISCH SANTOS E TIAGO PANIZIO GOTTARDO.\nREQUISITOS MÍNIMOS:\n- PROCESSADOR: 1.6 GHZ\n- MEMÓRIA: 1GB RAM\n- ARMAZENAMENTO: 40 MB DE ESPAÇO LIVRE'
+      label = 'ALUNO OU PROFESSOR?\n\n\n\n\n\n'
     }
   }
 
-  voltarBtn = Button:new({
+  alunoBtn = Button:new({
     shape = {
       width = 560,
       height = 150,
@@ -35,11 +34,34 @@ function sobre.load()
     },
     color = btnCollor,
     position = {
-      x = 400,
+      x = 200,
+      y = 150
+    },
+    content = {
+      label = 'ALUNO',
+      color = { 36, 87, 197, 0.9 },
+      fontSize = 40,
+      position = {
+        x = 10,
+        y = 200
+      }
+    }
+
+  })
+
+  profBtn = Button:new({
+    shape = {
+      width = 560,
+      height = 150,
+      radius = 30
+    },
+    color = btnCollor,
+    position = {
+      x = 100,
       y = 300
     },
     content = {
-      label = 'VOLTAR',
+      label = 'PROFESSOR',
       color = { 36, 87, 197, 0.9 },
       fontSize = 40,
       position = {
@@ -52,56 +74,74 @@ function sobre.load()
 
   cursor = Cursor:new {
     botoes={
-      voltarBtn
+      alunoBtn, profBtn
     }
   }
 
-  sobre.resize()
+  instancia.resize()
 end
 
-function sobre.update(dt)
+function instancia.update(dt)
   -- Atualizar lógica
 end
 
-function sobre.draw()
+function instancia.draw()
   -- Desenhar elementos
   container:draw()
   container:setBorder()
-  voltarBtn:draw()
-  --setBorder(love, voltarBtn)
+  alunoBtn:draw()
+  profBtn:draw()
+  --setBorder(love, alunoBtn)
 end
 
-function sobre.keypressed(key)
+function instancia.keypressed(key)
   -- Lidar com teclas pressionadas
 end
 
-function sobre.mousepressed(x, y, button, istouch, presses)
+function instancia.mousepressed(x, y, button, istouch, presses)
   if button == 1 then
-    voltarBtn:onClick(x, y, button, (function()
-      Game.currentLevel = Game.instance=='prof' and 10 or 1
+    alunoBtn:onClick(x, y, button, (function()
+      Game.instance = 'aluno'
+      Game.currentLevel = 1
+      Game.load()
+    end))
+    profBtn:onClick(x, y, button, (function()
+      Game.instance = 'prof'
+      Game.currentLevel = 10
       Game.load()
     end))
   end
 end
 
-function sobre.mousemoved(x, y, dx, dy, istouch)
+function instancia.mousemoved(x, y, dx, dy, istouch)
   cursor:update(x, y)
 end
 
-function sobre.resize()
+function instancia.resize()
   local windowWidth, windowHeight = love.graphics.getDimensions()
   -- local mBtnH = sairBtn.shape.height
 
   midW = (windowWidth) / 2 --miniButtonHeigh
 
-  voltarBtn:set {
+  alunoBtn:set {
     shape = {
       width = windowWidth * 0.2,
-      height = windowWidth * 0.1
+      height = windowWidth * 0.2
     },
     position = {
-      x = windowWidth * 0.77,
-      y = windowHeight * 0.8
+      x = windowWidth * 0.33,
+      y = windowHeight * 0.5
+    }
+  }
+
+  profBtn:set {
+    shape = {
+      width = windowWidth * 0.25,
+      height = windowWidth * 0.2
+    },
+    position = {
+      x = windowWidth * 0.64,
+      y = windowHeight * 0.5
     }
   }
 
@@ -122,4 +162,4 @@ function sobre.resize()
   container:set(containerTable)
 end
 
-return sobre
+return instancia

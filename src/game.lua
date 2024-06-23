@@ -13,10 +13,13 @@ Game.levels = {
   require "levels.level2",
   require "levels.level3pre",
   require "levels.level3",
-  require "levels.sobre"
+  require "levels.sobre",
+  require "levels.instanciaUsuario",
+  require "levels.menuProf",
+  require "levels.relatorios"
 }
 
-Game.currentLevel = 1
+Game.currentLevel = 9
 
 function Game.load()
   fundo = love.graphics.newImage("assets/images/fundo.png")
