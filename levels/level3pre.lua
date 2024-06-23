@@ -113,7 +113,7 @@ function Level3pre.mousepressed(x, y, button)
 end
 
 function Level3pre.update(dt)
-  Game.timer:update()
+  --Game.timer:update()
   -- if Game.timer:isTimeOver() and not evenTriggered then
   -- isTimeOverModal.hidden = false
   -- evenTriggered = true

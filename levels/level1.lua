@@ -120,7 +120,7 @@ function Level1.mousemoved(x, y, dx, dy, istouch)
 end
 
 function Level1.update(dt)
-  Game.timer:update()
+  Game.timer:update(dt)
   if Game.timer:isTimeOver() and not evenTriggered then
     isTimeOverModal.hidden = false
     cursor:set { botoes = { isTimeOverModal.button } }
