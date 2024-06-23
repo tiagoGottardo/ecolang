@@ -2,6 +2,15 @@ require("utils.colors")
 local Timer = require 'src.timer'
 Game = {}
 Game.timer = Timer:new({ fontSize = 30, color = Black })
+Game.player = {
+  name = "Anonimo",
+  errors = {
+    lvl1 = {},
+    lvl2 = {},
+    lvl3 = {}
+  },
+  time = 0
+}
 
 local fundo
 
