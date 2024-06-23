@@ -129,7 +129,7 @@ function instancia.resize()
       height = windowWidth * 0.2
     },
     position = {
-      x = windowWidth * 0.23,
+      x = windowWidth * 0.33,
       y = windowHeight * 0.5
     }
   }
@@ -140,7 +140,7 @@ function instancia.resize()
       height = windowWidth * 0.2
     },
     position = {
-      x = windowWidth * 0.74,
+      x = windowWidth * 0.64,
       y = windowHeight * 0.5
     }
   }
