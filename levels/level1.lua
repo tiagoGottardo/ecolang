@@ -66,8 +66,13 @@ end
 local function verifyCorrectAnswer(answer)
   answer = answer or 1
   if Game.animal == Game.level1.animals[answer] then
-    successModal.hidden = false
-    cursor:set { botoes = { successModal.button } }
+    if Game.level1.currentRound >= Game.level1.totalRounds then
+      successModal.hidden = false
+      cursor:set { botoes = { successModal.button } }
+    else
+      Game.level1.next()
+      Level1.load()
+    end
   else
     failedModal.hidden = false
     cursor:set { botoes = { failedModal.button } }
@@ -91,6 +96,14 @@ function Level1.mousepressed(x, y, button)
   end
   if not successModal.hidden then
     successModal.button:onClick(x, y, button, (function()
+      Game.level2               = {}
+      Game.level2.currentRound  = 0
+      Game.level2.totalRounds   = 10
+      Game.level2.next = function()
+        Game.level2.currentRound = Game.level2.currentRound + 1
+        Game.animal = Game.animals[1+math.floor(math.random()*#Game.animals)] or "MACACO"
+      end
+      Game.level2.next()
       Game.currentLevel = 4
       Game.load()
     end))

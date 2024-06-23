@@ -208,8 +208,13 @@ end
 local function verifyCorrectAnswer(answer)
   answer = answer or ""
   if firstUtf8Char(Game.animal) == answer then
-    successModal.hidden = false
-    cursor:set { botoes = { successModal.button } }
+    if Game.level2.currentRound >= Game.level2.totalRounds then
+      successModal.hidden = false
+      cursor:set { botoes = { successModal.button } }
+    else
+      Game.level2.next()
+      Level2.load()
+    end
   else
     --failedModal.hidden = false
     --cursor:set { botoes = { failedModal.button } }
