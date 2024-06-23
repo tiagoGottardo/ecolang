@@ -210,7 +210,8 @@ end
 
 local function verifyCorrectAnswer(answer)
   answer = answer or ""
-  if firstUtf8Char(Game.animal) == answer then
+  local rightLetter=firstUtf8Char(Game.animal)
+  if rightLetter == answer then
     if Game.level2.currentRound >= Game.level2.totalRounds then
       successModal.hidden = false
       cursor:set { botoes = { successModal.button } }
@@ -219,6 +220,17 @@ local function verifyCorrectAnswer(answer)
       Level2.load()
     end
   else
+    letterPressed:set {
+      content = {
+        label = rightLetter,
+        color = Red
+      }
+    }
+    letterPressed:set {
+      content = {
+        color = { a = .5 }
+      }
+    }
     --failedModal.hidden = false
     --cursor:set { botoes = { failedModal.button } }
   end
@@ -320,10 +332,11 @@ function Level2.textinput(text)
     text = firstUtf8Char(text:upper())
     letterPressed:set {
       content = {
-        label = text
+        label = text,
+        color = { 0, 0, 0, 1 }
       }
     }
-    verifyTimer = {love.timer.getTime(), text}
+    verifyTimer = { love.timer.getTime(), text }
   end
 end
 
