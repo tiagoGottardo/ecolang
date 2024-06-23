@@ -16,6 +16,7 @@ local logo = {}
 local titulo = {}
 local helpButton = {}
 local audioLabel = {}
+local questStatement = {}
 
 local function setBorder(love, object)
   object = object or Object:new()
@@ -62,7 +63,7 @@ function questStatement.load(levelName, levelStatement)
       color = Black,
       fontSize = 40,
       label = levelStatement,
-      wrapLimit = container.shape.width*0.9
+      wrapLimit = container.shape.width * 0.9
     }
   }
 
