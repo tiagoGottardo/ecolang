@@ -46,6 +46,9 @@ local letterGoal
 local keyboardImage
 local selectedKey
 
+local verifyTimer = nil
+local verifyDelay = 0.5
+
 local function getKeyPosition(key)
   local keys = {
     ['A'] = { 314, 257 },
@@ -255,6 +258,11 @@ end
 
 function Level2.update(dt)
   Game.timer:update(dt)
+
+  if verifyTimer and love.timer.getTime()-verifyTimer[1] > verifyDelay then
+    verifyCorrectAnswer(verifyTimer[2])
+    verifyTimer = nil
+  end
   if Game.timer:isTimeOver() and not evenTriggered then
     isTimeOverModal.hidden = false
     cursor:set { botoes = { isTimeOverModal.button } }
@@ -315,7 +323,7 @@ function Level2.textinput(text)
         label = text
       }
     }
-    verifyCorrectAnswer(text)
+    verifyTimer = {love.timer.getTime(), text}
   end
 end
 
