@@ -106,7 +106,7 @@ function database:getPlays()
 end
 
 function database:saveData()
-  local file = io.open("db.json", "w+")
+  local file = io.open("database/db.json", "w+")
   if not file then
     return print "Some shit happen!"
   end
