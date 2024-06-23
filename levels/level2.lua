@@ -153,7 +153,6 @@ function Level2.load()
 
   animalImage = Object:new {
     position = { WINDOW_WIDTH * 4 / 5, 97 },
-    color = { a = 0.51 },
     shape = {
       width = 88,
       height = 88,
@@ -161,8 +160,8 @@ function Level2.load()
     },
     content = {
       kind = 'image',
-      width = 80,
-      height = 80,
+      width = 70,
+      height = 70,
       name = "Animals/" .. Game.animal .. ".png"
     }
   }
