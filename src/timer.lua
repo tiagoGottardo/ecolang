@@ -21,8 +21,9 @@ function Timer:set(timerTable)
   timerTable = timerTable or {}
   self.color:set(timerTable.color)
   self.timerDuration = 0
+  self.timePassed = 0
+  --self.startTime = nil
   self.wrapLimit = timerTable.wrapLimit or self.wrapLimit or 0
-  self.startTime = nil
   self.label = timerTable.label or self.label or secondsToTimeFormat(self.timerDuration) or ""
   self.fontSize = timerTable.fontSize or self.fontSize or 24
 end
@@ -30,17 +31,18 @@ end
 function Timer:start(timerDuration)
   assert(type(timerDuration) == 'number', 'At Timer:start(timerDuration), "timerDuration" must be a number!')
   self.timerDuration = timerDuration + 1
-  self.startTime = love.timer.getTime()
+  self.timePassed = 0
+  --self.startTime = love.timer.getTime()
   self.label = secondsToTimeFormat(self.timerDuration) or ""
 end
 
-function Timer:update()
-  local timePassed = love.timer.getTime() - self.startTime
-  self.label = secondsToTimeFormat(math.max(self.timerDuration - timePassed, 0)) or ""
+function Timer:update(dt)
+  self.timePassed = self.timePassed + dt
+  self.label = secondsToTimeFormat(math.max(self.timerDuration - self.timePassed, 0)) or ""
 end
 
 function Timer:isTimeOver()
-  return self.timerDuration <= 0 or self.startTime == nil or love.timer.getTime() - self.startTime > self.timerDuration
+  return self.timerDuration <= self.timePassed
 end
 
 return Timer
