@@ -101,10 +101,12 @@ end
 function instancia.mousepressed(x, y, button, istouch, presses)
   if button == 1 then
     alunoBtn:onClick(x, y, button, (function()
+      Game.instance = 'aluno'
       Game.currentLevel = 1
       Game.load()
     end))
     profBtn:onClick(x, y, button, (function()
+      Game.instance = 'prof'
       Game.currentLevel = 10
       Game.load()
     end))

@@ -145,7 +145,7 @@ end
 
 function menuProf.mousepressed(x, y, button, istouch, presses)
   playBtn:onClick(x, y, button, (function()
-    Game.currentLevel = 2
+    Game.currentLevel = 11
     Game.load()
   end))
   sobreBtn:onClick(x, y, button, (function()
