@@ -17,7 +17,8 @@ local sobreBtn
 local placarBtn
 local sairBtn
 
-local utils = require 'utils'
+local utils = require 'utils.array'
+local animalsIndex = require 'utils.animals'
 
 local cursor = {}
 
@@ -145,6 +146,10 @@ end
 
 function menu.mousepressed(x, y, button, istouch, presses)
   playBtn:onClick(x, y, button, (function()
+    Game.level1 = {}
+    Game.level1.animals = utils:getRandomDistinctElements(animalsIndex, 4) or
+        { "MACACO", "RATO", "RINOCERONTE", "TARTARUGA" }
+    Game.animal = utils:getRandomDistinctElements(Game.level1.animals)[1] or "MACACO"
     Game.currentLevel = 2
     Game.load()
   end))

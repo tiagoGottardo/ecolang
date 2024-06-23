@@ -25,14 +25,6 @@ local logo = {}
 local helpButton = {}
 local componentHelpButton = require "levels.components.componentHelpButton"
 
-local answers = { "MACACO", "LEÃO", "ABELHA", "CACHORRO" }
-local animalSound = {
-  ["MACACO"] = 'monkey',
-  ["LEÃO"] = 'lion',
-  ["ABELHA"] = 'bee',
-  ["CACHORRO"] = 'dog'
-}
-local correct
 local correctSound
 
 local successModal
@@ -48,13 +40,12 @@ local evenTriggered = false
 
 function Level1.load()
   evenTriggered = false
-  correct = answers[math.floor(love.math.random() * 4) + 1]
-  correctSound = love.audio.newSource("assets/sounds/" .. animalSound[correct] .. ".mp3", "static")
+  correctSound = love.audio.newSource("assets/sounds/" .. Game.animal .. ".mp3", "static")
 
   animals = animalButtons:new()
   container = centralContainer:new()
   header = upHeader:new()
-  headerLabel = componentHeaderLabel:new(correct)
+  headerLabel = componentHeaderLabel:new(Game.animal)
   soundHeader = componentSoundHeader:new()
 
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4, })
@@ -73,8 +64,8 @@ function Level1.load()
 end
 
 local function verifyCorrectAnswer(answer)
-  answer = answer or ""
-  if correct == answer then
+  answer = answer or 1
+  if Game.animal == Game.level1.animals[answer] then
     successModal.hidden = false
     cursor:set { botoes = { successModal.button } }
   else
