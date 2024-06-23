@@ -1,4 +1,5 @@
 Black = { 0, 0, 0 }
+White = { 255, 255, 255 }
 LightGreen = { 148, 221, 114, 0.49 }
 Green = { 29, 159, 50 }
 DarkGreen = { 7, 139, 36 }
