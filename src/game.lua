@@ -1,7 +1,9 @@
 require("utils.colors")
 local Timer = require 'src.timer'
+local playDefault = require 'utils.play'
 Game = {}
 Game.timer = Timer:new({ fontSize = 30, color = Black })
+Game.play = playDefault
 
 local fundo
 
@@ -14,12 +16,14 @@ Game.levels = {
   require "levels.level3pre",
   require "levels.level3",
   require "levels.sobre",
+  require "levels.name",
+  require "levels.ranking",
   require "levels.instanciaUsuario",
   require "levels.menuProf",
   require "levels.relatorios"
 }
 
-Game.currentLevel = 9
+Game.currentLevel = 11
 
 function Game.load()
   fundo = love.graphics.newImage("assets/images/fundo.png")

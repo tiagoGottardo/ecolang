@@ -172,6 +172,10 @@ function menu.mousepressed(x, y, button, istouch, presses)
     Game.currentLevel = 2
     Game.load()
   end))
+  placarBtn:onClick(x, y, button, (function()
+    Game.currentLevel = 10
+    Game.load()
+  end))
   sobreBtn:onClick(x, y, button, (function()
     Game.currentLevel = 8
     Game.load()
