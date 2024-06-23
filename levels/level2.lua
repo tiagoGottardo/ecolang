@@ -28,19 +28,6 @@ local logo = {}
 local helpButton = {}
 local componentHelpButton = require "levels.components.componentHelpButton"
 
-local animals = { "MACACO", "LEÃO", "ABELHA", "CACHORRO" }
-local animalsImages = {
-  ["MACACO"] = 'monkey.png',
-  ["LEÃO"] = 'lion.png',
-  ["ABELHA"] = 'bee.png',
-  ["CACHORRO"] = 'dog.png'
-}
-local animalsSounds = {
-  ["MACACO"] = 'monkey.mp3',
-  ["LEÃO"] = 'lion.mp3',
-  ["ABELHA"] = 'bee.mp3',
-  ["CACHORRO"] = 'dog.mp3'
-}
 local animalSound
 local animalImage
 
@@ -60,17 +47,17 @@ local keyboardImage
 local selectedKey
 
 local function getKeyPosition(key)
-  local keys={
-    ['A'] = {314, 257}, -- {314, 256}
-    ['C'] = {429, 301}, -- {429, 301}
-    ['L'] = {681, 257}, -- {681, 257}
-    ['M'] = {612, 301}  -- {612, 301}
+  local keys = {
+    ['A'] = { 314, 257 }, -- {314, 256}
+    ['C'] = { 429, 301 }, -- {429, 301}
+    ['L'] = { 681, 257 }, -- {681, 257}
+    ['M'] = { 612, 301 }  -- {612, 301}
   }
   return keys[key] or { 0, 0 }
 end
 
 local function firstUtf8Char(str)
-  if type(str)~='string' then
+  if type(str) ~= 'string' then
     return ''
   end
   for _, c in utf8.codes(str) do
@@ -81,32 +68,31 @@ end
 
 function Level2.load()
   evenTriggered = false
-  animal = animals[math.floor(love.math.random() * 4) + 1]
-  animalSound = love.audio.newSource("assets/sounds/" .. animalsSounds[animal], "static")
+  animalSound = love.audio.newSource("assets/sounds/" .. Game.animal .. ".mp3", "static")
 
-  local keyboardScale=.6
+  local keyboardScale = .6
   keyboardImage = Object:new {
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
     color = { a = 0 },
     shape = {
-      width = 780*keyboardScale,
-      height = 297*keyboardScale
+      width = 780 * keyboardScale,
+      height = 297 * keyboardScale
     },
     content = {
       kind = 'image',
       name = 'keyboard.png',
-      width = 780*keyboardScale,
-      height = 297*keyboardScale
+      width = 780 * keyboardScale,
+      height = 297 * keyboardScale
     }
   }
-  
+
   selectedKey = Object:new {
-    position = getKeyPosition(firstUtf8Char(animal)),
+    position = getKeyPosition(firstUtf8Char(Game.animal)),
     color = Red,
     shape = {
-      width=40,
-      height=40,
-      radius=5
+      width = 40,
+      height = 40,
+      radius = 5
     }
   }
   selectedKey:set {
@@ -149,8 +135,8 @@ function Level2.load()
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT * 4 / 5 },
     shape = {
       width = 100,
-      height= 100,
-      radius=10
+      height = 100,
+      radius = 10
     },
     content = {
       color = Black,
@@ -177,21 +163,21 @@ function Level2.load()
       kind = 'image',
       width = 80,
       height = 80,
-      name = animalsImages[animal]
+      name = "Animals/" .. Game.animal .. ".png"
     }
   }
 
   soundHeader = componentSoundHeader:new()
 
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4, })
-  
+
   helpButton = componentHelpButton:new()
 
   isTimeOverModal = componentTimeOver:new()
 
   successModal = componentSucces:new("VOLTAR PARA O MENU")
 
-  failedModal =  componentFailed:new()
+  failedModal = componentFailed:new()
 
   cursor = Cursor:new {
     botoes = { soundHeader, helpButton }
@@ -200,7 +186,7 @@ end
 
 local function verifyCorrectAnswer(answer)
   answer = answer or ""
-  if firstUtf8Char(animal) == answer then
+  if firstUtf8Char(Game.animal) == answer then
     successModal.hidden = false
     cursor:set { botoes = { successModal.button } }
   else
@@ -211,7 +197,7 @@ end
 
 function Level2.mousepressed(x, y, button)
   -- print(utils.string:tostring{x, y})
-  if(failedModal.hidden and successModal.hidden and isTimeOverModal.hidden) then
+  if (failedModal.hidden and successModal.hidden and isTimeOverModal.hidden) then
     soundHeader:onClick(x, y, button, (function() animalSound:play() end))
     helpButton:onClick(x, y, button, (function()
       Game.currentLevel = 4
@@ -262,15 +248,15 @@ function Level2.draw()
 
   local highlightColor = { 0.8, 0, 0, 1 }
   local regularColor = { 0.027, 0.545, 0.141, 1 }
-  local coloredText = { highlightColor, firstUtf8Char(animal:upper()), regularColor, ' ' .. animal:sub(2) }
+  local coloredText = { highlightColor, firstUtf8Char(Game.animal:upper()), regularColor, ' ' .. Game.animal:sub(2) }
   local textWidth = 0
   local textHeight = myFont:getHeight()
   for i, v in ipairs(coloredText) do
-    if i%2==0 then
-      textWidth=textWidth+myFont:getWidth(v)
+    if i % 2 == 0 then
+      textWidth = textWidth + myFont:getWidth(v)
     end
   end
-  love.graphics.print(coloredText, myFont, WINDOW_WIDTH / 2 - textWidth/2, 97-textHeight/2)
+  love.graphics.print(coloredText, myFont, WINDOW_WIDTH / 2 - textWidth / 2, 97 - textHeight / 2)
 
   soundHeader:draw()
   animalImage:draw()
@@ -297,7 +283,7 @@ end
 
 function Level2.textinput(text)
   if text then
-    text=firstUtf8Char(text:upper())
+    text = firstUtf8Char(text:upper())
     letterPressed:set {
       content = {
         label = text
