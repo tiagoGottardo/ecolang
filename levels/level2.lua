@@ -131,7 +131,7 @@ function Level2.load()
 
 
   letterPressed = Object:new {
-    color = LightGray,
+    color = White,
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT * 4 / 5 },
     shape = {
       width = 100,
