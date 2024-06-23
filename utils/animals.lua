@@ -21,7 +21,6 @@ return {
   "MACACO",
   "TARTARUGA",
   "BODE",
-  "MICO-LEÃO-DOURADO",
   "PÁSSARO",
   "PEIXE",
   "ORNITORRINCO",
@@ -29,6 +28,6 @@ return {
   "RATO",
   "RINOCERONTE",
   "SAPO",
-  "TUBURÃO",
+  "TUBARÃO",
   "VACA",
 }
