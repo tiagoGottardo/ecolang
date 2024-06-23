@@ -23,6 +23,8 @@ Game.levels = {
   require "levels.level3pre",
   require "levels.level3",
   require "levels.sobre",
+  require "levels.name",
+  require "levels.ranking",
   require "levels.instanciaUsuario",
   require "levels.menuProf",
   require "levels.relatorios"
