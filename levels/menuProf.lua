@@ -105,7 +105,7 @@ function menuProf.load()
   })
 
   cursor = Cursor:new {
-    botoes = { playBtn, sobreBtn, sairBtn }
+    botoes = { playBtn, placarBtn, sobreBtn, sairBtn }
   }
 
   playImage = Image:new({ name = "play.png", width = 60, height = 60 })

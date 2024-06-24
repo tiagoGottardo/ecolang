@@ -133,7 +133,7 @@ function Level3.load()
 
   isTimeOverModal = componentTimeOver:new()
 
-  successModal = componentSucces:new("VOLTAR AO MENU")
+  successModal = componentSucces:new("REGISTRAR PONTUAÇÃO")
 
   failedModal = componentFailed:new()
  
