@@ -19,7 +19,7 @@ local function merge(left, right)
   local merged = {}
 
   while #left > 0 and #right > 0 do
-    if left[1].score <= right[1].score then
+    if left[1].score >= right[1].score then
       table.insert(merged, table.remove(left, 1))
     else
       table.insert(merged, table.remove(right, 1))
@@ -117,7 +117,7 @@ function database:saveData()
 end
 
 function database:loadData()
-  local file = io.open("db.json", "r")
+  local file = io.open("database/db.json", "r")
   if not file then
     print "No data file found!"
     return
