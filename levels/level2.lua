@@ -210,7 +210,7 @@ end
 
 local function verifyCorrectAnswer(answer)
   answer = answer or ""
-  local rightLetter=firstUtf8Char(Game.animal)
+  local rightLetter = firstUtf8Char(Game.animal)
   if rightLetter == answer then
     if Game.level2.currentRound >= Game.level2.totalRounds then
       successModal.hidden = false
@@ -220,6 +220,9 @@ local function verifyCorrectAnswer(answer)
       Level2.load()
     end
   else
+    table.insert(Game.play.lvl2.errors, { tentativa = answer, resposta = rightLetter })
+    Game.play.score = Game.play.score - 20
+
     letterPressed:set {
       content = {
         label = rightLetter,
@@ -252,7 +255,9 @@ function Level2.mousepressed(x, y, button)
   end
   if not successModal.hidden then
     successModal.button:onClick(x, y, button, (function()
-      Game.currentLevel = 1
+      Game.play.lvl2.time = Game.timer.timePassed - Game.play.lvl1.time
+      Game.play.score = Game.play.score + 2 * math.floor(Game.timer.timerDuration - Game.timer.timePassed)
+      Game.currentLevel = 9
       Game.load()
     end))
   end
@@ -271,7 +276,7 @@ end
 function Level2.update(dt)
   Game.timer:update(dt)
 
-  if verifyTimer and love.timer.getTime()-verifyTimer[1] > verifyDelay then
+  if verifyTimer and love.timer.getTime() - verifyTimer[1] > verifyDelay then
     verifyCorrectAnswer(verifyTimer[2])
     verifyTimer = nil
   end

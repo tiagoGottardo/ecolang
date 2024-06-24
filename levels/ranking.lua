@@ -23,9 +23,30 @@ local function setBorder(love, object)
   love.graphics.setColor(r, g, b, a)
 end
 
-local items = database:getRanking()
-table.insert(items, 1, { name = "Nome", score = "Pontuação" })
+local function showData()
+  print("Name: " .. Game.play.name)
+  print("Score: " .. Game.play.score)
+  print("Level1:")
+  print("  Errors:")
+  for i, val in ipairs(Game.play.lvl1.errors) do
+    print("     Tentativa: " .. val.tentativa .. " | Resposta: " .. val.resposta)
+  end
+  print("     Tempo: " .. Game.play.lvl1.time)
+  print("Level2:")
+  print("  Errors:")
+  for i, val in ipairs(Game.play.lvl2.errors) do
+    print("     Tentativa: " .. val.tentativa .. " | Resposta: " .. val.resposta)
+  end
+  print("     Tempo: " .. Game.play.lvl2.time)
+  -- print("Level3:")
+  -- print("  Errors:")
+  -- for i, val in ipairs(Game.play.lvl3.errors) do
+  --   print("Tentativa: " .. val.tentativa .. " | Resposta: " .. val.resposta)
+  -- end
+  print("Tempo Total: " .. Game.play.lvl1.time + Game.play.lvl2.time)
+end
 
+local items
 local scrollOffset = 1
 local itemHeight = 42
 local itemsToShow = 10
@@ -33,6 +54,9 @@ local listWidth = 720
 local listHeight = itemHeight * itemsToShow
 
 function Ranking.load()
+  items = database:getRanking()
+  table.insert(items, 1, { name = "Nome", score = "Pontuação" })
+
   item = Text:new({ fontSize = 30, color = Black })
   container = Object:new({
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
