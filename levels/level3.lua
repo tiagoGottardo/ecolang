@@ -41,10 +41,65 @@ local isTimeOverModal
 local componentTimeOver = require "levels.components.componentTimeOver"
 
 local evenTriggered = false
+local inputContainer
+
+local currentState
+
+local function firstUtf8Char(str)
+  if type(str) ~= 'string' then
+    return ''
+  end
+  for _, c in utf8.codes(str) do
+    return utf8.char(c)
+  end
+  return ''
+end
+
+local function upperUtf8(str)
+  local str1=''
+  local accents = {
+    ['á'] = 'Á',
+    ['â'] = 'Â',
+    ['à'] = 'À',
+    ['ã'] = 'Ã',
+    ['ä'] = 'Ä',
+    ['é'] = 'É',
+    ['ê'] = 'Ê',
+    ['è'] = 'È',
+    ['ë'] = 'Ë',
+    ['í'] = 'Í',
+    ['î'] = 'Î',
+    ['ì'] = 'Ì',
+    ['ï'] = 'Ï',
+    ['ó'] = 'Ó',
+    ['ô'] = 'Ô',
+    ['ò'] = 'Ò',
+    ['õ'] = 'Õ',
+    ['ö'] = 'Ö',
+    ['ú'] = 'Ú',
+    ['û'] = 'Û',
+    ['ù'] = 'Ù',
+    ['ü'] = 'Ü',
+    ['ç'] = 'Ç',
+    ['ñ'] = 'Ñ'
+  }
+  for _, v in utf8.codes(str) do
+    local char=utf8.char(v)
+    str1 = str1 .. (accents[char] or char:upper())
+  end
+  return str1
+end
 
 function Level3.load()
   evenTriggered = false
   animalSound = love.audio.newSource("assets/sounds/" .. Game.animal .. ".mp3", "static")
+
+  currentState = {
+    char=nil,
+    start=nil,
+    index=1,
+    durationLimit=0.5
+  }
 
   -- letterGoal = Object:new {
   --   color = { a = 0 },
@@ -81,17 +136,67 @@ function Level3.load()
   successModal = componentSucces:new("VOLTAR AO MENU")
 
   failedModal = componentFailed:new()
+ 
+  inputContainer = Object:new {
+    color = White,
+    position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
+    shape = {
+      width = WINDOW_WIDTH * 2 / 3,
+      height = 100,
+      radius = 10
+    },
+    content = {
+      color = Black,
+      fontSize = 60,
+      label = ''
+    }
+  }
 
   cursor = Cursor:new {
     botoes = { soundHeader, helpButton }
   }
+
+  print(utils.string:tostring(Game.animal))
+  for i, v in utf8.codes(Game.animal) do
+    v=utf8.char(v)
+    print(utils.string:tostring({i, v}))
+  end
 end
 
 local function verifyCorrectAnswer(answer)
   answer = answer or ""
-  if Game.animal == answer then
-    successModal.hidden = false
-    cursor:set { botoes = { successModal.button } }
+  local needNextCode = false
+  for i, v in utf8.codes(Game.animal) do
+    v=utf8.char(v)
+    if i==currentState.index then
+      if v==currentState.char then
+        currentState.char   = nil
+        needNextCode = true
+      else
+        currentState.start  = love.timer.getTime()
+      end
+      if not needNextCode then
+        break
+      end
+    elseif i>currentState.index then
+      if needNextCode then
+        currentState.index  = i
+        needNextCode        = false
+      end
+      break
+    end
+  end
+  if needNextCode then
+    currentState.index=#Game.animal+1
+  end
+  if currentState.index==#Game.animal+1 then
+    if Game.level3.currentRound >= Game.level3.totalRounds then
+      successModal.hidden = false
+      cursor:set { botoes = { successModal.button } }
+    else
+      Game.level3.next()
+      Level3.load()
+    end
   else
     --failedModal.hidden = false
     --cursor:set { botoes = { failedModal.button } }
@@ -131,6 +236,10 @@ function Level3.mousemoved(x, y, dx, dy, istouch)
 end
 
 function Level3.update(dt)
+  if currentState.start and love.timer.getTime() - currentState.start >= currentState.durationLimit then
+    currentState.char=nil
+    currentState.start=nil
+  end
   Game.timer:update(dt)
   if Game.timer:isTimeOver() and not evenTriggered then
     isTimeOverModal.hidden = false
@@ -143,6 +252,7 @@ function Level3.draw()
   container:draw()
   header:draw()
   headerLabel:draw()
+  inputContainer:draw()
 
   local myFont       = love.graphics.newFont("assets/Sniglet/Sniglet-Regular.ttf", 65)
   local previousFont = love.graphics.getFont()
@@ -160,6 +270,40 @@ function Level3.draw()
     end
   end
   love.graphics.print(coloredText, myFont, WINDOW_WIDTH / 2 - textWidth / 2, 97 - textHeight / 2)
+
+  local myFont       = love.graphics.newFont("assets/Sniglet/Sniglet-Regular.ttf", 60)
+  local previousFont = love.graphics.getFont()
+  love.graphics.setFont(myFont)
+
+
+  local wrongColor = { 0.8, 0, 0, 1 }
+  local correctColor = { 0, 0, 0, 0.4 }
+  local regularColor = { 0, 0, 0, 1 }
+  local coloredText = {}
+  local textWidth = 0
+  local textHeight = myFont:getHeight()
+
+  for i, v in utf8.codes(Game.animal) do
+    v=utf8.char(v)
+    if i==currentState.index and currentState.char then
+      if currentState.char==v then
+        table.insert(coloredText, regularColor)
+      else
+        table.insert(coloredText, wrongColor)
+      end
+      table.insert(coloredText, currentState.char)
+    else
+      table.insert(coloredText, i<currentState.index and regularColor or correctColor)
+      table.insert(coloredText, v)
+    end
+  end
+
+  for i, v in ipairs(coloredText) do
+    if i % 2 == 0 then
+      textWidth = textWidth + myFont:getWidth(v)
+    end
+  end
+  love.graphics.print(coloredText, myFont, WINDOW_WIDTH / 2 - textWidth / 2, WINDOW_HEIGHT / 2 - textHeight / 2)
 
   soundHeader:draw()
   animalImage:draw()
@@ -180,7 +324,9 @@ end
 
 function Level3.textinput(text)
   if text then
-    print(utils.string:tostring(text))
+    text=upperUtf8(firstUtf8Char(text))
+    currentState.char   = text
+    print(utils.string:tostring(currentState))
     verifyCorrectAnswer(text)
   end
 end
