@@ -199,7 +199,7 @@ function Level2.load()
 
   isTimeOverModal = componentTimeOver:new()
 
-  successModal = componentSucces:new("VOLTAR PARA O MENU")
+  successModal = componentSucces:new("IR PARA A FASE 3")
 
   failedModal = componentFailed:new()
 
@@ -255,9 +255,17 @@ function Level2.mousepressed(x, y, button)
   end
   if not successModal.hidden then
     successModal.button:onClick(x, y, button, (function()
+      Game.level3               = {}
+      Game.level3.currentRound  = 0
+      Game.level3.totalRounds   = 10
+      Game.level3.next = function()
+        Game.level3.currentRound = Game.level3.currentRound + 1
+        Game.animal = Game.animals[1+math.floor(math.random()*#Game.animals)] or "MACACO"
+      end
+      Game.level3.next()
+      Game.currentLevel = 6
       Game.play.lvl2.time = Game.timer.timePassed - Game.play.lvl1.time
       Game.play.score = Game.play.score + 2 * math.floor(Game.timer.timerDuration - Game.timer.timePassed)
-      Game.currentLevel = 9
       Game.load()
     end))
   end
