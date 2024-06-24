@@ -108,12 +108,15 @@ end
 function database:saveData()
   local file = io.open("database/db.json", "w+")
   if not file then
-    return print "Some shit happen!"
+    return print "Some problem happened in get file content."
   end
   local data = json.encode(self.data)
-  file:write(data)
-  file:close()
-  print "Data saved successfully!"
+  if type(data) == 'string' then
+    file:write(data)
+    file:close()
+    return print "Data saved successfully!"
+  end
+  print "Data is not a valid json."
 end
 
 function database:loadData()
