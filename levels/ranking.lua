@@ -105,7 +105,13 @@ end
 
 function Ranking.mousepressed(x, y, button)
   goHomeButton:onClick(x, y, button, function()
-    Game.currentLevel = 1
+    Game.currentLevel = Game.instance == 'prof' and 12 or 1
+
+    if Game.instance == 'prof' then
+      Game.currentLevel = 12
+    else
+      Game.currentLevel = 1
+    end
     Game.load()
   end)
 end
