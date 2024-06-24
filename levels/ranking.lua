@@ -91,7 +91,7 @@ function Ranking.load()
     },
     content = {
       kind = "image",
-      name = "prox.png",
+      name = "home.png",
       width = 58,
       height = 58,
     },
@@ -105,7 +105,7 @@ end
 
 function Ranking.mousepressed(x, y, button)
   goHomeButton:onClick(x, y, button, function()
-    Game.currentLevel = Game.currentLevel + 1
+    Game.currentLevel = 1
     Game.load()
   end)
 end
