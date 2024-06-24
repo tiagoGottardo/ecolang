@@ -45,51 +45,6 @@ local inputContainer
 
 local currentState
 
-local function firstUtf8Char(str)
-  if type(str) ~= 'string' then
-    return ''
-  end
-  for _, c in utf8.codes(str) do
-    return utf8.char(c)
-  end
-  return ''
-end
-
-local function upperUtf8(str)
-  local str1=''
-  local accents = {
-    ['á'] = 'Á',
-    ['â'] = 'Â',
-    ['à'] = 'À',
-    ['ã'] = 'Ã',
-    ['ä'] = 'Ä',
-    ['é'] = 'É',
-    ['ê'] = 'Ê',
-    ['è'] = 'È',
-    ['ë'] = 'Ë',
-    ['í'] = 'Í',
-    ['î'] = 'Î',
-    ['ì'] = 'Ì',
-    ['ï'] = 'Ï',
-    ['ó'] = 'Ó',
-    ['ô'] = 'Ô',
-    ['ò'] = 'Ò',
-    ['õ'] = 'Õ',
-    ['ö'] = 'Ö',
-    ['ú'] = 'Ú',
-    ['û'] = 'Û',
-    ['ù'] = 'Ù',
-    ['ü'] = 'Ü',
-    ['ç'] = 'Ç',
-    ['ñ'] = 'Ñ'
-  }
-  for _, v in utf8.codes(str) do
-    local char=utf8.char(v)
-    str1 = str1 .. (accents[char] or char:upper())
-  end
-  return str1
-end
-
 function Level3.load()
   evenTriggered = false
   animalSound = love.audio.newSource("assets/sounds/" .. Game.animal .. ".mp3", "static")
@@ -156,11 +111,11 @@ function Level3.load()
     botoes = { soundHeader, helpButton }
   }
 
-  print(utils.string:tostring(Game.animal))
-  for i, v in utf8.codes(Game.animal) do
-    v=utf8.char(v)
-    print(utils.string:tostring({i, v}))
-  end
+  --print(utils.string:tostring(Game.animal))
+  --for i, v in utf8.codes(Game.animal) do
+  --  v=utf8.char(v)
+  --  print(utils.string:tostring({i, v}))
+  --end
 end
 
 local function verifyCorrectAnswer(answer)
@@ -324,9 +279,9 @@ end
 
 function Level3.textinput(text)
   if text then
-    text=upperUtf8(firstUtf8Char(text))
+    text=utils.string:upperUtf8(utils.string:firstUtf8Char(text))
     currentState.char   = text
-    print(utils.string:tostring(currentState))
+    --print(utils.string:tostring(currentState))
     verifyCorrectAnswer(text)
   end
 end
