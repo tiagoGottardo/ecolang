@@ -133,7 +133,7 @@ function Level3.load()
 
   isTimeOverModal = componentTimeOver:new()
 
-  successModal = componentSucces:new("VOLTAR AO MENU")
+  successModal = componentSucces:new("REGISTRAR PONTUAÇÃO")
 
   failedModal = componentFailed:new()
  
@@ -219,7 +219,7 @@ function Level3.mousepressed(x, y, button)
   end
   if not successModal.hidden then
     successModal.button:onClick(x, y, button, (function()
-      Game.currentLevel = 1
+      Game.currentLevel = 9
       Game.load()
     end))
   end
