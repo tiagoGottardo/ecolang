@@ -1,6 +1,7 @@
 local Level1 = {}
 require("utils.colors")
 local Image = require "components.image"
+local utils = require 'utils'
 
 local cursor = {}
 local Cursor = require 'src.cursor'
@@ -104,7 +105,13 @@ function Level1.mousepressed(x, y, button)
       Game.level2.totalRounds  = 10
       Game.level2.next         = function()
         Game.level2.currentRound = Game.level2.currentRound + 1
-        Game.animal = Game.animals[1 + math.floor(math.random() * #Game.animals)] or "MACACO"
+        -- Game.animal = Game.animals[1 + math.floor(math.random() * #Game.animals)] or "MACACO"
+        local firstChar = utils.string:firstUtf8Char(Game.animal)
+        local newAnimal = Game.animals[1 + math.floor(math.random() * #Game.animals)]
+        while utils.string:firstUtf8Char(newAnimal)==firstChar do
+          newAnimal = Game.animals[1 + math.floor(math.random() * #Game.animals)]
+        end
+        Game.animal = newAnimal
       end
       Game.level2.next()
       Game.currentLevel = 4
