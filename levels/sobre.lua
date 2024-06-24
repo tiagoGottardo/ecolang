@@ -13,7 +13,7 @@ local midW = 0;
 local btnCollor = { 200, 200, 200 }
 local containerColor = { 250, 250, 250 }
 
-local cursor={}
+local cursor = {}
 
 function sobre.load()
   container = Object:new {
@@ -51,7 +51,7 @@ function sobre.load()
   })
 
   cursor = Cursor:new {
-    botoes={
+    botoes = {
       voltarBtn
     }
   }
@@ -78,7 +78,7 @@ end
 function sobre.mousepressed(x, y, button, istouch, presses)
   if button == 1 then
     voltarBtn:onClick(x, y, button, (function()
-      Game.currentLevel = Game.instance=='prof' and 10 or 1
+      Game.currentLevel = Game.instance == 'prof' and 12 or 1
       Game.load()
     end))
   end

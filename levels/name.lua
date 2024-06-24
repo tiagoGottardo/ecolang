@@ -6,6 +6,7 @@ local Image = require 'components.image'
 local Cursor = require 'src.cursor'
 local input, button, title, container, footer, soundFooter, titulo, proximoFooter
 local logo, cursor, audioLabel, warning
+local database = require 'database.database'
 
 local containerTemplate = require 'levels.components.centralContainer'
 
@@ -127,7 +128,9 @@ function Name.mousepressed(x, y, button)
   end)
   proximoFooter:onClick(x, y, button, function()
     if input.content.label ~= "" then
-      Game.player.name = input.content.label
+      Game.play.name = input.content.label
+      database:createPlay(Game.play)
+      database:saveData()
       Game.currentLevel = Game.currentLevel + 1
       Game.load()
     else
@@ -155,7 +158,9 @@ function Name.keypressed(key)
     input.content.label = input.content.label:sub(1, -2)
   elseif key == "return" then
     if input.content.label ~= "" then
-      Game.player.name = input.content.label
+      Game.play.name = input.content.label
+      database:createPlay(Game.play)
+      database:saveData()
       Game.currentLevel = Game.currentLevel + 1
       Game.load()
     else

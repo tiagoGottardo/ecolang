@@ -11,7 +11,7 @@ local container = {}
 local btnCollor = { 200, 200, 200 }
 local containerColor = { 250, 250, 250 }
 
-local cursor={}
+local cursor = {}
 
 function instancia.load()
   container = Object:new {
@@ -73,7 +73,7 @@ function instancia.load()
   })
 
   cursor = Cursor:new {
-    botoes={
+    botoes = {
       alunoBtn, profBtn
     }
   }
@@ -107,7 +107,7 @@ function instancia.mousepressed(x, y, button, istouch, presses)
     end))
     profBtn:onClick(x, y, button, (function()
       Game.instance = 'prof'
-      Game.currentLevel = 10
+      Game.currentLevel = 12
       Game.load()
     end))
   end
