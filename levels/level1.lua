@@ -74,6 +74,9 @@ local function verifyCorrectAnswer(answer)
       Level1.load()
     end
   else
+    table.insert(Game.play.lvl1.errors, { tentativa = Game.level1.animals[answer], resposta = Game.animal })
+    Game.play.score = Game.play.score - 30
+
     failedModal.hidden = false
     cursor:set { botoes = { failedModal.button } }
   end
@@ -96,15 +99,16 @@ function Level1.mousepressed(x, y, button)
   end
   if not successModal.hidden then
     successModal.button:onClick(x, y, button, (function()
-      Game.level2               = {}
-      Game.level2.currentRound  = 0
-      Game.level2.totalRounds   = 10
-      Game.level2.next = function()
+      Game.level2              = {}
+      Game.level2.currentRound = 0
+      Game.level2.totalRounds  = 10
+      Game.level2.next         = function()
         Game.level2.currentRound = Game.level2.currentRound + 1
-        Game.animal = Game.animals[1+math.floor(math.random()*#Game.animals)] or "MACACO"
+        Game.animal = Game.animals[1 + math.floor(math.random() * #Game.animals)] or "MACACO"
       end
       Game.level2.next()
       Game.currentLevel = 4
+      Game.play.lvl1.time = Game.timer.timePassed
       Game.load()
     end))
   end

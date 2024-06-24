@@ -6,6 +6,6 @@ DarkGreen = { 7, 139, 36 }
 Orange = { 242, 157, 56 }
 LightOrange = { 255, 229, 0 }
 Gray = { 107, 102, 102 }
-LightGray = { 83, 83, 83 }
+LightGray = { 221, 221, 221 }
 Red = { 204, 0, 0 }
 Blue = { 111, 168, 220 }
