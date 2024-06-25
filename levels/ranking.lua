@@ -23,30 +23,8 @@ local function setBorder(love, object)
   love.graphics.setColor(r, g, b, a)
 end
 
-local function showData()
-  print("Name: " .. Game.play.name)
-  print("Score: " .. Game.play.score)
-  print("Level1:")
-  print("  Errors:")
-  for i, val in ipairs(Game.play.lvl1.errors) do
-    print("     Tentativa: " .. val.tentativa .. " | Resposta: " .. val.resposta)
-  end
-  print("     Tempo: " .. Game.play.lvl1.time)
-  print("Level2:")
-  print("  Errors:")
-  for i, val in ipairs(Game.play.lvl2.errors) do
-    print("     Tentativa: " .. val.tentativa .. " | Resposta: " .. val.resposta)
-  end
-  print("     Tempo: " .. Game.play.lvl2.time)
-  -- print("Level3:")
-  -- print("  Errors:")
-  -- for i, val in ipairs(Game.play.lvl3.errors) do
-  --   print("Tentativa: " .. val.tentativa .. " | Resposta: " .. val.resposta)
-  -- end
-  print("Tempo Total: " .. Game.play.lvl1.time + Game.play.lvl2.time)
-end
-
-local items
+local items = {}
+local item = {}
 local scrollOffset = 1
 local itemHeight = 42
 local itemsToShow = 10
@@ -56,7 +34,6 @@ local listHeight = itemHeight * itemsToShow
 function Ranking.load()
   items = database:getRanking()
   table.insert(items, 1, { name = "Nome", score = "Pontuação" })
-
   item = Text:new({ fontSize = 30, color = Black })
   container = Object:new({
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
@@ -101,6 +78,14 @@ function Ranking.load()
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4 })
 
   love.keyboard.setKeyRepeat(true)
+
+  cursor = Cursor:new {
+    botoes = { goHomeButton }
+  }
+end
+
+function Ranking.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x, y)
 end
 
 function Ranking.mousepressed(x, y, button)
@@ -117,7 +102,7 @@ function Ranking.mousepressed(x, y, button)
 end
 
 function Ranking.update(dt)
-  scrollOffset = math.max(0, math.min(scrollOffset, #items * itemHeight - listHeight))
+  scrollOffset = math.max(0, math.min(scrollOffset, (#items - 7) * itemHeight))
 end
 
 function Ranking.draw()
@@ -145,7 +130,7 @@ function Ranking.draw()
   love.graphics.setScissor()
 end
 
-function love.wheelmoved(x, y)
+function Ranking.wheelmoved(x, y)
   scrollOffset = scrollOffset - y * itemHeight
 end
 
