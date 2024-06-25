@@ -42,7 +42,7 @@ local errorsItemsToShow = 10
 local errorsListWidth = 320
 local errorsListHeight = errorsItemHeight * errorsItemsToShow
 
-local items
+local items = {}
 local scrollOffset = 1
 local itemHeight = 42
 local itemsToShow = 10
@@ -224,11 +224,9 @@ function Reports.mousemoved(x, y, dx, dy, istouch)
 end
 
 function Reports.update(dt)
-  errorsScrollOffset = math.max(0,
-    math.min(errorsScrollOffset, #errorsItems * errorsItemHeight - errorsListHeight))
+  errorsScrollOffset = math.max(0, math.min(errorsScrollOffset, (#errorsItems - 8) * errorsItemHeight))
 
-  scrollOffset = math.max(0,
-    math.min(scrollOffset, #items * itemHeight - listHeight))
+  scrollOffset = math.max(0, math.min(scrollOffset, (#items - 7) * itemHeight))
 end
 
 function Reports.draw()

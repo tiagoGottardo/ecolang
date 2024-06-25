@@ -23,7 +23,8 @@ local function setBorder(love, object)
   love.graphics.setColor(r, g, b, a)
 end
 
-local items
+local items = {}
+local item = {}
 local scrollOffset = 1
 local itemHeight = 42
 local itemsToShow = 10
@@ -33,7 +34,6 @@ local listHeight = itemHeight * itemsToShow
 function Ranking.load()
   items = database:getRanking()
   table.insert(items, 1, { name = "Nome", score = "Pontuação" })
-
   item = Text:new({ fontSize = 30, color = Black })
   container = Object:new({
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
@@ -102,7 +102,7 @@ function Ranking.mousepressed(x, y, button)
 end
 
 function Ranking.update(dt)
-  scrollOffset = math.max(0, math.min(scrollOffset, #items * itemHeight - listHeight))
+  scrollOffset = math.max(0, math.min(scrollOffset, (#items - 7) * itemHeight))
 end
 
 function Ranking.draw()
