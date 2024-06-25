@@ -2,6 +2,7 @@ local Name = {}
 local Text = require 'components.text'
 local Object = require 'components.object'
 local Button = require 'components.button'
+local defaultPlayTemplate = require 'utils.play'
 local Image = require 'components.image'
 local Cursor = require 'src.cursor'
 local input, button, title, container, footer, soundFooter, titulo, proximoFooter
@@ -135,6 +136,7 @@ function Name.mousepressed(x, y, button)
       database:saveData()
       Game.currentLevel = Game.currentLevel + 1
       Game.load()
+      Game.play = defaultPlayTemplate
     else
       warning:play()
     end
@@ -167,6 +169,7 @@ function Name.keypressed(key)
       database:saveData()
       Game.currentLevel = Game.currentLevel + 1
       Game.load()
+      Game.play = defaultPlayTemplate
     else
       warning:play()
     end
