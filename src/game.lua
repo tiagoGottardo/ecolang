@@ -4,6 +4,7 @@ local playDefault = require 'utils.play'
 Game = {}
 Game.timer = Timer:new({ fontSize = 30, color = Black })
 Game.play = playDefault
+Game.report = { lvl1 = {}, lvl2 = {}, lvl3 = {}, playedAt = {}, errors = {} }
 
 local fundo
 
