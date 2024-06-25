@@ -54,6 +54,7 @@ local database = {
 }
 
 function database:createPlay(play)
+  self.data = self.data or {}
   table.insert(self.data.plays, play)
   print "Play added successfully!"
 end
@@ -99,16 +100,26 @@ function database:getPlays()
   return self.data.plays
 end
 
+local function removeFirstNElements(t, N)
+  for _ = 1, N do
+    table.remove(t, 1)
+  end
+end
+
 function database:saveData()
   local file = io.open("database/db.json", "w+")
   if not file then
     return print "Some problem happened in get file content."
   end
+  if #self.data.plays > 14 then
+    print(#self.data.plays - 14)
+    removeFirstNElements(self.data.plays, #self.data.plays - 14)
+  end
   local data = json.encode(self.data)
   if type(data) == 'string' then
     file:write(data)
     file:close()
-    return print "Data saved successfully!"
+    return
   end
   print "Data is not a valid json."
 end
@@ -120,9 +131,8 @@ function database:loadData()
     return
   end
   local data = file:read("*a")
-  self.data = json.decode(data)
+  self.data = json.decode(data) or { plays = {} }
   file:close()
-  print "Data loaded successfully!"
 end
 
 database:loadData()
