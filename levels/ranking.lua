@@ -145,7 +145,7 @@ function Ranking.draw()
   love.graphics.setScissor()
 end
 
-function love.wheelmoved(x, y)
+function Ranking.wheelmoved(x, y)
   scrollOffset = scrollOffset - y * itemHeight
 end
 

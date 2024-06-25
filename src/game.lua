@@ -81,4 +81,10 @@ function Game.textinput(text)
   end
 end
 
+function Game.wheelmoved(x, y)
+  if Game.levels[Game.currentLevel].wheelmoved then
+    Game.levels[Game.currentLevel].wheelmoved(x, y)
+  end
+end
+
 return Game
