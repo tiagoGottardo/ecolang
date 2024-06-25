@@ -181,6 +181,8 @@ function Name.keypressed(key)
     return
   elseif key == "space" then
     input.content.label = input.content.label .. " "
+  elseif #input.content.label == 9 then
+    return
   else
     if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
       if key:match("%a") then
