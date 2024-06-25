@@ -40,6 +40,7 @@ local componentTimeOver = require "levels.components.componentTimeOver"
 local evenTriggered = false
 
 function Level1.load()
+  print(utils.string:tostring(Game.play))
   evenTriggered = false
   correctSound = love.audio.newSource("assets/sounds/" .. Game.animal .. ".mp3", "static")
 

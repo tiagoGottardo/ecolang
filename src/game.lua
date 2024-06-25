@@ -1,9 +1,10 @@
 require("utils.colors")
 local Timer = require 'src.timer'
 local playDefault = require 'utils.play'
+local utils = require 'utils'
 Game = {}
 Game.timer = Timer:new({ fontSize = 30, color = Black })
-Game.play = playDefault
+Game.play = utils.table:deepCopy(playDefault)
 Game.report = { lvl1 = {}, lvl2 = {}, lvl3 = {}, playedAt = {}, errors = {} }
 
 local fundo
