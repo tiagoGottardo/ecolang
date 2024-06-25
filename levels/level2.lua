@@ -1,4 +1,4 @@
-+local Level2 = {}
+local Level2 = {}
 require("utils.colors")
 local utils = require 'utils'
 local Object = require 'components.object'
@@ -250,9 +250,9 @@ function Level2.mousepressed(x, y, button)
       Game.level3.next         = function()
         Game.level3.currentRound = Game.level3.currentRound + 1
 
-        local newAnimal = Game.animals[1+math.floor(math.random()*#Game.animals)]
-        while newAnimal==Game.animal do
-          newAnimal = Game.animals[1+math.floor(math.random()*#Game.animals)]
+        local newAnimal = Game.animals[1 + math.floor(math.random() * #Game.animals)]
+        while newAnimal == Game.animal do
+          newAnimal = Game.animals[1 + math.floor(math.random() * #Game.animals)]
         end
         Game.animal = newAnimal
       end
@@ -301,7 +301,8 @@ function Level2.draw()
 
   local highlightColor = { 0.8, 0, 0, 1 }
   local regularColor = { 0.027, 0.545, 0.141, 1 }
-  local coloredText = { highlightColor, utils.string:firstUtf8Char(Game.animal:upper()), regularColor, ' ' .. Game.animal:sub(2) }
+  local coloredText = { highlightColor, utils.string:firstUtf8Char(Game.animal:upper()), regularColor, ' ' ..
+  Game.animal:sub(2) }
   local textWidth = 0
   local textHeight = myFont:getHeight()
   for i, v in ipairs(coloredText) do

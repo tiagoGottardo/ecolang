@@ -112,7 +112,6 @@ function database:saveData()
     return print "Some problem happened in get file content."
   end
   if #self.data.plays > 14 then
-    print(#self.data.plays - 14)
     removeFirstNElements(self.data.plays, #self.data.plays - 14)
   end
   local data = json.encode(self.data)
