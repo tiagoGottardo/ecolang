@@ -17,6 +17,14 @@ local sobreBtn
 local placarBtn
 local sairBtn
 
+local componentSoundHeader = require "levels.components.componentSoundHeader"
+local soundHeaders = {
+  play = {},
+  placar = {},
+  sobre = {},
+  sair = {}
+}
+
 local utils = require 'utils'
 local animalsIndex = utils.animals
 
@@ -105,8 +113,41 @@ function menu.load()
 
   })
 
+  soundHeaders.play = componentSoundHeader:new()
+  soundHeaders.placar = componentSoundHeader:new()
+  soundHeaders.sobre = componentSoundHeader:new()
+  soundHeaders.sair = componentSoundHeader:new()
+  soundHeaders.play:set {
+    shape = {
+      width = 70,
+      height = 70
+    }
+  }
+  soundHeaders.play.sound = love.audio.newSource('assets/sounds/play.mp3', 'static')
+  soundHeaders.placar:set {
+    shape = {
+      width = 60,
+      height = 60
+    }
+  }
+  soundHeaders.placar.sound = love.audio.newSource('assets/sounds/placar.mp3', 'static')
+  soundHeaders.sobre:set {
+    shape = {
+      width = 60,
+      height = 60
+    }
+  }
+  soundHeaders.sobre.sound = love.audio.newSource('assets/sounds/sobre.mp3', 'static')
+  soundHeaders.sair:set {
+    shape = {
+      width = 60,
+      height = 60
+    }
+  }
+  soundHeaders.sair.sound = love.audio.newSource('assets/sounds/sair.mp3', 'static')
+
   cursor = Cursor:new {
-    botoes = { playBtn, placarBtn, sobreBtn, sairBtn }
+    botoes = { playBtn, placarBtn, sobreBtn, sairBtn, soundHeaders.play, soundHeaders.placar, soundHeaders.sobre, soundHeaders.sair }
   }
 
   playImage = Image:new({ name = "play.png", width = 60, height = 60 })
@@ -132,6 +173,14 @@ function menu.draw()
   placarBtn:draw()
   sobreBtn:draw()
   sairBtn:draw()
+  soundHeaders.play:draw()
+  soundHeaders.play:setBorder()
+  soundHeaders.placar:draw()
+  soundHeaders.placar:setBorder()
+  soundHeaders.sobre:draw()
+  soundHeaders.sobre:setBorder()
+  soundHeaders.sair:draw()
+  soundHeaders.sair:setBorder()
   -- playImage:draw(playBtn.position.x, playBtn.position.y - 25)
 
   -- local r, g, b, a = love.graphics.getColor()
@@ -183,6 +232,18 @@ function menu.mousepressed(x, y, button, istouch, presses)
   sairBtn:onClick(x, y, button, (function()
     love.event.quit()
   end))
+  soundHeaders.play:onClick(x, y, button, (function()
+    soundHeaders.play.sound:play()
+  end))
+  soundHeaders.placar:onClick(x, y, button, (function()
+    soundHeaders.placar.sound:play()
+  end))
+  soundHeaders.sobre:onClick(x, y, button, (function()
+    soundHeaders.sobre.sound:play()
+  end))
+  soundHeaders.sair:onClick(x, y, button, (function()
+    soundHeaders.sair.sound:play()
+  end))
   -- sobreBtn:onClick(x, y, button, (function()
   --   Game.currentLevel = 5
   --   Game.load()
@@ -210,6 +271,22 @@ function menu.resize()
 
   sairBtn.position.x = midW
   sairBtn.position.y = windowHeight - mBtnH - 10
+
+  soundHeaders.play:set {
+    position = { playBtn.position.x + (2*soundHeaders.placar.shape.width + playBtn.shape.width)/2, playBtn.position.y }
+  }
+
+  soundHeaders.placar:set {
+    position = { placarBtn.position.x + (2*soundHeaders.placar.shape.width + placarBtn.shape.width)/2, placarBtn.position.y }
+  }
+
+  soundHeaders.sobre:set {
+    position = { sobreBtn.position.x + (2*soundHeaders.sobre.shape.width + sobreBtn.shape.width)/2, sobreBtn.position.y }
+  }
+
+  soundHeaders.sair:set {
+    position = { sairBtn.position.x + (2*soundHeaders.sair.shape.width + sairBtn.shape.width)/2, sairBtn.position.y }
+  }
 
   volumeSlider.x = windowWidth - volumeSlider.width
   volumeSlider.y = windowHeight - volumeSlider.length * 7 / 8

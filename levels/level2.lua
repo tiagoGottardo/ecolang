@@ -1,7 +1,6 @@
-local Level2 = {}
++local Level2 = {}
 require("utils.colors")
 local utils = require 'utils'
-local utf8 = require 'utf8'
 local Object = require 'components.object'
 local Timer = require 'src.timer'
 local Button = require "components.button"
@@ -81,16 +80,6 @@ local function getKeyPosition(key)
   return keys[key] or { 0, 0 }
 end
 
-local function firstUtf8Char(str)
-  if type(str) ~= 'string' then
-    return ''
-  end
-  for _, c in utf8.codes(str) do
-    return utf8.char(c)
-  end
-  return ''
-end
-
 function Level2.load()
   evenTriggered = false
   animalSound = love.audio.newSource("assets/sounds/" .. Game.animal .. ".mp3", "static")
@@ -112,7 +101,7 @@ function Level2.load()
   }
 
   selectedKey = Object:new {
-    position = getKeyPosition(firstUtf8Char(Game.animal)),
+    position = getKeyPosition(utils.string:firstUtf8Char(Game.animal)),
     color = Red,
     shape = {
       width = 40,
@@ -135,7 +124,7 @@ function Level2.load()
   --   content = {
   --     color = Red,
   --     fontSize = 70,
-  --     label = firstUtf8Char(animal)
+  --     label = utils.string:firstUtf8Char(animal)
   --   }
   -- }
 
@@ -150,7 +139,7 @@ function Level2.load()
   --  content = {
   --    color = White,
   --    fontSize = 70,
-  --    label = firstUtf8Char(animal)
+  --    label = utils.string:firstUtf8Char(animal)
   --  }
   --}
 
@@ -210,7 +199,7 @@ end
 
 local function verifyCorrectAnswer(answer)
   answer = answer or ""
-  local rightLetter = firstUtf8Char(Game.animal)
+  local rightLetter = utils.string:firstUtf8Char(Game.animal)
   if rightLetter == answer then
     if Game.level2.currentRound >= Game.level2.totalRounds then
       successModal.hidden = false
@@ -260,7 +249,12 @@ function Level2.mousepressed(x, y, button)
       Game.level3.totalRounds  = 10
       Game.level3.next         = function()
         Game.level3.currentRound = Game.level3.currentRound + 1
-        Game.animal = Game.animals[1 + math.floor(math.random() * #Game.animals)] or "MACACO"
+
+        local newAnimal = Game.animals[1+math.floor(math.random()*#Game.animals)]
+        while newAnimal==Game.animal do
+          newAnimal = Game.animals[1+math.floor(math.random()*#Game.animals)]
+        end
+        Game.animal = newAnimal
       end
       Game.level3.next()
       Game.currentLevel = 6
@@ -307,7 +301,7 @@ function Level2.draw()
 
   local highlightColor = { 0.8, 0, 0, 1 }
   local regularColor = { 0.027, 0.545, 0.141, 1 }
-  local coloredText = { highlightColor, firstUtf8Char(Game.animal:upper()), regularColor, ' ' .. Game.animal:sub(2) }
+  local coloredText = { highlightColor, utils.string:firstUtf8Char(Game.animal:upper()), regularColor, ' ' .. Game.animal:sub(2) }
   local textWidth = 0
   local textHeight = myFont:getHeight()
   for i, v in ipairs(coloredText) do
@@ -342,7 +336,7 @@ end
 
 function Level2.textinput(text)
   if text then
-    text = firstUtf8Char(text:upper())
+    text = utils.string:firstUtf8Char(text:upper())
     letterPressed:set {
       content = {
         label = text,
