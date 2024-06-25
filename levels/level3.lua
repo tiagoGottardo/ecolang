@@ -173,6 +173,8 @@ local function verifyCorrectAnswer(answer)
         currentState.char = nil
         needNextCode      = true
       else
+        table.insert(Game.play.errors, { level = 3, try = currentState.char, correct = v })
+        Game.play.score = Game.play.score - 10
         currentState.start = love.timer.getTime()
       end
       if not needNextCode then
@@ -220,6 +222,7 @@ function Level3.mousepressed(x, y, button)
   if not successModal.hidden then
     successModal.button:onClick(x, y, button, (function()
       Game.play.lvl3.time = Game.timer.timePassed - Game.play.lvl1.time - Game.play.lvl2.time
+      Game.play.score = Game.play.score + 2 * math.floor(Game.timer.timerDuration - Game.timer.timePassed)
       Game.currentLevel = 9
       Game.load()
     end))
