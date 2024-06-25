@@ -1,60 +1,11 @@
 local json = require("dkjson")
 
-local function splitArray(arr)
-  local mid = math.floor(#arr / 2)
-  local left = {}
-  local right = {}
-
-  for i = 1, mid do
-    table.insert(left, arr[i])
-  end
-
-  for i = mid + 1, #arr do
-    table.insert(right, arr[i])
-  end
-
-  return left, right
-end
-local function merge(left, right)
-  local merged = {}
-
-  while #left > 0 and #right > 0 do
-    if left[1].score >= right[1].score then
-      table.insert(merged, table.remove(left, 1))
-    else
-      table.insert(merged, table.remove(right, 1))
-    end
-  end
-
-  while #left > 0 do
-    table.insert(merged, table.remove(left, 1))
-  end
-
-  while #right > 0 do
-    table.insert(merged, table.remove(right, 1))
-  end
-
-  return merged
-end
-
-local function mergeSort(arr)
-  if #arr <= 1 then
-    return arr
-  end
-
-  local left, right = splitArray(arr)
-
-  left = mergeSort(left)
-  right = mergeSort(right)
-  return merge(left, right)
-end
-
 local database = {
   data = { plays = {} }
 }
 
 function database:createPlay(play)
-  self.data = self.data or {}
+  self.data = self.data or { plays={} }
   table.insert(self.data.plays, play)
   print "Play added successfully!"
 end
@@ -91,7 +42,7 @@ function database:getRanking()
   for key, val in pairs(self.data.plays) do
     ranking[key] = { name = val.name, score = val.score }
   end
-  ranking = mergeSort(ranking)
+  table.sort(ranking, function(r1,r2) return r1.score >= r2.score end)
 
   return ranking
 end

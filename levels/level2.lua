@@ -282,7 +282,8 @@ function Level2.update(dt)
     isTimeOverModal.hidden = false
     cursor:set { botoes = { isTimeOverModal.button } }
     evenTriggered = true
-  elseif verifyTimer and love.timer.getTime() - verifyTimer[1] > verifyDelay then
+  end
+  if not evenTriggered and verifyTimer and love.timer.getTime() - verifyTimer[1] > verifyDelay then
     verifyCorrectAnswer(verifyTimer[2])
     verifyTimer = nil
   end

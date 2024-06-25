@@ -8,6 +8,7 @@ local Cursor = require 'src.cursor'
 local input, button, title, container, footer, soundFooter, titulo, proximoFooter
 local logo, cursor, audioLabel, warning
 local database = require 'database.database'
+local utils = require 'utils'
 
 local containerTemplate = require 'levels.components.centralContainer'
 
@@ -140,7 +141,7 @@ function Name.mousepressed(x, y, button)
       database:saveData()
       Game.currentLevel = Game.currentLevel + 1
       Game.load()
-      Game.play = defaultPlayTemplate
+      Game.play = utils.table:deepCopy(defaultPlayTemplate)
     else
       warning:play()
     end
@@ -173,7 +174,7 @@ function Name.keypressed(key)
       database:saveData()
       Game.currentLevel = Game.currentLevel + 1
       Game.load()
-      Game.play = defaultPlayTemplate
+      Game.play = utils.table:deepCopy(defaultPlayTemplate)
     else
       warning:play()
     end
