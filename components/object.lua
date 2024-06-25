@@ -4,6 +4,7 @@ local Square = require "components.square"
 
 local Image = require "components.image"
 local Text = require "components.text"
+local Video = require "components.video"
 local Color = require "components.color"
 local Position = require "components.position"
 
@@ -39,6 +40,9 @@ local function pickContent(contentTable)
     end,
     ['text'] = function(t)
       return Text:new(t)
+    end,
+    ['video'] = function(t)
+      return Video:new(t)
     end
   }
 

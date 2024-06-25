@@ -88,7 +88,7 @@ function Level1.mousepressed(x, y, button)
     animals:mousepressed(x, y, button, verifyCorrectAnswer)
     soundHeader:onClick(x, y, button, (function() correctSound:play() end))
     helpButton:onClick(x, y, button, (function()
-      Game.currentLevel = 2
+      Game.currentLevel = 14
       Game.load()
     end))
   end

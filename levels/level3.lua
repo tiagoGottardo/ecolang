@@ -165,7 +165,7 @@ function Level3.mousepressed(x, y, button)
   if (failedModal.hidden and successModal.hidden and isTimeOverModal.hidden) then
     soundHeader:onClick(x, y, button, (function() animalSound:play() end))
     helpButton:onClick(x, y, button, (function()
-      Game.currentLevel = 6
+      Game.currentLevel = 16
       Game.load()
     end))
   end

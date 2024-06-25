@@ -21,7 +21,10 @@ Game.levels = {
   require "levels.ranking",
   require "levels.instanciaUsuario",
   require "levels.menuProf",
-  require "levels.reports"
+  require "levels.reports",
+  require "levels.level1video",
+  require "levels.level2video",
+  require "levels.level3video"
 }
 
 Game.currentLevel = 11
