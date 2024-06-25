@@ -49,30 +49,6 @@ local function mergeSort(arr)
   return merge(left, right)
 end
 
--- plays = {
---  name = "",
---  score = 320
---  errors = {
---    level1 = {
---      Tentativa = "",
---      Resposta Correta = "" }, level2 = {
---      Tentativa = "",
---      Resposta Correta = ""
---    },
---    level3 = {
---      Tentativa = "",
---      Resposta Correta = ""
---    },
---  },
---  times = {
---    level1 = 200, level2 = 20, level3 = 70, total = 290
---  },
---  playedAt = {
---    time = 17:15,
---    date = 10/11/1989
---  } }
---
-
 local database = {
   data = { plays = {} }
 }
@@ -89,6 +65,24 @@ function database:getPlay(playId)
   end
 
   return play
+end
+
+function database:getReport(i)
+  if i == 0 then
+    return
+  end
+
+  return self.data.plays[i]
+end
+
+function database:getReports()
+  local reports = {}
+
+  for i = 1, #self.data.plays do
+    reports[i] = { name = self.data.plays[i].name, score = self.data.plays[i].playedAt.date or "--/--/----" }
+  end
+
+  return reports
 end
 
 function database:getRanking()
