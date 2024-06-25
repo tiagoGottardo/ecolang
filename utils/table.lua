@@ -7,7 +7,7 @@ function t:deepCopy(tab)
 
   local a = {}
   for key, val in pairs(tab) do
-    a[key] = t.deepCopy(val) or val
+    a[key] = self:deepCopy(val) or val
   end
 
   return a

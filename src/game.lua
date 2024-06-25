@@ -4,6 +4,7 @@ local playDefault = require 'utils.play'
 Game = {}
 Game.timer = Timer:new({ fontSize = 30, color = Black })
 Game.play = playDefault
+Game.report = { lvl1 = {}, lvl2 = {}, lvl3 = {}, playedAt = {}, errors = {} }
 
 local fundo
 
@@ -20,7 +21,7 @@ Game.levels = {
   require "levels.ranking",
   require "levels.instanciaUsuario",
   require "levels.menuProf",
-  require "levels.relatorios",
+  require "levels.reports",
   require "levels.level1video",
   require "levels.level2video",
   require "levels.level3video"
@@ -81,6 +82,12 @@ end
 function Game.textinput(text)
   if Game.levels[Game.currentLevel].textinput then
     Game.levels[Game.currentLevel].textinput(text)
+  end
+end
+
+function Game.wheelmoved(x, y)
+  if Game.levels[Game.currentLevel].wheelmoved then
+    Game.levels[Game.currentLevel].wheelmoved(x, y)
   end
 end
 

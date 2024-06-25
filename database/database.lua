@@ -49,35 +49,12 @@ local function mergeSort(arr)
   return merge(left, right)
 end
 
--- plays = {
---  name = "",
---  score = 320
---  errors = {
---    level1 = {
---      Tentativa = "",
---      Resposta Correta = "" }, level2 = {
---      Tentativa = "",
---      Resposta Correta = ""
---    },
---    level3 = {
---      Tentativa = "",
---      Resposta Correta = ""
---    },
---  },
---  times = {
---    level1 = 200, level2 = 20, level3 = 70, total = 290
---  },
---  playedAt = {
---    time = 17:15,
---    date = 10/11/1989
---  } }
---
-
 local database = {
   data = { plays = {} }
 }
 
 function database:createPlay(play)
+  self.data = self.data or {}
   table.insert(self.data.plays, play)
   print "Play added successfully!"
 end
@@ -89,6 +66,24 @@ function database:getPlay(playId)
   end
 
   return play
+end
+
+function database:getReport(i)
+  if i == 0 then
+    return
+  end
+
+  return self.data.plays[i]
+end
+
+function database:getReports()
+  local reports = {}
+
+  for i = 1, #self.data.plays do
+    reports[i] = { name = self.data.plays[i].name, score = self.data.plays[i].playedAt.date or "--/--/----" }
+  end
+
+  return reports
 end
 
 function database:getRanking()
@@ -105,15 +100,27 @@ function database:getPlays()
   return self.data.plays
 end
 
+local function removeFirstNElements(t, N)
+  for _ = 1, N do
+    table.remove(t, 1)
+  end
+end
+
 function database:saveData()
   local file = io.open("database/db.json", "w+")
   if not file then
-    return print "Some shit happen!"
+    return print "Some problem happened in get file content."
+  end
+  if #self.data.plays > 14 then
+    removeFirstNElements(self.data.plays, #self.data.plays - 14)
   end
   local data = json.encode(self.data)
-  file:write(data)
-  file:close()
-  print "Data saved successfully!"
+  if type(data) == 'string' then
+    file:write(data)
+    file:close()
+    return
+  end
+  print "Data is not a valid json."
 end
 
 function database:loadData()
@@ -123,9 +130,8 @@ function database:loadData()
     return
   end
   local data = file:read("*a")
-  self.data = json.decode(data)
+  self.data = json.decode(data) or { plays = {} }
   file:close()
-  print "Data loaded successfully!"
 end
 
 database:loadData()

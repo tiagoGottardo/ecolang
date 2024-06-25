@@ -50,10 +50,10 @@ function Level3.load()
   animalSound = love.audio.newSource("assets/sounds/" .. Game.animal .. ".mp3", "static")
 
   currentState = {
-    char=nil,
-    start=nil,
-    index=1,
-    durationLimit=0.5
+    char = nil,
+    start = nil,
+    index = 1,
+    durationLimit = 0.5
   }
 
   -- letterGoal = Object:new {
@@ -91,7 +91,7 @@ function Level3.load()
   successModal = componentSucces:new("REGISTRAR PONTUAÇÃO")
 
   failedModal = componentFailed:new()
- 
+
   inputContainer = Object:new {
     color = White,
     position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 },
@@ -108,7 +108,7 @@ function Level3.load()
   }
 
   cursor = Cursor:new {
-    botoes = { soundHeader, helpButton }
+    botoes = { soundHeader, helpButton, successModal.button }
   }
 
   --print(utils.string:tostring(Game.animal))
@@ -122,29 +122,31 @@ local function verifyCorrectAnswer(answer)
   answer = answer or ""
   local needNextCode = false
   for i, v in utf8.codes(Game.animal) do
-    v=utf8.char(v)
-    if i==currentState.index then
-      if v==currentState.char then
-        currentState.char   = nil
-        needNextCode = true
+    v = utf8.char(v)
+    if i == currentState.index then
+      if v == currentState.char then
+        currentState.char = nil
+        needNextCode      = true
       else
-        currentState.start  = love.timer.getTime()
+        table.insert(Game.play.errors, { level = 3, try = currentState.char, correct = v })
+        Game.play.score = Game.play.score - 10
+        currentState.start = love.timer.getTime()
       end
       if not needNextCode then
         break
       end
-    elseif i>currentState.index then
+    elseif i > currentState.index then
       if needNextCode then
-        currentState.index  = i
-        needNextCode        = false
+        currentState.index = i
+        needNextCode       = false
       end
       break
     end
   end
   if needNextCode then
-    currentState.index=#Game.animal+1
+    currentState.index = #Game.animal + 1
   end
-  if currentState.index==#Game.animal+1 then
+  if currentState.index == #Game.animal + 1 then
     if Game.level3.currentRound >= Game.level3.totalRounds then
       successModal.hidden = false
       cursor:set { botoes = { successModal.button } }
@@ -174,6 +176,8 @@ function Level3.mousepressed(x, y, button)
   end
   if not successModal.hidden then
     successModal.button:onClick(x, y, button, (function()
+      Game.play.lvl3.time = Game.timer.timePassed - Game.play.lvl1.time - Game.play.lvl2.time
+      Game.play.score = Game.play.score + 2 * math.floor(Game.timer.timerDuration - Game.timer.timePassed)
       Game.currentLevel = 9
       Game.load()
     end))
@@ -192,8 +196,8 @@ end
 
 function Level3.update(dt)
   if currentState.start and love.timer.getTime() - currentState.start >= currentState.durationLimit then
-    currentState.char=nil
-    currentState.start=nil
+    currentState.char = nil
+    currentState.start = nil
   end
   Game.timer:update(dt)
   if Game.timer:isTimeOver() and not evenTriggered then
@@ -239,16 +243,16 @@ function Level3.draw()
   local textHeight = myFont:getHeight()
 
   for i, v in utf8.codes(Game.animal) do
-    v=utf8.char(v)
-    if i==currentState.index and currentState.char then
-      if currentState.char==v then
+    v = utf8.char(v)
+    if i == currentState.index and currentState.char then
+      if currentState.char == v then
         table.insert(coloredText, regularColor)
       else
         table.insert(coloredText, wrongColor)
       end
       table.insert(coloredText, currentState.char)
     else
-      table.insert(coloredText, i<currentState.index and regularColor or correctColor)
+      table.insert(coloredText, i < currentState.index and regularColor or correctColor)
       table.insert(coloredText, v)
     end
   end

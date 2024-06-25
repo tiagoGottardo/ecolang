@@ -209,7 +209,7 @@ local function verifyCorrectAnswer(answer)
       Level2.load()
     end
   else
-    table.insert(Game.play.lvl2.errors, { tentativa = answer, resposta = rightLetter })
+    table.insert(Game.play.errors, { level = 2, try = answer, correct = rightLetter })
     Game.play.score = Game.play.score - 20
 
     letterPressed:set {
@@ -244,15 +244,15 @@ function Level2.mousepressed(x, y, button)
   end
   if not successModal.hidden then
     successModal.button:onClick(x, y, button, (function()
-      Game.level3               = {}
-      Game.level3.currentRound  = 0
-      Game.level3.totalRounds   = 10
-      Game.level3.next = function()
+      Game.level3              = {}
+      Game.level3.currentRound = 0
+      Game.level3.totalRounds  = 10
+      Game.level3.next         = function()
         Game.level3.currentRound = Game.level3.currentRound + 1
-        -- Game.animal = Game.animals[1+math.floor(math.random()*#Game.animals)] or "MACACO"
-        local newAnimal = Game.animals[1+math.floor(math.random()*#Game.animals)]
-        while newAnimal==Game.animal do
-          newAnimal = Game.animals[1+math.floor(math.random()*#Game.animals)]
+
+        local newAnimal = Game.animals[1 + math.floor(math.random() * #Game.animals)]
+        while newAnimal == Game.animal do
+          newAnimal = Game.animals[1 + math.floor(math.random() * #Game.animals)]
         end
         Game.animal = newAnimal
       end
@@ -301,7 +301,8 @@ function Level2.draw()
 
   local highlightColor = { 0.8, 0, 0, 1 }
   local regularColor = { 0.027, 0.545, 0.141, 1 }
-  local coloredText = { highlightColor, utils.string:firstUtf8Char(Game.animal:upper()), regularColor, ' ' .. Game.animal:sub(2) }
+  local coloredText = { highlightColor, utils.string:firstUtf8Char(Game.animal:upper()), regularColor, ' ' ..
+  Game.animal:sub(2) }
   local textWidth = 0
   local textHeight = myFont:getHeight()
   for i, v in ipairs(coloredText) do

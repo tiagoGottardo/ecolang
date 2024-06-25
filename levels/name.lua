@@ -2,6 +2,7 @@ local Name = {}
 local Text = require 'components.text'
 local Object = require 'components.object'
 local Button = require 'components.button'
+local defaultPlayTemplate = require 'utils.play'
 local Image = require 'components.image'
 local Cursor = require 'src.cursor'
 local input, button, title, container, footer, soundFooter, titulo, proximoFooter
@@ -122,6 +123,10 @@ function Name.load()
   love.keyboard.setKeyRepeat(true)
 end
 
+function Name.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x, y)
+end
+
 function Name.mousepressed(x, y, button)
   soundFooter:onClick(x, y, button, function()
     audioLabel:play()
@@ -129,10 +134,13 @@ function Name.mousepressed(x, y, button)
   proximoFooter:onClick(x, y, button, function()
     if input.content.label ~= "" then
       Game.play.name = input.content.label
+      Game.play.playedAt.date = os.date("%d/%m/%Y")
+      Game.play.playedAt.time = os.date("%H:%M")
       database:createPlay(Game.play)
       database:saveData()
       Game.currentLevel = Game.currentLevel + 1
       Game.load()
+      Game.play = defaultPlayTemplate
     else
       warning:play()
     end
@@ -159,10 +167,13 @@ function Name.keypressed(key)
   elseif key == "return" then
     if input.content.label ~= "" then
       Game.play.name = input.content.label
+      Game.play.playedAt.date = os.date("%d/%m/%Y")
+      Game.play.playedAt.time = os.date("%H:%M")
       database:createPlay(Game.play)
       database:saveData()
       Game.currentLevel = Game.currentLevel + 1
       Game.load()
+      Game.play = defaultPlayTemplate
     else
       warning:play()
     end
@@ -170,6 +181,8 @@ function Name.keypressed(key)
     return
   elseif key == "space" then
     input.content.label = input.content.label .. " "
+  elseif #input.content.label == 9 then
+    return
   else
     if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
       if key:match("%a") then
