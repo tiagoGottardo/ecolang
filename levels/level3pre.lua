@@ -107,7 +107,7 @@ function Level3pre.mousepressed(x, y, button)
     audioLabel:play()
   end)
   proximoFooter:onClick(x, y, button, function()
-    Game.currentLevel = 7
+    Game.currentLevel = 16
     Game.load()
   end)
 end

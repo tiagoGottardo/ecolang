@@ -119,6 +119,9 @@ function Level3.load()
 end
 
 local function verifyCorrectAnswer(answer)
+  if evenTriggered then
+    return
+  end
   answer = answer or ""
   local needNextCode = false
   for i, v in utf8.codes(Game.animal) do
@@ -282,7 +285,7 @@ function Level3.draw()
 end
 
 function Level3.textinput(text)
-  if text then
+  if text and not evenTriggered then
     text=utils.string:upperUtf8(utils.string:firstUtf8Char(text))
     currentState.char   = text
     --print(utils.string:tostring(currentState))

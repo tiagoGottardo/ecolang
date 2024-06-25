@@ -67,7 +67,7 @@ end
 function Level3video.mousepressed(x, y, button)
   proximoFooter:onClick(x, y, button, function()
     video:stop()
-    Game.currentLevel = 5
+    Game.currentLevel = 7
     Game.load()
   end)
   video:onClick(x, y, button)
