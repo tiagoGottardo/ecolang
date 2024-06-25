@@ -123,6 +123,10 @@ function Name.load()
   love.keyboard.setKeyRepeat(true)
 end
 
+function Name.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x, y)
+end
+
 function Name.mousepressed(x, y, button)
   soundFooter:onClick(x, y, button, function()
     audioLabel:play()

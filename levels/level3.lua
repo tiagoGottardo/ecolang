@@ -153,7 +153,7 @@ function Level3.load()
   }
 
   cursor = Cursor:new {
-    botoes = { soundHeader, helpButton }
+    botoes = { soundHeader, helpButton, successModal.button }
   }
 
   print(utils.string:tostring(Game.animal))

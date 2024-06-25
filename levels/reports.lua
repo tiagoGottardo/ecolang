@@ -16,6 +16,7 @@ local timeDefault = { init = 270, offSet = 40 }
 local container, goHomeButton, listContainer, containerModal
 local logo, cursor, item
 local database = require 'database.database'
+local Cursor = require 'src.cursor'
 
 local function setBorder(love, object)
   object = object or Object:new()
@@ -212,6 +213,14 @@ function Reports.load()
   logo = Image:new({ name = "logo.png", width = 325 * 0.4, height = 152 * 0.4 })
 
   love.keyboard.setKeyRepeat(true)
+
+  cursor = Cursor:new {
+    botoes = { goHomeButton, reportModal.closeButton }
+  }
+end
+
+function Reports.mousemoved(x, y, dx, dy, istouch)
+  cursor:update(x, y)
 end
 
 function Reports.update(dt)
