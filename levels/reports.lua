@@ -217,6 +217,9 @@ end
 function Reports.update(dt)
   errorsScrollOffset = math.max(0,
     math.min(errorsScrollOffset, #errorsItems * errorsItemHeight - errorsListHeight))
+
+  scrollOffset = math.max(0,
+    math.min(scrollOffset, #items * itemHeight - listHeight))
 end
 
 function Reports.draw()
@@ -341,7 +344,7 @@ function Reports.wheelmoved(_, y)
   if not reportModal.hidden then
     errorsScrollOffset = errorsScrollOffset - y * errorsItemHeight
   else
-    scrollOffset = math.max(0, math.min(scrollOffset, #items * itemHeight - listHeight))
+    scrollOffset = scrollOffset - y * itemHeight
   end
 end
 
