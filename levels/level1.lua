@@ -74,7 +74,7 @@ local function verifyCorrectAnswer(answer)
       Level1.load()
     end
   else
-    table.insert(Game.play.lvl1.errors, { tentativa = Game.level1.animals[answer], resposta = Game.animal })
+    table.insert(Game.play.errors, { level = 1, try = Game.level1.animals[answer], correct = Game.animal })
     Game.play.score = Game.play.score - 30
 
     failedModal.hidden = false

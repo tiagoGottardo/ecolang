@@ -129,6 +129,8 @@ function Name.mousepressed(x, y, button)
   proximoFooter:onClick(x, y, button, function()
     if input.content.label ~= "" then
       Game.play.name = input.content.label
+      Game.play.playedAt.date = os.date("%d/%m/%Y")
+      Game.play.playedAt.time = os.date("%H:%M")
       database:createPlay(Game.play)
       database:saveData()
       Game.currentLevel = Game.currentLevel + 1
@@ -159,6 +161,8 @@ function Name.keypressed(key)
   elseif key == "return" then
     if input.content.label ~= "" then
       Game.play.name = input.content.label
+      Game.play.playedAt.date = os.date("%d/%m/%Y")
+      Game.play.playedAt.time = os.date("%H:%M")
       database:createPlay(Game.play)
       database:saveData()
       Game.currentLevel = Game.currentLevel + 1
