@@ -278,14 +278,13 @@ end
 function Level2.update(dt)
   Game.timer:update(dt)
 
-  if verifyTimer and love.timer.getTime() - verifyTimer[1] > verifyDelay then
-    verifyCorrectAnswer(verifyTimer[2])
-    verifyTimer = nil
-  end
   if Game.timer:isTimeOver() and not evenTriggered then
     isTimeOverModal.hidden = false
     cursor:set { botoes = { isTimeOverModal.button } }
     evenTriggered = true
+  elseif verifyTimer and love.timer.getTime() - verifyTimer[1] > verifyDelay then
+    verifyCorrectAnswer(verifyTimer[2])
+    verifyTimer = nil
   end
 end
 
@@ -336,7 +335,7 @@ function Level2.draw()
 end
 
 function Level2.textinput(text)
-  if text then
+  if text and not evenTriggered then
     text = utils.string:firstUtf8Char(text:upper())
     letterPressed:set {
       content = {
