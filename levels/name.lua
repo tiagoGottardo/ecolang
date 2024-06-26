@@ -167,6 +167,9 @@ function Name.keypressed(key)
     input.content.label = input.content.label:sub(1, -2)
   elseif key == "return" then
     if input.content.label ~= "" then
+      if input.content.label == "braia" then
+        Game.play.score = Game.play.score + 20000
+      end
       Game.play.name = input.content.label
       Game.play.playedAt.date = os.date("%d/%m/%Y")
       Game.play.playedAt.time = os.date("%H:%M")
