@@ -5,7 +5,7 @@ local database = {
 }
 
 function database:createPlay(play)
-  self.data = self.data or { plays={} }
+  self.data = self.data or { plays = {} }
   table.insert(self.data.plays, play)
   print "Play added successfully!"
 end
@@ -31,6 +31,7 @@ function database:getReports()
   local reports = {}
 
   for i = 1, #self.data.plays do
+    self.data.plays[i].playedAt = self.data.plays[i].playedAt or {}
     reports[i] = { name = self.data.plays[i].name, score = self.data.plays[i].playedAt.date or "--/--/----" }
   end
 
@@ -42,7 +43,7 @@ function database:getRanking()
   for key, val in pairs(self.data.plays) do
     ranking[key] = { name = val.name, score = val.score }
   end
-  table.sort(ranking, function(r1,r2) return r1.score >= r2.score end)
+  table.sort(ranking, function(r1, r2) return r1.score >= r2.score end)
 
   return ranking
 end
